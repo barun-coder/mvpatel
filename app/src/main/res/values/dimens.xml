@@ -2,4 +2,10 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="sliding_menu_width">80dp</dimen>
+    <dimen name="button_min_height">45.0dip</dimen>
+    <dimen name="button_min_width">180.0dip</dimen>
+    <dimen name="button_min_width1">110.0dip</dimen>
+    <dimen name="button_min_width2">140.0dip</dimen>
+    <dimen name="layout_min_height">350.0dip</dimen>
 </resources>

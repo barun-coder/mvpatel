@@ -4,6 +4,7 @@ package com.displayfort.mvpatel.TextUtils;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -11,7 +12,7 @@ import android.widget.TextView;
 /**
  * @author husains
  */
-public class TypefaceTextViewBrandenReg extends TextView {
+public class TypefaceTextViewBrandenReg extends AppCompatTextView {
 
     public TypefaceTextViewBrandenReg(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);

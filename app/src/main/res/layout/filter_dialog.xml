@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="10.0dip">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenBold
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8.0dip"
+            android:text="Filters"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/crossImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="8.0dip"
+            android:layout_marginRight="8.0dip"
+            android:src="@drawable/ic_clear_black_24dp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="36.0dip"
+        android:layout_height="2.0dip"
+        android:layout_marginLeft="2.0dip"
+        android:layout_marginTop="2.0dip"
+        android:background="@color/theme" />
+
+    <RelativeLayout
+        android:id="@+id/accendingAlphLinearLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36.0dip"
+        android:orientation="horizontal">
+
+        <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+            android:id="@+id/nameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16.0dip"
+            android:layout_marginBottom="8.0dip"
+            android:text="Name"
+            android:textAllCaps="true"
+            android:textColor="@color/dark_text_color"
+            android:textSize="20.0sp" />
+
+        <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenLight
+            android:id="@+id/alphabetnameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="12.0dip"
+            android:layout_marginBottom="8.0dip"
+            android:layout_toRightOf="@+id/nameTextView"
+            android:text="A-Z"
+            android:textAllCaps="true"
+
+            android:textColor="@color/text_color"
+            android:textSize="20.0sp" />
+
+        <ImageView
+            android:id="@+id/img_name_a_z"
+            android:layout_width="20.0dip"
+            android:layout_height="20.0dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8.0dip"
+            android:src="@android:drawable/checkbox_on_background"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:layout_marginTop="12.0dip"
+        android:background="@android:color/darker_gray" />
+
+    <RelativeLayout
+        android:id="@+id/decendingAlphLinearLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+            android:id="@+id/name1TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16.0dip"
+            android:layout_marginTop="16.0dip"
+            android:layout_marginBottom="8.0dip"
+            android:text="Name"
+            android:textAllCaps="true"
+            android:textColor="@color/dark_text_color"
+            android:textSize="20.0sp" />
+
+        <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenLight
+            android:id="@+id/revalphabetnameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="12.0dip"
+            android:layout_marginTop="16.0dip"
+            android:layout_marginBottom="8.0dip"
+            android:layout_toRightOf="@+id/name1TextView"
+            android:text="Z-A"
+            android:textAllCaps="true"
+
+            android:textColor="@color/text_color"
+            android:textSize="20.0sp" />
+
+        <ImageView
+            android:id="@+id/img_name_z_a"
+            android:layout_width="20.0dip"
+            android:layout_height="20.0dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8.0dip"
+            android:src="@android:drawable/checkbox_on_background"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:layout_marginTop="12.0dip"
+        android:background="@android:color/darker_gray" />
+
+    <RelativeLayout
+        android:id="@+id/accesndingPriceLinearLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+            android:id="@+id/priceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16.0dip"
+            android:layout_marginTop="16.0dip"
+            android:layout_marginBottom="8.0dip"
+            android:text="Price"
+            android:textColor="@color/dark_text_color"
+            android:textSize="20.0sp" />
+
+        <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenLight
+            android:id="@+id/pricenameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="12.0dip"
+            android:layout_marginTop="16.0dip"
+            android:layout_marginBottom="8.0dip"
+            android:layout_toRightOf="@+id/priceTextView"
+            android:text="Low to High"
+
+            android:textColor="@color/text_color"
+            android:textSize="20.0sp" />
+
+        <ImageView
+            android:id="@+id/img_price_asc"
+            android:layout_width="20.0dip"
+            android:layout_height="20.0dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8.0dip"
+            android:src="@android:drawable/checkbox_on_background"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:layout_marginTop="12.0dip"
+        android:background="@android:color/darker_gray" />
+
+    <RelativeLayout
+        android:id="@+id/decendingPriceLinearLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+            android:id="@+id/price1TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16.0dip"
+            android:layout_marginTop="16.0dip"
+            android:layout_marginBottom="8.0dip"
+            android:text="Price"
+            android:textColor="@color/dark_text_color"
+            android:textSize="20.0sp" />
+
+        <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenLight
+            android:id="@+id/revpricenameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="12.0dip"
+            android:layout_marginTop="16.0dip"
+            android:layout_marginBottom="8.0dip"
+            android:layout_toRightOf="@+id/price1TextView"
+            android:text="@string/high_to_low"
+            android:textColor="@color/text_color"
+            android:textSize="20.0sp" />
+
+        <ImageView
+            android:id="@+id/img_price_desc"
+            android:layout_width="20.0dip"
+            android:layout_height="20.0dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8.0dip"
+            android:src="@android:drawable/checkbox_on_background"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:layout_marginTop="12.0dip"
+        android:background="@android:color/darker_gray" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+            android:id="@+id/price2TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16.0dip"
+            android:layout_marginTop="16.0dip"
+            android:layout_marginBottom="8.0dip"
+
+            android:textColor="@color/dark_text_color"
+            android:textSize="20.0sp" />
+    </LinearLayout>
+</LinearLayout>

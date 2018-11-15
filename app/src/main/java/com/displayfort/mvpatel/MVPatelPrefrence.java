@@ -61,4 +61,24 @@ public class MVPatelPrefrence {
     }
 
 
+    public void setValue(String Key, String value) {
+        SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+        prefsEditor.putString(Key, null == value ? "" : value);
+        prefsEditor.commit();
+    }
+
+    public String getValue(String Key) {
+        return sharedPreferences.getString(Key, "");
+    }
+
+    public void setIntValue(String Key, int value) {
+        SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+        prefsEditor.putInt(Key, value);
+        prefsEditor.commit();
+    }
+
+    public int getIntValue(String Key) {
+        return sharedPreferences.getInt(Key, 0);
+    }
+
 }

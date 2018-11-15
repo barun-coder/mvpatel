@@ -21,10 +21,10 @@ public class SplashActivity extends BaseActivity {
 
                 try {
                     // Thread will sleep for 5 seconds
-                    sleep(2 * 1200);
+                    sleep(2 * 1000);
                     // After 5 seconds redirect to another intent
                     if (new MVPatelPrefrence(context).IsLogin()) {
-//                        startActivityWithAnim(new Intent(getBaseContext(), ActivityDashboard.class));
+                        startActivityWithAnim(new Intent(getBaseContext(), HomeActivity.class));
                     } else {
                         startActivityWithAnim(new Intent(getBaseContext(), LoginActivity.class));
                     }

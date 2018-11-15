@@ -13,4 +13,26 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="Rs">\u20B9</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    <!--menu-->
+    <string name="home">Home</string>
+    <string name="jaquar">Jaquar</string>
+    <string name="favourites">Favourites</string>
+    <string name="support">Support</string>
+    <string name="news">News</string>
+    <string name="news_notifications">News &amp; Notifications</string>
+    <string name="my_project">My Projects</string>
+    <string name="new_arrivals">New Arrivals</string>
+    <string name="videos">Videos</string>
+    <string name="dealer">Customer</string>
+
+    <string name="product_image_transition">ProductImageTransision</string>
+    <!---->
+    <string name="high_to_low">High to Low</string>
+    <string name="download_technical_drawing">DOWNLOAD TECHNICAL DRAWING</string>
+    <string name="pdf">PDF</string>
+    <string name="cad">CAD</string>
+    <string name="technical_drawing_msg">File will be downloaded and attached attached to your email, This might take few seconds.</string>
 </resources>

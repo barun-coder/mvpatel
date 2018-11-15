@@ -1,0 +1,488 @@
+[
+    {
+        "id": "1",
+        "name": "Kuwait City",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "2",
+        "name": "Dasmān",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "3",
+        "name": "Sharq",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "4",
+        "name": "Mirg?b",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "5",
+        "name": "Jibla",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "6",
+        "name": "Dasma",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "7",
+        "name": "Da'iya",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "8",
+        "name": "Saw?bir",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "9",
+        "name": "Salhiya",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "10",
+        "name": "Bneid il-G?r",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "11",
+        "name": "Kaifan",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "12",
+        "name": "Mans?riya",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "13",
+        "name": "Abdullah as-Salim suburb",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "14",
+        "name": "Nuzha",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "15",
+        "name": "Faiha'",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "16",
+        "name": "Shamiya",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "17",
+        "name": "Rawda",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "18",
+        "name": "Adiliya",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "19",
+        "name": "Khaldiya",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "20",
+        "name": "Qadsiya",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "21",
+        "name": "Qurtuba",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "22",
+        "name": "Surra",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "23",
+        "name": "Yarm?k",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "24",
+        "name": "Shuwaikh",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "25",
+        "name": "Rai",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "26",
+        "name": "Ghirnata",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "27",
+        "name": "Sulaibikhat",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "28",
+        "name": "Doha",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "29",
+        "name": "Nahdha",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "30",
+        "name": "Jabir al-Ahmad City",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "31",
+        "name": "Qairaw?n",
+        "governate_id": "1",
+        "ar_name": null
+    },
+    {
+        "id": "32",
+        "name": "Hawally",
+        "governate_id": "2",
+        "ar_name": null
+    },
+    {
+        "id": "33",
+        "name": "Rumaithiya",
+        "governate_id": "2",
+        "ar_name": null
+    },
+    {
+        "id": "34",
+        "name": "Jabriya",
+        "governate_id": "2",
+        "ar_name": null
+    },
+    {
+        "id": "35",
+        "name": "Salmiya",
+        "governate_id": "2",
+        "ar_name": null
+    },
+    {
+        "id": "36",
+        "name": "Mishrif",
+        "governate_id": "2",
+        "ar_name": null
+    },
+    {
+        "id": "37",
+        "name": "Sha'ab",
+        "governate_id": "2",
+        "ar_name": null
+    },
+    {
+        "id": "38",
+        "name": "Bay?n",
+        "governate_id": "2",
+        "ar_name": null
+    },
+    {
+        "id": "39",
+        "name": "Bi'di'",
+        "governate_id": "2",
+        "ar_name": null
+    },
+    {
+        "id": "40",
+        "name": "Nigra",
+        "governate_id": "2",
+        "ar_name": null
+    },
+    {
+        "id": "41",
+        "name": "Salwa",
+        "governate_id": "2",
+        "ar_name": null
+    },
+    {
+        "id": "42",
+        "name": "Maidan Hawalli",
+        "governate_id": "2",
+        "ar_name": null
+    },
+    {
+        "id": "43",
+        "name": "Mubarak aj-Jabir suburb",
+        "governate_id": "2",
+        "ar_name": null
+    },
+    {
+        "id": "44",
+        "name": "South Surra",
+        "governate_id": "2",
+        "ar_name": null
+    },
+    {
+        "id": "45",
+        "name": "Hittin",
+        "governate_id": "2",
+        "ar_name": null
+    },
+    {
+        "id": "46",
+        "name": "Mubarak al-Kabeer",
+        "governate_id": "3",
+        "ar_name": null
+    },
+    {
+        "id": "47",
+        "name": "Ad?n",
+        "governate_id": "3",
+        "ar_name": null
+    },
+    {
+        "id": "48",
+        "name": "Qurain",
+        "governate_id": "3",
+        "ar_name": null
+    },
+    {
+        "id": "49",
+        "name": "Qus?r",
+        "governate_id": "3",
+        "ar_name": null
+    },
+    {
+        "id": "50",
+        "name": "Sabah as-Salim suburb",
+        "governate_id": "3",
+        "ar_name": null
+    },
+    {
+        "id": "51",
+        "name": "Mis?la",
+        "governate_id": "3",
+        "ar_name": null
+    },
+    {
+        "id": "52",
+        "name": "Abu 'Fteira",
+        "governate_id": "3",
+        "ar_name": null
+    },
+    {
+        "id": "53",
+        "name": "Sabh?n",
+        "governate_id": "3",
+        "ar_name": null
+    },
+    {
+        "id": "54",
+        "name": "Fint?s",
+        "governate_id": "3",
+        "ar_name": null
+    },
+    {
+        "id": "55",
+        "name": "Funait?s",
+        "governate_id": "3",
+        "ar_name": null
+    },
+    {
+        "id": "56",
+        "name": "Ahmadi",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "57",
+        "name": "Aqila",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "58",
+        "name": "Zuhar",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "59",
+        "name": "Miqwa'",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "60",
+        "name": "Mahbula",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "61",
+        "name": "Rigga",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "62",
+        "name": "Hadiya",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "63",
+        "name": "Abu Hulaifa",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "64",
+        "name": "Sabahiya",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "65",
+        "name": "Mangaf",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "66",
+        "name": "Fahaheel",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "67",
+        "name": "Wafra",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "68",
+        "name": "Zoor",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "69",
+        "name": "Khairan",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "70",
+        "name": "Abdullah Port",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "71",
+        "name": "Agricultural Wafra",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "72",
+        "name": "Bneidar",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "73",
+        "name": "Jilei'a",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "74",
+        "name": "Jabir al-Ali Suburb",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "75",
+        "name": "Fahd al-Ahmad Suburb",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "76",
+        "name": "Shu'aiba",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "77",
+        "name": "Sabah al-Ahmad City",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "78",
+        "name": "Nuwaiseeb",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "79",
+        "name": "Khairan City",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "80",
+        "name": "Ali as-Salim suburb",
+        "governate_id": "4",
+        "ar_name": null
+    },
+    {
+        "id": "81",
+        "name": "Sabah al-Ahmad Nautical City",
+        "governate_id": "4",
+        "ar_name": null
+    }
+]

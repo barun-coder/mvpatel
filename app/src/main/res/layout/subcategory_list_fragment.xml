@@ -1,0 +1,102 @@
+<io.codetail.widget.RevealFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!---->
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8.0dip">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/product_image_iv"
+                        android:layout_width="fill_parent"
+                        android:layout_height="250.0dip"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/dummy_image" />
+
+                    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                        android:id="@+id/product_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="16.0dip"
+                        android:layout_marginBottom="8.0dip"
+                        android:textColor="@color/theme"
+                        android:textSize="20.0sp" />
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.displayfort.mvpatel.TextUtils.TypefaceButtonBrandenReg
+                            android:id="@+id/feature_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8.0dip"
+                            android:background="@drawable/ic_button_outer_gray_shape"
+                            android:minWidth="@dimen/button_min_width1"
+                            android:minHeight="@dimen/button_min_height"
+                            android:padding="8.0dip"
+                            android:text="Features"
+                            android:textAllCaps="true"
+                            android:textColor="@color/theme"
+                            android:textSize="12.0sp" />
+
+                        <com.displayfort.mvpatel.TextUtils.TypefaceButtonBrandenReg
+                            android:id="@+id/technology_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16.0dip"
+                            android:layout_toRightOf="@+id/feature_btn"
+                            android:background="@drawable/ic_button_outer_gray_shape"
+                            android:minWidth="@dimen/button_min_width1"
+                            android:minHeight="@dimen/button_min_height"
+                            android:padding="8.0dip"
+                            android:paddingLeft="4.0dip"
+                            android:paddingRight="4.0dip"
+                            android:text="Technology"
+                            android:textAllCaps="true"
+                            android:textColor="@color/theme"
+                            android:textSize="12.0sp" />
+                    </RelativeLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/product_list_rv"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="8.0dip"
+                        android:scrollbars="vertical"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+        <!---->
+    </FrameLayout>
+</io.codetail.widget.RevealFrameLayout>

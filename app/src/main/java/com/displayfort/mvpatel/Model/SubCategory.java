@@ -24,7 +24,7 @@ public class SubCategory {
     public boolean newArrival;
     public ArrayList<Product> products = null;
     public Boolean status;
-    public String title;
+    public String title, about;
     public Long updated;
     public ArrayList<SubCategory> subCategoryList = new ArrayList<>();
     public static HashMap<Long, SubCategory> subcategoryDetailMap = new HashMap<>();
@@ -68,6 +68,7 @@ public class SubCategory {
             this.title = jsonObject.optString("title", "");
             this.updated = jsonObject.optLong("updated", 0);
             this.name = jsonObject.optString("name", "NA");
+            this.about = jsonObject.optString("about", "NA");
             this.products = new Product(jsonObject.optJSONArray("products")).productList;
         }
     }

@@ -43,6 +43,8 @@
         <activity
             android:name=".Screen.ImageFullscreenActivity"
             android:screenOrientation="portrait" />
+
+        <service android:name=".Services.SaveJsonDateInDbService" />
     </application>
 
 </manifest>

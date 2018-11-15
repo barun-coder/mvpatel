@@ -26,7 +26,7 @@ public class DbQueries {
     private static final String NOT_NULL = " NOT NULL, ";
     private static final Object INTEGER_NO_COMMA = " Integer";
 
-    /**/
+    /*Category table*/
     static String getCreateCategoryTable() {
         StringBuffer mBuffer = new StringBuffer();
         mBuffer.append(CREATE_TABLE);
@@ -34,41 +34,113 @@ public class DbQueries {
         mBuffer.append(OPEN_BRACES);
         mBuffer.append(DbCons.CAT_ID);//0
         mBuffer.append(INTEGER);
-        mBuffer.append(DbCons.CAT_NAME);
-        mBuffer.append(TEXT);
         mBuffer.append(DbCons.STATUS);//
         mBuffer.append(BOOLEAN);
         mBuffer.append(DbCons.NEW_ARRIVAL);//
         mBuffer.append(BOOLEAN);
-        mBuffer.append(DbCons.SUBCAT_ID);//
-        mBuffer.append(INTEGER_NO_COMMA);
+        mBuffer.append(DbCons.CAT_NAME);
+        mBuffer.append(TEXT_NO_COMMA);
         mBuffer.append(CLOSE_BRACES);
         Utility.showLog(mBuffer.toString());
         return mBuffer.toString();
     }
 
-    /**/
+    /*Master Table*/
     static String getCreateMasterCategoryTable() {
         StringBuffer mBuffer = new StringBuffer();
         mBuffer.append(CREATE_TABLE);
         mBuffer.append(DbCons.TABLE_MASTER_CATEGORY);
         mBuffer.append(OPEN_BRACES);
-        mBuffer.append(DbCons.CAT_ID);//0
+        mBuffer.append(DbCons._ID);//0
         mBuffer.append(INTEGER);
-        mBuffer.append(DbCons.CAT_NAME);
-        mBuffer.append(TEXT);
-        mBuffer.append(DbCons.STATUS);//
-        mBuffer.append(BOOLEAN);
-        mBuffer.append(DbCons.NEW_ARRIVAL);//
-        mBuffer.append(BOOLEAN);
-        mBuffer.append(DbCons.SUBCAT_ID);//
+        mBuffer.append(DbCons.CAT_ID);//
         mBuffer.append(INTEGER_NO_COMMA);
         mBuffer.append(CLOSE_BRACES);
         Utility.showLog(mBuffer.toString());
         return mBuffer.toString();
     }
 
-    /**/
+    /*Attachbale Relation*/
+    static String getCreateAttachableTable() {
+        StringBuffer mBuffer = new StringBuffer();
+        mBuffer.append(CREATE_TABLE);
+        mBuffer.append(DbCons.TABLE_ATTACHABLE_REL);
+        mBuffer.append(OPEN_BRACES);
+        mBuffer.append(DbCons._ID);//0
+        mBuffer.append(INTEGER);
+        mBuffer.append(DbCons.ATTACHABLE_ID);//
+        mBuffer.append(INTEGER_NO_COMMA);
+        mBuffer.append(CLOSE_BRACES);
+        Utility.showLog(mBuffer.toString());
+        return mBuffer.toString();
+    }
+
+    /*Attachment */
+    static String getCreateAttachmentTable() {
+        StringBuffer mBuffer = new StringBuffer();
+        mBuffer.append(CREATE_TABLE);
+        mBuffer.append(DbCons.TABLE_ATTACHMENT);
+        mBuffer.append(OPEN_BRACES);
+        mBuffer.append(DbCons._ID);//0
+        mBuffer.append(INTEGER);
+        mBuffer.append(DbCons.TYPE);
+        mBuffer.append(TEXT);
+        mBuffer.append(DbCons.URL);
+        mBuffer.append(TEXT);
+        mBuffer.append(DbCons.COLOR_ID);//0
+        mBuffer.append(INTEGER);
+        mBuffer.append(DbCons.STATUS);//
+        mBuffer.append(BOOLEAN);
+        mBuffer.append(DbCons.TITLE);//
+        mBuffer.append(TEXT_NO_COMMA);
+        mBuffer.append(CLOSE_BRACES);
+        Utility.showLog(mBuffer.toString());
+        return mBuffer.toString();
+    }
+
+    /*SUBCategory*/
+    static String getCreateSubCategoryTable() {
+        StringBuffer mBuffer = new StringBuffer();
+        mBuffer.append(CREATE_TABLE);
+        mBuffer.append(DbCons.TABLE_SUBCATEGORY);
+        mBuffer.append(OPEN_BRACES);
+        mBuffer.append(DbCons.SUBCAT_ID);//0
+        mBuffer.append(INTEGER);
+        mBuffer.append(DbCons.CAT_ID);//0
+        mBuffer.append(INTEGER);
+        mBuffer.append(DbCons.SUBCAT_NAME);
+        mBuffer.append(TEXT);
+        mBuffer.append(DbCons.STATUS);//
+        mBuffer.append(BOOLEAN);
+        mBuffer.append(DbCons.NEW_ARRIVAL);//
+        mBuffer.append(BOOLEAN);
+        mBuffer.append(DbCons.TITLE);//
+        mBuffer.append(TEXT);
+        mBuffer.append(DbCons.ABOUT);//
+        mBuffer.append(TEXT_NO_COMMA);
+        mBuffer.append(CLOSE_BRACES);
+        Utility.showLog(mBuffer.toString());
+        return mBuffer.toString();
+    }
+
+    /*Color*/
+    static String getCreateColorTable() {
+        StringBuffer mBuffer = new StringBuffer();
+        mBuffer.append(CREATE_TABLE);
+        mBuffer.append(DbCons.TABLE_COLOR);
+        mBuffer.append(OPEN_BRACES);
+        mBuffer.append(DbCons._ID);//0
+        mBuffer.append(INTEGER);
+        mBuffer.append(DbCons.STATUS);//
+        mBuffer.append(BOOLEAN);
+        mBuffer.append(DbCons.TITLE);
+        mBuffer.append(TEXT_NO_COMMA);
+        mBuffer.append(CLOSE_BRACES);
+        Utility.showLog(mBuffer.toString());
+        return mBuffer.toString();
+    }
+
+    /*Product*/
     static String getCreateProductTable() {
         StringBuffer mBuffer = new StringBuffer();
         mBuffer.append(CREATE_TABLE);
@@ -87,6 +159,27 @@ public class DbQueries {
         mBuffer.append(DbCons.STATUS);//
         mBuffer.append(BOOLEAN);
         mBuffer.append(DbCons.SUBCAT_ID);//
+        mBuffer.append(INTEGER_NO_COMMA);
+        mBuffer.append(CLOSE_BRACES);
+        Utility.showLog(mBuffer.toString());
+        return mBuffer.toString();
+    }
+
+    /*Product Price/Type*/
+    static String getCreateProductPriceTable() {
+        StringBuffer mBuffer = new StringBuffer();
+        mBuffer.append(CREATE_TABLE);
+        mBuffer.append(DbCons.TABLE_PRODUCT_PRICE_TYPE);
+        mBuffer.append(OPEN_BRACES);
+        mBuffer.append(DbCons._ID);//0
+        mBuffer.append(INTEGER);
+        mBuffer.append(DbCons.PRODUCT_ID);
+        mBuffer.append(INTEGER);
+        mBuffer.append(DbCons.PRODUCT_PRICE);
+        mBuffer.append(INTEGER);
+        mBuffer.append(DbCons.STATUS);//
+        mBuffer.append(BOOLEAN);
+        mBuffer.append(DbCons.COLOR_ID);//0
         mBuffer.append(INTEGER_NO_COMMA);
         mBuffer.append(CLOSE_BRACES);
         Utility.showLog(mBuffer.toString());

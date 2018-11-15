@@ -10,8 +10,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
-import com.displayfort.mvpatel.Utils.Utility;
+import android.widget.Toast;
 
 
 public class DatabaseHandler extends SQLiteOpenHelper {
@@ -43,12 +42,39 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
         /**
-         * Creating the user table
+         * Creating table
          */
-
+        db.execSQL(DbQueries.getCreateCategoryTable());
+        db.execSQL(DbQueries.getCreateSubCategoryTable());
+        db.execSQL(DbQueries.getCreateMasterCategoryTable());
+        db.execSQL(DbQueries.getCreateAttachableTable());
+        db.execSQL(DbQueries.getCreateAttachmentTable());
+        db.execSQL(DbQueries.getCreateColorTable());
+        db.execSQL(DbQueries.getCreateProductPriceTable());
         db.execSQL(DbQueries.getCreateProductTable());
+        /* Insert data to a Table*/
+        db.execSQL("INSERT INTO " + DbCons.TABLE_MASTER_CATEGORY + " (" + DbCons._ID + ", " + DbCons.CAT_ID + ") VALUES (1, 22);");
+        db.execSQL("INSERT INTO " + DbCons.TABLE_MASTER_CATEGORY + " (" + DbCons._ID + ", " + DbCons.CAT_ID + ") VALUES (1, 10);");
+        db.execSQL("INSERT INTO " + DbCons.TABLE_MASTER_CATEGORY + " (" + DbCons._ID + ", " + DbCons.CAT_ID + ") VALUES (1, 19);");
+        db.execSQL("INSERT INTO " + DbCons.TABLE_MASTER_CATEGORY + " (" + DbCons._ID + ", " + DbCons.CAT_ID + ") VALUES (1, 20);");
+
+        db.execSQL("INSERT INTO " + DbCons.TABLE_MASTER_CATEGORY + " (" + DbCons._ID + ", " + DbCons.CAT_ID + ") VALUES (2, 1);");
+        db.execSQL("INSERT INTO " + DbCons.TABLE_MASTER_CATEGORY + " (" + DbCons._ID + ", " + DbCons.CAT_ID + ") VALUES (2, 11);");
+
+        db.execSQL("INSERT INTO " + DbCons.TABLE_MASTER_CATEGORY + " (" + DbCons._ID + ", " + DbCons.CAT_ID + ") VALUES (3, 11);");
+        db.execSQL("INSERT INTO " + DbCons.TABLE_MASTER_CATEGORY + " (" + DbCons._ID + ", " + DbCons.CAT_ID + ") VALUES (3, 12);");
+
+        db.execSQL("INSERT INTO " + DbCons.TABLE_MASTER_CATEGORY + " (" + DbCons._ID + ", " + DbCons.CAT_ID + ") VALUES (4, 17);");
+        db.execSQL("INSERT INTO " + DbCons.TABLE_MASTER_CATEGORY + " (" + DbCons._ID + ", " + DbCons.CAT_ID + ") VALUES (4, 14);");
+        db.execSQL("INSERT INTO " + DbCons.TABLE_MASTER_CATEGORY + " (" + DbCons._ID + ", " + DbCons.CAT_ID + ") VALUES (4, 15);");
+        db.execSQL("INSERT INTO " + DbCons.TABLE_MASTER_CATEGORY + " (" + DbCons._ID + ", " + DbCons.CAT_ID + ") VALUES (4, 16);");
+
+        db.execSQL("INSERT INTO " + DbCons.TABLE_MASTER_CATEGORY + " (" + DbCons._ID + ", " + DbCons.CAT_ID + ") VALUES (4, 18);");
+        db.execSQL("INSERT INTO " + DbCons.TABLE_MASTER_CATEGORY + " (" + DbCons._ID + ", " + DbCons.CAT_ID + ") VALUES (4, 19);");
+        db.execSQL("INSERT INTO " + DbCons.TABLE_MASTER_CATEGORY + " (" + DbCons._ID + ", " + DbCons.CAT_ID + ") VALUES (4, 20);");
+        db.execSQL("INSERT INTO " + DbCons.TABLE_MASTER_CATEGORY + " (" + DbCons._ID + ", " + DbCons.CAT_ID + ") VALUES (5, 21);");
+//
 
     }
 
@@ -56,11 +82,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (newVersion > oldVersion) {
 
-            String sql = "ALTER TABLE "
-                    + DbCons.TABLE_OFFLINE_CUSTOMER + " ADD COLUMN " + DbCons.CUSTOMER_ORDER + " INTEGER";
 
-            db.execSQL(sql);
-            Utility.showLog("OnUpgrade successFul");
         }
 
     }
@@ -105,4 +127,29 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
+    public static void ShowLog(String text) {
+        Log.i("DBUTILS:", text);
+    }
+
+    public static void ShowToast(String text, Context context) {
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+    }
+/*
+*    CREATE TABLE IF NOT EXISTS TableCategory(catId INTEGER, Status BOOLEAN, NewArrival BOOLEAN, catName TEXT)
+
+     CREATE TABLE IF NOT EXISTS TableSubCategory(subcatId INTEGER, catId INTEGER, subcatName TEXT, Status BOOLEAN, NewArrival BOOLEAN, title TEXT, about TEXT)
+
+     CREATE TABLE IF NOT EXISTS MasterRelation(ID INTEGER, catId Integer)
+
+     CREATE TABLE IF NOT EXISTS AttachableRelation(ID INTEGER, attach_ID Integer)
+
+     CREATE TABLE IF NOT EXISTS TableSubCategory(ID INTEGER, type TEXT, attachmentURL TEXT, color_ID INTEGER, Status BOOLEAN, title TEXT)
+
+     CREATE TABLE IF NOT EXISTS TableColor(ID INTEGER, Status BOOLEAN, title TEXT)
+
+     CREATE TABLE IF NOT EXISTS TableProductType(ID INTEGER, P_ID INTEGER, Price INTEGER, Status BOOLEAN, color_ID Integer)
+
+     CREATE TABLE IF NOT EXISTS TableProduct(P_ID INTEGER, P_Name TEXT, Code TEXT, Detail TEXT, NewArrival BOOLEAN, Status BOOLEAN, subcatId Integer)
+
+* */
 }

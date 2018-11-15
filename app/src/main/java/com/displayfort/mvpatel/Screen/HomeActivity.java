@@ -24,6 +24,7 @@ import com.displayfort.mvpatel.Base.BaseActivity;
 import com.displayfort.mvpatel.Base.BaseFragment;
 import com.displayfort.mvpatel.Base.Constant;
 import com.displayfort.mvpatel.Fragments.HomeFragment;
+import com.displayfort.mvpatel.MVPatelPrefrence;
 import com.displayfort.mvpatel.R;
 import com.displayfort.mvpatel.Utils.NewViewAnimator;
 
@@ -216,6 +217,7 @@ public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnima
 //                }
 //                break;
             case Constant.LOGOUT:
+            case Constant.LOGIN:
                 LogoutProcess(context);
                 break;
             default:
@@ -229,6 +231,7 @@ public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnima
     }
 
     public void LogoutProcess(final Context context) {
+        new MVPatelPrefrence(context).setIsLogin(false);
 //        Dialogs.showYesNolDialog(context, "Confirmation", "Are you sure you want to Logout", new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

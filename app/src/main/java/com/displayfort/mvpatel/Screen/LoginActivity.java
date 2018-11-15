@@ -9,7 +9,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.displayfort.mvpatel.Base.BaseActivity;
+import com.displayfort.mvpatel.MVPatelPrefrence;
 import com.displayfort.mvpatel.R;
+import com.displayfort.mvpatel.Services.SaveJsonDateInDbService;
 
 /**
  * A login screen that offers login via email/password.
@@ -30,10 +32,10 @@ public class LoginActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.guest_login_btn:
-                startActivityWithAnim(new Intent(getBaseContext(), HomeActivity.class));
+                callHomeActiviyt();
                 break;
             case R.id.login_btn:
-                startActivityWithAnim(new Intent(getBaseContext(), HomeActivity.class));
+                callHomeActiviyt();
                 break;
             case R.id.forget_pssword_tv:
                 break;
@@ -42,6 +44,12 @@ public class LoginActivity extends BaseActivity {
                 super.onClick(v);
                 break;
         }
+    }
+
+    private void callHomeActiviyt() {
+        startActivityWithAnim(new Intent(getBaseContext(), HomeActivity.class));
+        new MVPatelPrefrence(context).setIsLogin(true);
+        startService(new Intent(context, SaveJsonDateInDbService.class));
     }
 
     public class ActivityViewHolder {

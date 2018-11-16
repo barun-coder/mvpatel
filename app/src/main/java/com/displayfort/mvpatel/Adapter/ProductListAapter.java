@@ -69,8 +69,8 @@ public class ProductListAapter extends RecyclerView.Adapter<ProductListAapter.Vi
         viewHolder.mNewArrivalImageViewIv.setVisibility(View.GONE);
         if (!(product.attachable == null || product.attachable.attachmentList == null || product.attachable.attachmentList.size() <= 0)) {
             for (int i = 0; i < product.attachable.attachmentList.size(); i++) {
-                if (((AttachmentListDao) product.attachable.attachmentList.get(i)).type.equalsIgnoreCase(Constant.IMAGE_TYPES.THUMBNAIL.name())) {
-                    Utility.setImage(context, ((AttachmentListDao) product.attachable.attachmentList.get(i)).attachmentURL, viewHolder.mImgPagerItemIv);
+                if (( product.attachable.attachmentList.get(i)).type.equalsIgnoreCase(Constant.IMAGE_TYPES.THUMBNAIL.name())) {
+                    Utility.setImage(context, ( product.attachable.attachmentList.get(i)).attachmentURL, viewHolder.mImgPagerItemIv);
                 }
             }
         }

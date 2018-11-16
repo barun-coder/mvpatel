@@ -61,10 +61,36 @@ public class DbQueries {
     }
 
     /*Attachbale Relation*/
-    static String getCreateAttachableTable() {
+    static String getCreateCatAttachableTable() {
         StringBuffer mBuffer = new StringBuffer();
         mBuffer.append(CREATE_TABLE);
-        mBuffer.append(DbCons.TABLE_ATTACHABLE_REL);
+        mBuffer.append(DbCons.TABLE_CAT_ATTACHABLE_REL);
+        mBuffer.append(OPEN_BRACES);
+        mBuffer.append(DbCons._ID);//0
+        mBuffer.append(INTEGER);
+        mBuffer.append(DbCons.ATTACHABLE_ID);//
+        mBuffer.append(INTEGER_NO_COMMA);
+        mBuffer.append(CLOSE_BRACES);
+        Utility.showLog(mBuffer.toString());
+        return mBuffer.toString();
+    }
+    static String getCreateSubAttachableTable() {
+        StringBuffer mBuffer = new StringBuffer();
+        mBuffer.append(CREATE_TABLE);
+        mBuffer.append(DbCons.TABLE_SUBCAT_ATTACHABLE_REL);
+        mBuffer.append(OPEN_BRACES);
+        mBuffer.append(DbCons._ID);//0
+        mBuffer.append(INTEGER);
+        mBuffer.append(DbCons.ATTACHABLE_ID);//
+        mBuffer.append(INTEGER_NO_COMMA);
+        mBuffer.append(CLOSE_BRACES);
+        Utility.showLog(mBuffer.toString());
+        return mBuffer.toString();
+    }
+    static String getCreateProductAttachableTable() {
+        StringBuffer mBuffer = new StringBuffer();
+        mBuffer.append(CREATE_TABLE);
+        mBuffer.append(DbCons.TABLE_PRODUCT_ATTACHABLE_REL);
         mBuffer.append(OPEN_BRACES);
         mBuffer.append(DbCons._ID);//0
         mBuffer.append(INTEGER);

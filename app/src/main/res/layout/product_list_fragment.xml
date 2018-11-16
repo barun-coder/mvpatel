@@ -43,11 +43,20 @@
                         app:srcCompat="@drawable/dummy_image" />
 
                     <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenBold
-                        android:id="@+id/product_name_tv"
+                        android:id="@+id/about_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="16.0dip"
+                        android:text="--"
+                        android:textColor="@color/dark_text_color"
+                        android:textSize="18sp" />
+
+                    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenBold
+                        android:id="@+id/title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginBottom="8.0dip"
                         android:text="--"
                         android:textColor="@color/theme"

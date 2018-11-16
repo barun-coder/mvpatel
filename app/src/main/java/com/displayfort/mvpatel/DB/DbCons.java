@@ -31,7 +31,9 @@ public final class DbCons {
     public static final String TABLE_COLOR = "TableColor";
     public static final String COLOR_ID = "color_ID";
     /*COLOR*/
-    public static final String TABLE_ATTACHABLE_REL = "AttachableRelation";
+    public static final String TABLE_CAT_ATTACHABLE_REL = "AttachableCATRelation";
+    public static final String TABLE_SUBCAT_ATTACHABLE_REL = "AttachableSUBCATRelation";
+    public static final String TABLE_PRODUCT_ATTACHABLE_REL = "AttachableProductRelation";
     public static final String ATTACHABLE_ID = "attach_ID";
     /*PRODUCT Table*/
     public static final String TABLE_PRODUCT = "TableProduct";

@@ -19,7 +19,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TRACKER_DB = "MVPatel.db";
     // Database Version\
     private static SQLiteDatabase mSqLiteDatabase;
-    private static final int VERSION = 7;//5
+    private static final int VERSION = 8;//5
     private static final String TAG = "DatabaseHandler";
     private static final String DROP_IF_EXISTS = "DROP TABLE IF EXISTS ";
     private static final String FOREIGN_KEY_CONSTRAINT = "PRAGMA foreign_key=ON;";
@@ -48,7 +48,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(DbQueries.getCreateCategoryTable());
         db.execSQL(DbQueries.getCreateSubCategoryTable());
         db.execSQL(DbQueries.getCreateMasterCategoryTable());
-        db.execSQL(DbQueries.getCreateAttachableTable());
+        db.execSQL(DbQueries.getCreateCatAttachableTable());
+        db.execSQL(DbQueries.getCreateSubAttachableTable());
+        db.execSQL(DbQueries.getCreateProductAttachableTable());
         db.execSQL(DbQueries.getCreateAttachmentTable());
         db.execSQL(DbQueries.getCreateColorTable());
         db.execSQL(DbQueries.getCreateProductPriceTable());
@@ -80,8 +82,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (newVersion > oldVersion) {
-
+        if (newVersion != oldVersion) {
+            db.execSQL(DbQueries.getCreateSubAttachableTable());
 
         }
 

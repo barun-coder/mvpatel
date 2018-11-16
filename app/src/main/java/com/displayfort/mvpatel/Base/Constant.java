@@ -27,4 +27,12 @@ public class Constant {
         CAD,
         PDF
     }
+
+
+    public static final int ATOZ = 1;
+    public static final int ZTOA = 2;
+    public static final int HTOL = 3;
+    public static final int LTOH = 4;
+    public static final int DEFAULT = 0;
+
 }

@@ -81,8 +81,6 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
         homeViewHolder.mRecyclerViewRv.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         homeViewHolder.mRecyclerViewRv.setHasFixedSize(true);
         homeViewHolder.mRecyclerViewRv.addOnScrollListener(new CenterScrollListener());
-//        CategoryDao categoryDao = CategoryDao.getCategoryDao(mContext);
-//        categoryDaoArrayList = categoryDao.categoryMap.get(MCatID);
         TrackerDbHandler dbHandler = MvPatelApplication.getDatabaseHandler();
         categoryDaoArrayList = dbHandler.getCategoryListByMaster(MCatID);
         adapter = new CategoryAdapter(mContext, categoryDaoArrayList);

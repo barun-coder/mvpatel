@@ -23,9 +23,11 @@ import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.displayfort.mvpatel.Adapter.SubCategoryListAapter;
 import com.displayfort.mvpatel.Base.BaseFragment;
 import com.displayfort.mvpatel.Base.Constant;
+import com.displayfort.mvpatel.DB.TrackerDbHandler;
 import com.displayfort.mvpatel.Model.AttachmentListDao;
 import com.displayfort.mvpatel.Model.CategoryDao;
 import com.displayfort.mvpatel.Model.SubCategory;
+import com.displayfort.mvpatel.MvPatelApplication;
 import com.displayfort.mvpatel.R;
 import com.displayfort.mvpatel.Screen.HomeActivity;
 import com.displayfort.mvpatel.Utils.RecyclerItemClickListener;
@@ -64,8 +66,9 @@ public class SubCategoryFragment extends BaseFragment implements View.OnClickLis
         super.onViewCreated(view, savedInstanceState);
         this.containerView = view.findViewById(R.id.container);
         homeViewHolder = new HomeViewHolder(view, this);
-        CategoryDao categoryDao = CategoryDao.getCategoryDao(mContext);
-        categoryDetailDao = categoryDao.getCategoryDetail(CatID);
+        TrackerDbHandler dbHandler = MvPatelApplication.getDatabaseHandler();
+        categoryDetailDao = dbHandler.getCategoryDetail(CatID);
+        categoryDetailDao.subCategories = dbHandler.getSubCategoryList(CatID);
         init();
         setAdapter();
 

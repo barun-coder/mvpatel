@@ -24,8 +24,9 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        activityViewHolder = new ActivityViewHolder(findViewById(R.id.container_Ll), this);
         context = this;
+        activityViewHolder = new ActivityViewHolder(findViewById(R.id.container_Ll), this);
+
     }
 
     @Override

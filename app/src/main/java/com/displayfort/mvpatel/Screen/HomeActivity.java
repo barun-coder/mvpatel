@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.displayfort.mvpatel.Base.BaseActivity;
 import com.displayfort.mvpatel.Base.BaseFragment;
 import com.displayfort.mvpatel.Base.Constant;
+import com.displayfort.mvpatel.DB.DatabaseHandler;
 import com.displayfort.mvpatel.DB.TrackerDbHandler;
 import com.displayfort.mvpatel.Fragments.HomeFragment;
 import com.displayfort.mvpatel.MVPatelPrefrence;
@@ -91,10 +92,14 @@ public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnima
                 public void run() {
                     try {
                         sleep(1500);
+                        DatabaseHandler.ShowLog("Started");
                         CategoryDao categoryDao = CategoryDao.getCategoryDao(context);
                         TrackerDbHandler dbHandler = MvPatelApplication.getDatabaseHandler();
                         dbHandler.AddCategoryList(categoryDao.categoryDaos);
+                        DatabaseHandler.ShowLog("End");
                     } catch (Exception e) {
+                        loadingdialog.dismiss();
+                        DatabaseHandler.ShowLog("Exception " + e.getMessage());
                         Log.e("threadmessage", e.getMessage());
                     }
                     loadingdialog.dismiss();
@@ -264,6 +269,7 @@ public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnima
 
     public void LogoutProcess(final Context context) {
         new MVPatelPrefrence(context).setIsLogin(false);
+        new MVPatelPrefrence(context).setisDataLoad(false);
 //        Dialogs.showYesNolDialog(context, "Confirmation", "Are you sure you want to Logout", new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

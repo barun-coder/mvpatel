@@ -23,6 +23,7 @@ public class Product {
     public Boolean status;
     public Long subcatid;
     public Long updated;
+    public String ImageUrl;
     public ArrayList<Product> productList = new ArrayList<>();
     public static HashMap<Long, Product> productDetailMap = new HashMap<>();
 

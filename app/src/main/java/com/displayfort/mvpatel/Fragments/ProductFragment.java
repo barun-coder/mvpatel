@@ -24,11 +24,13 @@ import android.widget.TextView;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.displayfort.mvpatel.Adapter.ProductListAapter;
 import com.displayfort.mvpatel.Base.BaseFragment;
+import com.displayfort.mvpatel.Base.Constant;
+import com.displayfort.mvpatel.DB.TrackerDbHandler;
 import com.displayfort.mvpatel.MVPatelPrefrence;
 import com.displayfort.mvpatel.Model.CategoryDao;
 import com.displayfort.mvpatel.Model.Product;
-import com.displayfort.mvpatel.Model.ProductPrice;
 import com.displayfort.mvpatel.Model.SubCategory;
+import com.displayfort.mvpatel.MvPatelApplication;
 import com.displayfort.mvpatel.R;
 import com.displayfort.mvpatel.Screen.HomeActivity;
 import com.displayfort.mvpatel.Utils.RecyclerItemClickListener;
@@ -51,13 +53,14 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
     private Context mContext;
     private ProductListAapter adapter;
     private ArrayList<Product> productList;
-    private CategoryDao categoryDetailDao;
+    private SubCategory subCategoryDetail;
+    private TrackerDbHandler dbHandler;
 
 
     public static ProductFragment newInstance(Long catId) {
         ProductFragment contentFragment = new ProductFragment();
         Bundle bundle = new Bundle();
-        bundle.putLong("CATID", catId);
+        bundle.putLong("SUBCATID", catId);
         contentFragment.setArguments(bundle);
         return contentFragment;
     }
@@ -79,7 +82,7 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SubCatID = getArguments().getLong("CATID");
+        SubCatID = getArguments().getLong("SUBCATID");
     }
 
     @Override
@@ -95,9 +98,12 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
         homeViewHolder.mRecyclerViewRv.setLayoutManager(new GridLayoutManager(mContext, 2));
         homeViewHolder.mRecyclerViewRv.setHasFixedSize(true);
         homeViewHolder.mRecyclerViewRv.addOnScrollListener(new CenterScrollListener());
-        SubCategory subCategoryDetail = SubCategory.getSubCategoryDetail(SubCatID);
+        dbHandler = MvPatelApplication.getDatabaseHandler();
+        subCategoryDetail = dbHandler.getSubCategoryDetail((int) SubCatID);
+        subCategoryDetail.products = dbHandler.getProductList((int) SubCatID, Constant.DEFAULT);
         productList = subCategoryDetail.products;
-        homeViewHolder.mProductNameTv.setText(subCategoryDetail.name);
+        homeViewHolder.mSubCategoryNameTv.setText(subCategoryDetail.title);
+        homeViewHolder.mCategoryNameTv.setText(subCategoryDetail.about);
         adapter = new ProductListAapter(mContext, productList);
         homeViewHolder.mRecyclerViewRv.setAdapter(adapter);
         homeViewHolder.mRecyclerViewRv.addOnItemTouchListener(
@@ -108,12 +114,13 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
                         ((HomeActivity) getActivity()).addFragment(ProductDetailFragment.newInstance(product.id), (product.name));
                     }
                 }));
-        setAToZ();
+        setFilter(Constant.ATOZ);
     }
 
-    private void setAToZ() {
-        new MVPatelPrefrence(mContext).setIntValue("PRODUCT_DETAIL_FILTER", 1);
-        sortNameList(productList, true);
+    private void setFilter(int atoz) {
+        subCategoryDetail.products = dbHandler.getProductList((int) SubCatID, atoz);
+        productList = subCategoryDetail.products;
+        adapter.setlist(productList);
 
     }
 
@@ -224,7 +231,8 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
                 imageView7.setVisibility(View.GONE);
                 imageView8.setVisibility(View.GONE);
                 imageView9.setVisibility(View.GONE);
-                sortNameList(productList, true);
+                setFilter(Constant.ATOZ);
+//                sortNameList(productList, true);
                 create.cancel();
             }
         });
@@ -235,7 +243,8 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
                 imageView7.setVisibility(View.VISIBLE);
                 imageView8.setVisibility(View.GONE);
                 imageView9.setVisibility(View.GONE);
-                sortNameList(productList, false);
+//                sortNameList(productList, false);
+                setFilter(Constant.ZTOA);
                 create.cancel();
             }
         });
@@ -246,8 +255,10 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
                 imageView7.setVisibility(View.GONE);
                 imageView8.setVisibility(View.VISIBLE);
                 imageView9.setVisibility(View.GONE);
-                sortPriceList(productList, true);
+//                sortPriceList(productList, true);
+                setFilter(Constant.LTOH);
                 create.cancel();
+
             }
         });
         relativeLayout4.setOnClickListener(new View.OnClickListener() {
@@ -257,8 +268,10 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
                 imageView7.setVisibility(View.GONE);
                 imageView8.setVisibility(View.GONE);
                 imageView9.setVisibility(View.VISIBLE);
-                sortPriceList(productList, false);
+//                sortPriceList(productList, false);
+                setFilter(Constant.HTOL);
                 create.cancel();
+
             }
         });
     }
@@ -337,12 +350,13 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
         public RecyclerView mRecyclerViewRv;
         private final ImageView mfilterImageView;
         public ImageView mProductImageIv;
-        public TextView mProductNameTv;
+        public TextView mSubCategoryNameTv, mCategoryNameTv;
 
 
         public HomeViewHolder(View view, View.OnClickListener listener) {
             mProductImageIv = (ImageView) view.findViewById(R.id.product_image_iv);
-            mProductNameTv = (TextView) view.findViewById(R.id.product_name_tv);
+            mSubCategoryNameTv = (TextView) view.findViewById(R.id.title_tv);
+            mCategoryNameTv = (TextView) view.findViewById(R.id.about_tv);
             mRecyclerViewRv = (RecyclerView) view.findViewById(R.id.product_list_rv);
             mfilterImageView = (ImageView) view.findViewById(R.id.filterButton);
 

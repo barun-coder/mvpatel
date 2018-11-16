@@ -61,6 +61,17 @@ public class MVPatelPrefrence {
     }
 
 
+    public boolean isDataLoad() {
+        return sharedPreferences.getBoolean("isDataLoad", false);
+    }
+
+    public void setisDataLoad(boolean isDataLoad) {
+        SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+        prefsEditor.putBoolean("isDataLoad", isDataLoad);
+        prefsEditor.commit();
+    }
+
+
     public void setValue(String Key, String value) {
         SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
         prefsEditor.putString(Key, null == value ? "" : value);

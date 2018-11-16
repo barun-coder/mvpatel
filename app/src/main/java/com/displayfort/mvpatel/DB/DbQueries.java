@@ -87,6 +87,8 @@ public class DbQueries {
         mBuffer.append(TEXT);
         mBuffer.append(DbCons.URL);
         mBuffer.append(TEXT);
+        mBuffer.append(DbCons.ATTACHABLE_ID);//
+        mBuffer.append(INTEGER);
         mBuffer.append(DbCons.COLOR_ID);//0
         mBuffer.append(INTEGER);
         mBuffer.append(DbCons.STATUS);//

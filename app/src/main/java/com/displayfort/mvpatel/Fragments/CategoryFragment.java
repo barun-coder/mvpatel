@@ -19,9 +19,10 @@ import android.widget.ImageView;
 
 import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.displayfort.mvpatel.Adapter.CategoryAdapter;
-import com.displayfort.mvpatel.Adapter.MasterCategoryAdapter;
 import com.displayfort.mvpatel.Base.BaseFragment;
+import com.displayfort.mvpatel.DB.TrackerDbHandler;
 import com.displayfort.mvpatel.Model.CategoryDao;
+import com.displayfort.mvpatel.MvPatelApplication;
 import com.displayfort.mvpatel.R;
 import com.displayfort.mvpatel.Screen.HomeActivity;
 import com.displayfort.mvpatel.Utils.RecyclerItemClickListener;
@@ -36,7 +37,7 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
 
     private View containerView;
     protected ImageView mImageView;
-    protected int CatID;
+    protected int MCatID;
     private Bitmap bitmap;
     private HomeViewHolder homeViewHolder;
     private Context mContext;
@@ -64,7 +65,7 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CatID = getArguments().getInt("CATID");
+        MCatID = getArguments().getInt("CATID");
     }
 
     @Override
@@ -80,8 +81,10 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
         homeViewHolder.mRecyclerViewRv.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         homeViewHolder.mRecyclerViewRv.setHasFixedSize(true);
         homeViewHolder.mRecyclerViewRv.addOnScrollListener(new CenterScrollListener());
-        CategoryDao categoryDao = CategoryDao.getCategoryDao(mContext);
-        categoryDaoArrayList = categoryDao.categoryMap.get(CatID);
+//        CategoryDao categoryDao = CategoryDao.getCategoryDao(mContext);
+//        categoryDaoArrayList = categoryDao.categoryMap.get(MCatID);
+        TrackerDbHandler dbHandler = MvPatelApplication.getDatabaseHandler();
+        categoryDaoArrayList = dbHandler.getCategoryListByMaster(MCatID);
         adapter = new CategoryAdapter(mContext, categoryDaoArrayList);
         homeViewHolder.mRecyclerViewRv.setAdapter(adapter);
         homeViewHolder.mRecyclerViewRv.addOnItemTouchListener(

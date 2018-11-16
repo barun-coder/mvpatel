@@ -2,6 +2,7 @@ package com.displayfort.mvpatel.Services;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 
 import com.displayfort.mvpatel.DB.TrackerDbHandler;
@@ -24,9 +25,16 @@ public class SaveJsonDateInDbService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        CategoryDao categoryDao = CategoryDao.getCategoryDao(this);
-        TrackerDbHandler dbHandler = MvPatelApplication.getDatabaseHandler();
-        dbHandler.AddCategory(categoryDao.categoryDaos);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                CategoryDao categoryDao = CategoryDao.getCategoryDao(SaveJsonDateInDbService.this);
+                TrackerDbHandler dbHandler = MvPatelApplication.getDatabaseHandler();
+                dbHandler.AddCategoryList(categoryDao.categoryDaos);
+                stopSelf();
+            }
+        }, 800);
+
         return super.onStartCommand(intent, flags, startId);
     }
 }

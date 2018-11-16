@@ -15,6 +15,7 @@ public class AttachmentListDao {
     public String attachment;
     public String attachmentURL;
     public Color color;
+    public Integer colorID;
     public Long created;
     public String detail;
     public Integer id;
@@ -47,5 +48,10 @@ public class AttachmentListDao {
         this.title = jsonObject.optString("title", "");
         this.type = jsonObject.optString("type", "");
         this.updated = jsonObject.optLong("updated", 0);
+    }
+
+    public AttachmentListDao() {
+
+
     }
 }

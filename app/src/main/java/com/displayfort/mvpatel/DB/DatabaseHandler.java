@@ -16,7 +16,7 @@ import android.widget.Toast;
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Database Name
-    private static final String TRACKER_DB = "VT.db";
+    private static final String TRACKER_DB = "MVPatel.db";
     // Database Version\
     private static SQLiteDatabase mSqLiteDatabase;
     private static final int VERSION = 7;//5

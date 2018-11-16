@@ -72,6 +72,7 @@ public class ConstantValues {
         values.put(DbCons.COLOR_ID, attachmentList.color.id);
         values.put(DbCons.STATUS, attachmentList.status);
         values.put(DbCons.TITLE, attachmentList.title);
+        values.put(DbCons.ATTACHABLE_ID, attachmentList.attachableid);
         return values;
     }
 

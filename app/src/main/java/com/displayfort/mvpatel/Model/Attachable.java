@@ -22,4 +22,8 @@ public class Attachable {
             this.attachmentList = new AttachmentListDao(jsonObject.optJSONArray("attachmentList")).attachmentList;
         }
     }
+
+    public Attachable() {
+
+    }
 }

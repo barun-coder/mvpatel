@@ -26,21 +26,23 @@ public class MasterDataHandler extends DatabaseHandler {
      * @param categoryDaos
      * @return
      */
-    public void AddCategory(ArrayList<CategoryDao> categoryDaos) {
+    public void AddCategoryList(ArrayList<CategoryDao> categoryDaos) {
         deleteAllTables();
         db = this.getWritableDatabase();
+        ShowLog("Start:   ");
         for (CategoryDao categoryDao : categoryDaos) {
-            ShowLog("Start:" + categoryDao.name);
+            ShowLog("\n\nStarting Cat:" + categoryDao.name);
             AddCategory(categoryDao);
         }
+
+//        AddCategoryList(categoryDaos.get(0));
         databaseClose(db);
 
 
     }
 
     public long AddCategory(CategoryDao categoryDao) {
-        deleteAllTables();
-        ShowLog("AddCategory");
+        ShowLog("AddCategoryList " + categoryDao.name);
         long count = 0;
         db = this.getWritableDatabase();
         try {
@@ -50,15 +52,12 @@ public class MasterDataHandler extends DatabaseHandler {
                 }
                 count = db.insertWithOnConflict(DbCons.TABLE_CATEGORY, "", ConstantValues.getCatValues(categoryDao), SQLiteDatabase.CONFLICT_REPLACE);
                 AddAttachable(categoryDao);
-                AddAttachmentList(categoryDao.attachable.attachmentList);
                 AddSubcategoryList(categoryDao.subCategories);
-
-
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ShowLog(" count: " + count);
+
         return count;
     }
 
@@ -68,21 +67,21 @@ public class MasterDataHandler extends DatabaseHandler {
      * @return
      */
     public long AddAttachable(CategoryDao categoryDao) {
-        ShowLog("AddAttachable Cat");
+        ShowLog("AddAttachable Cat " + categoryDao.name);
         long count = 0;
-       db = this.getWritableDatabase();
+        db = this.getWritableDatabase();
         try {
             if (db != null) {
                 if (!db.isOpen()) {
                     this.getWritableDatabase();
                 }
-                count = db.insertWithOnConflict(DbCons.TABLE_ATTACHABLE_REL, "", ConstantValues.getAttachableValues(categoryDao), SQLiteDatabase.CONFLICT_REPLACE);
-
             }
+            count = db.insertWithOnConflict(DbCons.TABLE_ATTACHABLE_REL, "", ConstantValues.getAttachableValues(categoryDao), SQLiteDatabase.CONFLICT_REPLACE);
+            AddAttachmentList(categoryDao.attachable.attachmentList);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ShowLog("count: " + count);
+
         return count;
     }
 
@@ -91,21 +90,21 @@ public class MasterDataHandler extends DatabaseHandler {
      * @return
      */
     public long AddAttachable(SubCategory subCategory) {
-        ShowLog("AddAttachable Sub");
+        ShowLog("AddAttachable Sub " + subCategory.name);
         long count = 0;
-       db = this.getWritableDatabase();
+        db = this.getWritableDatabase();
         try {
             if (db != null) {
                 if (!db.isOpen()) {
                     this.getWritableDatabase();
                 }
-                count = db.insertWithOnConflict(DbCons.TABLE_ATTACHABLE_REL, "", ConstantValues.getAttachableValues(subCategory), SQLiteDatabase.CONFLICT_REPLACE);
-
             }
+            count = db.insertWithOnConflict(DbCons.TABLE_ATTACHABLE_REL, "", ConstantValues.getAttachableValues(subCategory), SQLiteDatabase.CONFLICT_REPLACE);
+            AddAttachmentList(subCategory.attachable.attachmentList);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ShowLog("count: " + count);
+
         return count;
     }
 
@@ -114,21 +113,22 @@ public class MasterDataHandler extends DatabaseHandler {
      * @return
      */
     public long AddAttachable(Product product) {
-        ShowLog("AddAttachable Product");
+        ShowLog("AddAttachable Product " + product.name);
         long count = 0;
-       db = this.getWritableDatabase();
+        db = this.getWritableDatabase();
         try {
             if (db != null) {
                 if (!db.isOpen()) {
                     this.getWritableDatabase();
                 }
-                count = db.insertWithOnConflict(DbCons.TABLE_ATTACHABLE_REL, "", ConstantValues.getAttachableValues(product), SQLiteDatabase.CONFLICT_REPLACE);
-
             }
+            count = db.insertWithOnConflict(DbCons.TABLE_ATTACHABLE_REL, "", ConstantValues.getAttachableValues(product), SQLiteDatabase.CONFLICT_REPLACE);
+            AddAttachmentList(product.attachable.attachmentList);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ShowLog("count: " + count);
+
         return count;
     }
 
@@ -139,7 +139,7 @@ public class MasterDataHandler extends DatabaseHandler {
     public long AddAttachmentList(ArrayList<AttachmentListDao> attachmentListDaos) {
         ShowLog("AddAttachmentList");
         long count = 0;
-       db = this.getWritableDatabase();
+        db = this.getWritableDatabase();
         try {
             if (db != null) {
                 if (!db.isOpen()) {
@@ -153,7 +153,7 @@ public class MasterDataHandler extends DatabaseHandler {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ShowLog("count: " + count);
+
         return count;
     }
 
@@ -164,7 +164,7 @@ public class MasterDataHandler extends DatabaseHandler {
     public long AddSubcategoryList(ArrayList<SubCategory> subCategories) {
         ShowLog("AddSubcategoryList");
         long count = 0;
-       db = this.getWritableDatabase();
+        db = this.getWritableDatabase();
         try {
             if (db != null) {
                 if (!db.isOpen()) {
@@ -173,14 +173,13 @@ public class MasterDataHandler extends DatabaseHandler {
                 for (SubCategory dao : subCategories) {
                     count = db.insertWithOnConflict(DbCons.TABLE_SUBCATEGORY, "", ConstantValues.getSubcategoryValues(dao), SQLiteDatabase.CONFLICT_REPLACE);
                     AddAttachable(dao);
-                    AddAttachmentList(dao.attachable.attachmentList);
                     AddProductList(dao.products);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ShowLog("count: " + count);
+
         return count;
     }
 
@@ -191,24 +190,22 @@ public class MasterDataHandler extends DatabaseHandler {
     public long AddProductList(ArrayList<Product> productArrayList) {
         ShowLog("AddProductList");
         long count = 0;
-       db = this.getWritableDatabase();
+        db = this.getWritableDatabase();
         try {
             if (db != null) {
                 if (!db.isOpen()) {
                     this.getWritableDatabase();
                 }
-
                 for (Product dao : productArrayList) {
                     count = db.insertWithOnConflict(DbCons.TABLE_PRODUCT, "", ConstantValues.getProductValues(dao), SQLiteDatabase.CONFLICT_REPLACE);
-                    AddProductPriceList(dao.productPrices);
                     AddAttachable(dao);
-                    AddAttachmentList(dao.attachable.attachmentList);
+                    AddProductPriceList(dao.productPrices);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ShowLog("count: " + count);
+
         return count;
     }
 
@@ -219,7 +216,7 @@ public class MasterDataHandler extends DatabaseHandler {
     public long AddProductPriceList(ArrayList<ProductPrice> productPriceArrayList) {
         ShowLog("AddProductPriceList");
         long count = 0;
-       db = this.getWritableDatabase();
+        db = this.getWritableDatabase();
         try {
             if (db != null) {
                 if (!db.isOpen()) {
@@ -235,7 +232,7 @@ public class MasterDataHandler extends DatabaseHandler {
         } finally {
             databaseClose(db);
         }
-        ShowLog("count: " + count);
+
         return count;
     }
 
@@ -244,9 +241,9 @@ public class MasterDataHandler extends DatabaseHandler {
      * @return
      */
     public long AddCOLOR(Color color) {
-        ShowLog("AddCOLOR");
+        ShowLog("AddCOLOR " + color.name);
         long count = 0;
-       db = this.getWritableDatabase();
+        db = this.getWritableDatabase();
         try {
             if (db != null) {
                 if (!db.isOpen()) {
@@ -258,7 +255,7 @@ public class MasterDataHandler extends DatabaseHandler {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ShowLog("count: " + count);
+
         return count;
     }
 

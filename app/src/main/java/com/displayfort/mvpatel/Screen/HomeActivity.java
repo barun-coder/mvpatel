@@ -5,7 +5,10 @@ package com.displayfort.mvpatel.Screen;
  * DisplayFortSoftware
  */
 
+import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -15,6 +18,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.LinearLayout;
@@ -23,9 +27,13 @@ import android.widget.TextView;
 import com.displayfort.mvpatel.Base.BaseActivity;
 import com.displayfort.mvpatel.Base.BaseFragment;
 import com.displayfort.mvpatel.Base.Constant;
+import com.displayfort.mvpatel.DB.TrackerDbHandler;
 import com.displayfort.mvpatel.Fragments.HomeFragment;
 import com.displayfort.mvpatel.MVPatelPrefrence;
+import com.displayfort.mvpatel.Model.CategoryDao;
+import com.displayfort.mvpatel.MvPatelApplication;
 import com.displayfort.mvpatel.R;
+import com.displayfort.mvpatel.Services.SaveJsonDateInDbService;
 import com.displayfort.mvpatel.Utils.NewViewAnimator;
 
 import java.util.ArrayList;
@@ -68,10 +76,34 @@ public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnima
                 drawerLayout.closeDrawers();
             }
         });
-
         setActionBar();
         createMenuList();
         viewAnimator = new NewViewAnimator<>(this, list, homeFragment, drawerLayout, this);
+        GetDataLoad();
+    }
+
+    private void GetDataLoad() {
+        if (!new MVPatelPrefrence(context).isDataLoad()) {
+            //TODO
+            final ProgressDialog loadingdialog = ProgressDialog.show(context,
+                    "Please Wait!", "Loading Data..", true);
+            new Thread() {
+                public void run() {
+                    try {
+                        sleep(1500);
+                        CategoryDao categoryDao = CategoryDao.getCategoryDao(context);
+                        TrackerDbHandler dbHandler = MvPatelApplication.getDatabaseHandler();
+                        dbHandler.AddCategoryList(categoryDao.categoryDaos);
+                    } catch (Exception e) {
+                        Log.e("threadmessage", e.getMessage());
+                    }
+                    loadingdialog.dismiss();
+                    new MVPatelPrefrence(context).setisDataLoad(true);
+                }
+            }.start();
+        }
+
+
     }
 
     private void createMenuList() {

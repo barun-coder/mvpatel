@@ -39,7 +39,6 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.forget_pssword_tv:
                 break;
-
             default:
                 super.onClick(v);
                 break;
@@ -49,7 +48,7 @@ public class LoginActivity extends BaseActivity {
     private void callHomeActiviyt() {
         startActivityWithAnim(new Intent(getBaseContext(), HomeActivity.class));
         new MVPatelPrefrence(context).setIsLogin(true);
-        startService(new Intent(context, SaveJsonDateInDbService.class));
+//        startService(new Intent(context, SaveJsonDateInDbService.class));
     }
 
     public class ActivityViewHolder {

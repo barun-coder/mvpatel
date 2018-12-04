@@ -12,6 +12,8 @@ import com.displayfort.mvpatel.Model.SubCategory;
 
 import java.util.ArrayList;
 
+import static com.displayfort.mvpatel.Model.CategoryDao.categoryDao;
+
 
 public class MasterDataHandler extends DatabaseHandler {
     private Context mContext;
@@ -28,25 +30,23 @@ public class MasterDataHandler extends DatabaseHandler {
      * @return
      */
     public void AddCategoryList(ArrayList<CategoryDao> categoryDaos) {
-        deleteAllTables();
-        db = this.getWritableDatabase();
+        try {
+            deleteAllTables();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         ShowLog("Start:   ");
-//        for (CategoryDao categoryDao : categoryDaos) {
-//        if (!db.isOpen()) {
-//            db = this.getWritableDatabase();
-//        }
-//            ShowLog("\n\nStarting Cat:" + categoryDao.name);
-//            AddCategory(categoryDao);
-//        }
 
-        AddCategory(categoryDaos.get(0));
-        databaseClose(db);
+        for (int i = 0; i < categoryDaos.size(); i++) {
+            CategoryDao categoryDao = categoryDaos.get(i);
+            ShowLog("  Starting Cat:" + i + " " + categoryDao.name);
+            AddCategory(categoryDao);
 
-
+        }
     }
 
     public long AddCategory(CategoryDao categoryDao) {
-        ShowLog("AddCategoryList " + (c++) + " " + categoryDao.name);
+        ShowLog("AddCategory " + (c++) + " " + categoryDao.name);
         long count = 0;
         db = this.getWritableDatabase();
         try {
@@ -54,14 +54,19 @@ public class MasterDataHandler extends DatabaseHandler {
                 if (!db.isOpen()) {
                     db = this.getWritableDatabase();
                 }
-                count = db.insertWithOnConflict(DbCons.TABLE_CATEGORY, "", ConstantValues.getCatValues(categoryDao), SQLiteDatabase.CONFLICT_REPLACE);
-                AddAttachable(categoryDao);
+//                db.beginTransaction();
+                count = db.insert(DbCons.TABLE_CATEGORY, "", ConstantValues.getCatValues(categoryDao));
                 AddSubcategoryList(categoryDao.subCategories);
+                AddAttachable(categoryDao);
+//                db.setTransactionSuccessful();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+//        if (db != null && db.inTransaction()) {
+//            db.endTransaction();
+//            ShowLog("endTransaction ");
+//        }
         return count;
     }
 
@@ -70,6 +75,7 @@ public class MasterDataHandler extends DatabaseHandler {
      * @return
      */
     public long AddAttachable(CategoryDao categoryDao) {
+        ShowLog("AddAttachable " + (c));
         long count = 0;
         db = this.getWritableDatabase();
         try {
@@ -78,7 +84,7 @@ public class MasterDataHandler extends DatabaseHandler {
                     db = this.getWritableDatabase();
                 }
             }
-            count = db.insertWithOnConflict(DbCons.TABLE_CAT_ATTACHABLE_REL, "", ConstantValues.getAttachableValues(categoryDao), SQLiteDatabase.CONFLICT_REPLACE);
+            count = db.insert(DbCons.TABLE_CAT_ATTACHABLE_REL, "", ConstantValues.getAttachableValues(categoryDao));
             AddAttachmentList(categoryDao.attachable.attachmentList);
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,7 +106,7 @@ public class MasterDataHandler extends DatabaseHandler {
                     db = this.getWritableDatabase();
                 }
             }
-            count = db.insertWithOnConflict(DbCons.TABLE_SUBCAT_ATTACHABLE_REL, "", ConstantValues.getAttachableValues(subCategory), SQLiteDatabase.CONFLICT_REPLACE);
+            count = db.insert(DbCons.TABLE_SUBCAT_ATTACHABLE_REL, "", ConstantValues.getAttachableValues(subCategory));
             AddAttachmentList(subCategory.attachable.attachmentList);
         } catch (Exception e) {
             e.printStackTrace();
@@ -122,7 +128,7 @@ public class MasterDataHandler extends DatabaseHandler {
                     db = this.getWritableDatabase();
                 }
             }
-            count = db.insertWithOnConflict(DbCons.TABLE_PRODUCT_ATTACHABLE_REL, "", ConstantValues.getAttachableValues(product), SQLiteDatabase.CONFLICT_REPLACE);
+            count = db.insert(DbCons.TABLE_PRODUCT_ATTACHABLE_REL, "", ConstantValues.getAttachableValues(product));
             AddAttachmentList(product.attachable.attachmentList);
 
         } catch (Exception e) {
@@ -148,7 +154,7 @@ public class MasterDataHandler extends DatabaseHandler {
                     if (!db.isOpen()) {
                         db = this.getWritableDatabase();
                     }
-                    count = db.insertWithOnConflict(DbCons.TABLE_ATTACHMENT, "", ConstantValues.getAttachmentValues(dao), SQLiteDatabase.CONFLICT_REPLACE);
+                    count = db.insert(DbCons.TABLE_ATTACHMENT, "", ConstantValues.getAttachmentValues(dao));
                     AddCOLOR(dao.color);
                 }
             }
@@ -164,7 +170,6 @@ public class MasterDataHandler extends DatabaseHandler {
      * @return
      */
     public long AddSubcategoryList(ArrayList<SubCategory> subCategories) {
-
         long count = 0;
         db = this.getWritableDatabase();
         try {
@@ -177,7 +182,7 @@ public class MasterDataHandler extends DatabaseHandler {
                     if (!db.isOpen()) {
                         db = this.getWritableDatabase();
                     }
-                    count = db.insertWithOnConflict(DbCons.TABLE_SUBCATEGORY, "", ConstantValues.getSubcategoryValues(dao), SQLiteDatabase.CONFLICT_REPLACE);
+                    count = db.insert(DbCons.TABLE_SUBCATEGORY, "", ConstantValues.getSubcategoryValues(dao));
                     AddAttachable(dao);
                     AddProductList(dao.products);
                 }
@@ -207,7 +212,7 @@ public class MasterDataHandler extends DatabaseHandler {
                     if (!db.isOpen()) {
                         db = this.getWritableDatabase();
                     }
-                    count = db.insertWithOnConflict(DbCons.TABLE_PRODUCT, "", ConstantValues.getProductValues(dao), SQLiteDatabase.CONFLICT_REPLACE);
+                    count = db.insert(DbCons.TABLE_PRODUCT, "", ConstantValues.getProductValues(dao));
                     AddAttachable(dao);
                     AddProductPriceList(dao.productPrices);
                 }
@@ -236,7 +241,7 @@ public class MasterDataHandler extends DatabaseHandler {
                     if (!db.isOpen()) {
                         db = this.getWritableDatabase();
                     }
-                    count = db.insertWithOnConflict(DbCons.TABLE_PRODUCT_PRICE_TYPE, "", ConstantValues.getProductPriceValues(dao), SQLiteDatabase.CONFLICT_REPLACE);
+                    count = db.insert(DbCons.TABLE_PRODUCT_PRICE_TYPE, "", ConstantValues.getProductPriceValues(dao));
                     AddCOLOR(dao.color);
                 }
             }
@@ -259,7 +264,7 @@ public class MasterDataHandler extends DatabaseHandler {
                 if (!db.isOpen()) {
                     db = this.getWritableDatabase();
                 }
-                count = db.insertWithOnConflict(DbCons.TABLE_COLOR, "", ConstantValues.getColorValues(color), SQLiteDatabase.CONFLICT_REPLACE);
+                count = db.insert(DbCons.TABLE_COLOR, "", ConstantValues.getColorValues(color));
 
             }
         } catch (Exception e) {
@@ -269,7 +274,7 @@ public class MasterDataHandler extends DatabaseHandler {
         return count;
     }
 
-    private void deleteAllTables() {
+    public void deleteAllTables() {
         deleteLineTableProduct(DbCons.TABLE_CATEGORY);
         deleteLineTableProduct(DbCons.TABLE_SUBCATEGORY);
         deleteLineTableProduct(DbCons.TABLE_CAT_ATTACHABLE_REL);

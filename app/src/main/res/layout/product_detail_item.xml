@@ -14,5 +14,6 @@
         android:adjustViewBounds="true"
         android:clickable="false"
         android:scaleType="fitCenter"
+        android:src="@drawable/dummy_image"
         android:transitionName="@string/product_image_transition" />
 </FrameLayout>

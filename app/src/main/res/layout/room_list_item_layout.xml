@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenBold
+            android:id="@+id/roomName_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:paddingLeft="4dp"
+            android:text="Product 1"
+            android:textColor="@color/colorAccent"
+            android:textSize="18.0sp"
+            app:layout_marginRightPercent="44.000008%"
+            app:layout_marginTopPercent="1.9999981%" />
+
+        <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+            android:id="@+id/qty_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/priceTextView"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="Qty"
+            android:textColor="@color/dark_text_color"
+            android:textSize="14.0sp"
+            app:layout_marginLeftPercent="1.9999981%"
+            app:layout_marginRightPercent="2.9999971%"
+            app:layout_marginTopPercent="1.9999981%" />
+
+        <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+            android:id="@+id/price_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:layout_weight="3"
+            android:gravity="right|center_vertical"
+            android:text="Price"
+            android:textColor="@color/dark_text_color"
+            android:textSize="14.0sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.0dip"
+        android:layout_below="@+id/layout"
+        android:layout_marginLeft="4.0dip"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="4.0dip"
+        android:background="@color/text_color"
+        android:visibility="visible" />
+</LinearLayout>

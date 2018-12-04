@@ -1,0 +1,164 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/white_round_rect"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="vertical">
+
+
+            <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                android:id="@+id/title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="5dp"
+                android:text="Discount Type"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"
+                android:visibility="visible" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_margin="8dp"
+                android:background="@color/gray" />
+
+            <RadioGroup
+                android:id="@+id/discount_rg"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/pink_out_line"
+                android:checkedButton="@+id/ruppes_rb"
+                android:orientation="horizontal">
+
+                <com.displayfort.mvpatel.TextUtils.TypefaceRadioButtonBrandenReg
+                    android:id="@+id/ruppes_rb"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/toggle_widget_background"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="@string/Rs"
+                    android:textColor="@drawable/rb_text_selector"
+                    android:textSize="16sp" />
+
+                <com.displayfort.mvpatel.TextUtils.TypefaceRadioButtonBrandenReg
+                    android:id="@+id/percentage_rb"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/toggle_widget_background"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="%"
+                    android:textColor="@drawable/rb_text_selector"
+                    android:textSize="16sp" />
+            </RadioGroup>
+
+            <android.support.design.widget.TextInputLayout
+                style="@style/TextLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                app:hintTextAppearance="@style/MyHintText">
+
+                <com.displayfort.mvpatel.TextUtils.TypefaceEditTextBrandenReg
+                    android:id="@+id/dicaount_val_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="Dioscount Value"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenBold
+                android:id="@+id/message_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="5dp"
+                android:text="0.0"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingTop="1px">
+
+
+                <com.displayfort.mvpatel.TextUtils.TypefaceButtonBrandenReg
+                    android:id="@+id/ok_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_selector"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Apply"
+                    android:textColor="@drawable/text_selector"
+                    android:textSize="16dp" />
+
+                <com.displayfort.mvpatel.TextUtils.TypefaceButtonBrandenReg
+                    android:id="@+id/cancel_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Cancel"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16dp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
+
+

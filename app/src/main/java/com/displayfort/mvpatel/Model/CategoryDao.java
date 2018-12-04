@@ -2,6 +2,7 @@ package com.displayfort.mvpatel.Model;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.displayfort.mvpatel.MvPatelApplication;
 import com.displayfort.mvpatel.Utils.Utility;
@@ -68,12 +69,15 @@ public class CategoryDao {
         try {
             JSONArray jsonArray = new JSONArray(json);
             if (jsonArray != null) {
+                resetMaster();
                 this.categoryDaos = new ArrayList<>();
                 this.categoryMap = new HashMap<>();
                 this.categoryDetailMap = new HashMap<>();
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.optJSONObject(i);
                     CategoryDao categoryDao = new CategoryDao(jsonObject);
+                    Log.i("DBUTILS:JSONPARSE", categoryDao.name);
+                    Master.categoryDaosMaster.add(categoryDao);
                     this.categoryDaos.add(categoryDao);
                     setToHashMap(categoryDao, 1);
                     categoryDetailMap.put(categoryDao.id, categoryDao);
@@ -82,6 +86,18 @@ public class CategoryDao {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void resetMaster() {
+        Master.categoryDaosMaster = new ArrayList<>();
+        Master.subCategoriesMaster = new ArrayList<>();
+        Master.attachablesCategoryMaster = new ArrayList<>();
+        Master.attachablesSubCategoryMaster = new ArrayList<>();
+        Master.attachablesProductMaster = new ArrayList<>();
+        Master.attachmentListDaosMaster = new ArrayList<>();
+        Master.colorArrayListMaster = new ArrayList<>();
+        Master.productsMaster = new ArrayList<>();
+        Master.productPriceArrayListMaster = new ArrayList<>();
     }
 
     private void setToHashMap(CategoryDao categoryDao, int j) {
@@ -133,7 +149,7 @@ public class CategoryDao {
         this.name = jsonObject.optString("name", "NA");
         this.status = jsonObject.optBoolean("status", true);
         this.updated = jsonObject.optLong("updated", 0);
-        this.attachable = new Attachable(jsonObject.optJSONObject("attachable"));
+        this.attachable = new Attachable(jsonObject.optJSONObject("attachable"), 1);
         this.subCategories = new SubCategory(jsonObject.optJSONArray("subCategories")).subCategoryList;
     }
 

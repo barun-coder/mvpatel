@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.daimajia.swipe.SwipeLayout xmlns:swipe="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        swipe:leftEdgeSwipeOffset="0dp"
+        swipe:rightEdgeSwipeOffset="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="#FF5534"
+            android:gravity="center"
+            android:tag="Bottom3"
+            android:weightSum="10">
+
+            <ImageView
+                android:id="@+id/trash"
+                android:layout_width="27dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:src="@mipmap/faucet"
+                android:visibility="invisible" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="Delete Item?"
+                android:textColor="#fff"
+                android:textSize="17sp" />
+
+            <Button
+                android:id="@+id/delete"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="4"
+                android:background="#ffffff"
+                android:text="Yes,Delete"
+                android:textColor="#FF5534" />
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/linearLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@color/white"
+                android:padding="16.0dip"
+                card_view:cardCornerRadius="4.0dip"
+                card_view:cardElevation="2.0dip"
+                card_view:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:id="@+id/myProjectLayout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
+
+                    <FrameLayout
+                        android:id="@+id/productImageViewLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="4dp"
+                        android:background="@drawable/image_background_box"
+                        android:padding="2dp">
+
+                        <ImageView
+                            android:id="@+id/product_iv"
+                            android:layout_width="80.0dip"
+                            android:layout_height="80.0dip"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/dummy_image"
+                            card_view:layout_marginPercent="1.9999981%" />
+
+
+                    </FrameLayout>
+
+                    <ImageView
+                        android:id="@+id/update_project_iv"
+                        android:layout_width="30dp"
+                        android:padding="4dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:adjustViewBounds="false"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:cropToPadding="false"
+                        android:scaleType="fitEnd"
+                        android:src="@drawable/ic_build_black_24dp" />
+
+                    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                        android:id="@+id/productCategory_tv"
+                        android:layout_width="fill_parent"
+                        android:layout_height="30dp"
+                        android:layout_alignBaseline="@+id/update_project_iv"
+                        android:layout_gravity="center"
+                        android:layout_toLeftOf="@+id/update_project_iv"
+                        android:layout_toRightOf="@+id/productImageViewLayout"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="Category"
+                        android:textColor="@color/text_color"
+                        android:textSize="18.0sp" />
+
+                    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                        android:id="@+id/productTitle_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/update_project_iv"
+                        android:layout_toLeftOf="@+id/deleteProjectImageView"
+                        android:layout_toRightOf="@+id/productImageViewLayout"
+                        android:singleLine="true"
+                        android:text="code"
+                        android:textColor="@color/theme"
+                        android:textSize="12.0sp" />
+
+                    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                        android:id="@+id/productcolor_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/update_project_iv"
+                        android:layout_alignBaseline="@+id/productTitle_tv"
+                        android:layout_marginLeft="8dp"
+                        android:layout_toLeftOf="@+id/deleteProjectImageView"
+                        android:layout_toRightOf="@+id/productTitle_tv"
+                        android:singleLine="true"
+                        android:text="code"
+                        android:textColor="@color/text_color"
+                        android:textSize="10.0sp" />
+
+                    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                        android:id="@+id/rate_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_below="@+id/productTitle_tv"
+                        android:layout_toLeftOf="@+id/deleteProjectImageView"
+                        android:layout_toRightOf="@+id/productImageViewLayout"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="1524"
+                        android:textColor="@color/dark_text_color"
+                        android:textSize="12.0sp" />
+
+                    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_below="@+id/productTitle_tv"
+                        android:layout_marginLeft="2dp"
+                        android:layout_toLeftOf="@+id/deleteProjectImageView"
+                        android:layout_toRightOf="@+id/rate_tv"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="X"
+                        android:textColor="@color/theme"
+                        android:textSize="12.0sp" />
+                    <!---->
+                    <LinearLayout
+                        android:id="@+id/layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/productTitle_tv"
+                        android:gravity="center_vertical|right"
+                        android:weightSum="10">
+
+
+                        <RelativeLayout
+                            android:id="@+id/quantityLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="3"
+                            android:orientation="vertical"
+                            android:padding="4dp">
+
+                            <nl.dionsegijn.steppertouch.StepperTouch xmlns:app="http://schemas.android.com/apk/res-auto"
+                                android:id="@+id/quantityText_tv"
+                                android:layout_width="match_parent"
+                                android:layout_height="35dp"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/dark_text_color"
+                                app:stepperActionsColor="@color/colorAccent"
+                                app:stepperActionsDisabledColor="@color/colorAccent"
+                                app:stepperBackgroundColor="@color/half_white"
+                                app:stepperButtonColor="@color/colorPrimary"
+                                app:stepperTextColor="@color/theme"
+                                app:stepperTextSize="12dp" />
+
+                            <EditText
+                                android:id="@+id/quantity_et"
+                                android:layout_width="45.0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:background="@drawable/textviewbackground"
+                                android:clickable="true"
+                                android:cursorVisible="true"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:inputType="number"
+                                android:maxLength="3"
+                                android:maxLines="1"
+                                android:textColor="@color/colorAccent"
+                                android:visibility="gone" />
+                        </RelativeLayout>
+
+                        <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                            android:id="@+id/price_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="4dp"
+                            android:layout_weight="3"
+                            android:gravity="right|center_vertical"
+                            android:padding="2dp"
+                            android:text="N/A"
+                            android:textColor="@color/text_color"
+                            android:textSize="14.0sp" />
+
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+
+    </com.daimajia.swipe.SwipeLayout>
+</LinearLayout>

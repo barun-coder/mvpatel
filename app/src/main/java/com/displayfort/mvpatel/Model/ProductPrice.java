@@ -12,12 +12,14 @@ import java.util.HashMap;
  */
 public class ProductPrice {
     public Color color;
+    public int colorID;
     public Long created;
     public Integer id;
     public Integer price;
     public Integer productId;
     public Boolean status;
     public Long updated;
+    public AttachmentListDao attachmentListDao;
     public ArrayList<ProductPrice> productPriceList = new ArrayList<>();
 
     public ProductPrice(JSONArray jsonArray) {
@@ -26,6 +28,7 @@ public class ProductPrice {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.optJSONObject(i);
                 ProductPrice productPrice = new ProductPrice(jsonObject);
+                Master.productPriceArrayListMaster.add(productPrice);
                 this.productPriceList.add(productPrice);
             }
         }

@@ -1,0 +1,163 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_rl"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            app:theme="@style/ToolBarStyle">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                android:text="Home"
+                android:textColor="@color/theme"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/newArrivalImageView"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_mono_small" />
+        </android.support.v7.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/add_to_project_btn"
+            android:layout_below="@+id/toolbar"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenBold
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:text="Add To Project"
+                android:textColor="@color/theme"
+                android:textSize="18sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/project_list_rv"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8.0dip"
+                android:orientation="horizontal"
+                android:scrollbars="vertical"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:reverseLayout="true"
+                tools:listitem="@layout/select_project_list_item" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2.0dip"
+                android:layout_marginTop="10dp"
+                android:background="@color/gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenBold
+                    android:id="@+id/project_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:text=""
+                    android:textColor="@color/theme"
+                    android:textSize="18sp" />
+
+                <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenLight
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/product_name_tv"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_toRightOf="@+id/project_name_tv"
+                    android:text="Room's"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="48.0dip"
+                    android:layout_height="2.0dip"
+                    android:layout_below="@+id/project_name_tv"
+                    android:layout_marginLeft="2.0dip"
+                    android:background="@color/colorAccent" />
+
+                <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenLight
+                    android:id="@+id/add_new_room_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="Add Room"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="48.0dip"
+                    android:layout_height="1.0dip"
+                    android:layout_below="@+id/add_new_room_tv"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="2.0dip"
+                    android:layout_marginRight="8dp"
+                    android:background="@color/theme" />
+            </RelativeLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/room_list_rv"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                android:visibility="visible"
+                tools:listitem="@layout/dialog_room_list_item" />
+
+
+        </LinearLayout>
+
+        <com.displayfort.mvpatel.TextUtils.TypefaceButtonBrandenReg
+            android:id="@+id/add_to_project_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="8dp"
+            android:background="@drawable/button_selector"
+            android:padding="8.0dip"
+            android:text="Add To Project"
+            android:textAllCaps="false"
+            android:textColor="@drawable/text_selector"
+            android:textSize="18.0sp" />
+    </RelativeLayout>
+</RelativeLayout>

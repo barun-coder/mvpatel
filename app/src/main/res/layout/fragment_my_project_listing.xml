@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.codetail.widget.RevealFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/white">
+
+            <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                android:id="@+id/myprojectName_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="16.0dip"
+                android:layout_marginBottom="8.0dip"
+                android:text="My Projects"
+                android:textColor="@color/dark_text_color"
+                android:textSize="20.0sp" />
+
+            <Button
+                android:id="@+id/addNewProject_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="80.0dip"
+                android:layout_marginTop="16.0dip"
+                android:layout_marginBottom="16.0dip"
+                android:background="@drawable/ic_button_shape"
+                android:gravity="center"
+                android:minWidth="@dimen/button_min_width"
+                android:minHeight="@dimen/button_min_height"
+                android:padding="8.0dip"
+                android:text="Add a new project"
+                android:textColor="@color/theme"
+                android:textSize="14.0sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/myproject_rv"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_above="@+id/addNewProject_btn"
+                android:layout_below="@+id/myprojectName_tv"
+                android:layout_marginTop="16.0dip"
+                android:clickable="true"
+                android:scrollbars="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:listitem="@layout/project_list_item" />
+        </RelativeLayout>
+    </FrameLayout>
+
+</io.codetail.widget.RevealFrameLayout>

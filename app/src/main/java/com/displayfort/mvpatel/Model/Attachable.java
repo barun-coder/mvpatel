@@ -14,13 +14,26 @@ public class Attachable {
     public Integer id;
     public Long updated;
 
-    public Attachable(JSONObject jsonObject) {
+    public Attachable(JSONObject jsonObject, int type) {
         if (jsonObject != null) {
             this.created = jsonObject.optLong("created", 0);
             this.id = jsonObject.optInt("id", 0);
             this.updated = jsonObject.optLong("updated", 0);
+            switch (type) {
+                case 1:
+                    Master.attachablesCategoryMaster.add(this);
+                    break;
+                case 2:
+                    Master.attachablesSubCategoryMaster.add(this);
+                    break;
+                default:
+                    Master.attachablesProductMaster.add(this);
+                    break;
+            }
             this.attachmentList = new AttachmentListDao(jsonObject.optJSONArray("attachmentList")).attachmentList;
         }
+
+
     }
 
     public Attachable() {

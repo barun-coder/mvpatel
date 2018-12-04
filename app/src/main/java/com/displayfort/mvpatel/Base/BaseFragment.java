@@ -14,10 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.displayfort.mvpatel.DB.TrackerDbHandler;
+import com.displayfort.mvpatel.R;
+
 import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
 public class BaseFragment extends Fragment implements ScreenShotable, View.OnClickListener {
 
+    protected TrackerDbHandler dbHandler;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -131,8 +135,12 @@ public class BaseFragment extends Fragment implements ScreenShotable, View.OnCli
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
 
+        }
     }
+
+
 
     @Override
     public void takeScreenShot() {

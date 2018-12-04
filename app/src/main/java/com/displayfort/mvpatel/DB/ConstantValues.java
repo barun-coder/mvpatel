@@ -5,8 +5,11 @@ import android.content.ContentValues;
 import com.displayfort.mvpatel.Model.AttachmentListDao;
 import com.displayfort.mvpatel.Model.CategoryDao;
 import com.displayfort.mvpatel.Model.Color;
+import com.displayfort.mvpatel.Model.OrderDetailDao;
 import com.displayfort.mvpatel.Model.Product;
 import com.displayfort.mvpatel.Model.ProductPrice;
+import com.displayfort.mvpatel.Model.Project;
+import com.displayfort.mvpatel.Model.Room;
 import com.displayfort.mvpatel.Model.SubCategory;
 
 /**
@@ -164,5 +167,51 @@ public class ConstantValues {
         return values;
     }
 
+    /**
+     * @param project
+     * @return
+     */
+    public static ContentValues getProjectValues(Project project) {
+        ContentValues values = new ContentValues();
+        values.put(DbCons.PROJECT_ID, project.projectId);
+        values.put(DbCons.TITLE, project.name);
+        values.put(DbCons.STATUS, true);
+        values.put(DbCons.DISCOUNT_VALUE, 0);
+        values.put(DbCons.DISCOUNT_TYPE, "R");
+        values.put(DbCons.CREATION, System.currentTimeMillis());
+        return values;
+    }
 
+    /**
+     * @param room
+     * @return
+     */
+    public static ContentValues geRoomValues(Room room) {
+        ContentValues values = new ContentValues();
+        values.put(DbCons.PROJECT_ID, room.projectID);
+        values.put(DbCons.TITLE, room.name);
+        values.put(DbCons.STATUS, true);
+        values.put(DbCons.CREATION, System.currentTimeMillis());
+        return values;
+    }
+
+    /**
+     * @param orderDetailDao
+     * @return
+     */
+    public static ContentValues geOrderDetailValues(OrderDetailDao orderDetailDao) {
+        ContentValues values = new ContentValues();
+        values.put(DbCons.PRODUCT_ID, orderDetailDao.productId);
+        values.put(DbCons.PRODUCT_NAME, orderDetailDao.name);
+        values.put(DbCons.PRODUCT_CODE, orderDetailDao.code);
+        values.put(DbCons.PRODUCT_DETAIL, orderDetailDao.detail);
+        values.put(DbCons.PRODUCT_TYPE_ID, orderDetailDao.productTypeId);
+        values.put(DbCons.PRODUCT_PRICE, orderDetailDao.price);
+        values.put(DbCons.COLOR_ID, orderDetailDao.colorId);
+        values.put(DbCons.STATUS, true);
+        values.put(DbCons.TITLE, orderDetailDao.colorText);
+        values.put(DbCons.URL, orderDetailDao.ImageUrl);
+        values.put(DbCons.CREATION, System.currentTimeMillis());
+        return values;
+    }
 }

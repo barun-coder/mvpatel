@@ -69,6 +69,12 @@ public class SubCategoryListAapter extends RecyclerView.Adapter<SubCategoryListA
                 }
             }
         }
+        if (SubCategory.newArrival) {
+            viewHolder.mNewArrivalImageViewIv.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.mNewArrivalImageViewIv.setVisibility(View.GONE);
+        }
+
 
     }
 

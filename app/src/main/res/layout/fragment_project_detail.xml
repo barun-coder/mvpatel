@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scroolview"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/grandTotalLayout"
+            android:layout_alignParentTop="true"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                android:id="@+id/myprojectName_tv"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="6dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text=""
+                android:textAllCaps="true"
+                android:textColor="@color/theme"
+                android:textSize="14.0sp" />
+
+            <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                android:id="@+id/projectName_tv"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16.0dip"
+                android:gravity="center"
+                android:text="Project Name"
+                android:textAllCaps="false"
+                android:textColor="@color/text_color"
+                android:textSize="20.0sp" />
+
+            <android.support.v4.widget.NestedScrollView xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/projectDetailsExpandable_rv"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/white"
+
+                android:scrollbars="vertical"
+                android:visibility="visible"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:listitem="@layout/test">
+
+                <LinearLayout
+                    android:id="@+id/order_detail_ll"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp">
+
+                    <include layout="@layout/room_list_item_layout" />
+
+                    <include layout="@layout/project_detail_list_item" />
+
+
+                    <include layout="@layout/project_detail_footer" />
+
+                    <include layout="@layout/room_list_item_layout" />
+
+                    <include layout="@layout/project_detail_list_item" />
+
+
+                    <include layout="@layout/project_detail_footer" />
+                </LinearLayout>
+
+            </android.support.v4.widget.NestedScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/grandTotalLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/shareLinearLayout"
+            android:background="@color/theme"
+            android:orientation="horizontal">
+
+            <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="32.0dip"
+                android:layout_marginTop="8.0dip"
+                android:layout_marginRight="16.0dip"
+                android:layout_marginBottom="8.0dip"
+                android:layout_weight="0.7"
+                android:background="@null"
+                android:gravity="center|right"
+                android:paddingLeft="16.0dip"
+                android:text="Total"
+                android:textColor="@color/white"
+                android:textSize="16.0sp"
+                android:textStyle="bold" />
+
+            <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                android:id="@+id/grand_qty_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8.0dip"
+                android:layout_marginTop="8.0dip"
+                android:layout_marginBottom="8.0dip"
+                android:layout_weight="0.1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="6.0dip"
+                android:text="1"
+                android:textColor="@color/dark_text_color"
+                android:textSize="16.0sp" />
+
+            <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenBold
+                android:id="@+id/grand_total_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="32.0dip"
+                android:layout_marginTop="8.0dip"
+                android:layout_marginRight="16.0dip"
+                android:layout_marginBottom="8.0dip"
+                android:layout_weight="0.2"
+                android:gravity="end|center"
+                android:text="12520"
+                android:textColor="@color/white"
+                android:textSize="18.0sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/shareLinearLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="4dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <com.displayfort.mvpatel.TextUtils.TypefaceButtonBrandenReg
+                android:id="@+id/emailProject_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8.0dip"
+                android:layout_marginTop="16.0dip"
+                android:layout_marginRight="8.0dip"
+                android:layout_marginBottom="16.0dip"
+                android:layout_weight="1"
+                android:background="@drawable/ic_button_shape"
+                android:minWidth="@dimen/button_min_width2"
+                android:minHeight="@dimen/button_min_height"
+                android:padding="8.0dip"
+                android:text="Share"
+                android:textAllCaps="false"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp" />
+
+            <com.displayfort.mvpatel.TextUtils.TypefaceButtonBrandenReg
+                android:id="@+id/add_more_project_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8.0dip"
+                android:layout_marginTop="16.0dip"
+                android:layout_marginRight="8.0dip"
+                android:layout_marginBottom="16.0dip"
+                android:layout_weight="1"
+                android:background="@drawable/ic_button_shape"
+                android:minWidth="@dimen/button_min_width"
+                android:minHeight="@dimen/button_min_height"
+                android:padding="8.0dip"
+                android:text="@string/add_more_products"
+                android:textAllCaps="false"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp" />
+
+            <com.displayfort.mvpatel.TextUtils.TypefaceButtonBrandenReg
+                android:id="@+id/discount_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8.0dip"
+                android:layout_marginTop="16.0dip"
+                android:layout_marginRight="8.0dip"
+                android:layout_marginBottom="16.0dip"
+                android:layout_weight="1"
+                android:background="@drawable/ic_button_shape"
+                android:minWidth="@dimen/button_min_width"
+                android:minHeight="@dimen/button_min_height"
+                android:padding="8.0dip"
+                android:text="Discount"
+                android:textAllCaps="false"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

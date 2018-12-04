@@ -1,0 +1,341 @@
+<io.codetail.widget.RevealFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!---->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_above="@+id/bottom"
+                android:layout_alignParentTop="true"
+                android:background="@color/white"
+                android:fillViewport="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                        android:id="@+id/product_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="8dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/theme"
+                        android:textSize="20.0sp" />
+
+                    <ImageView
+                        android:id="@+id/product_image_iv"
+                        android:layout_width="fill_parent"
+                        android:layout_height="200.0dip"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/dummy_image" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/product_list_rv"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8.0dip"
+                        android:orientation="horizontal"
+                        android:scrollbars="vertical"
+                        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                        app:reverseLayout="true"
+                        tools:listitem="@layout/product_color_item" />
+                    <!--thumb icon-->
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:gravity="right"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/add_project_ib"
+                            android:layout_width="30.0dip"
+                            android:layout_height="30.0dip"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_add_to_project_icon" />
+
+                        <ImageButton
+                            android:id="@+id/technical_detail_ib"
+                            android:layout_width="30.0dip"
+                            android:layout_height="30.0dip"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="4.0dip"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_download_icon" />
+
+                        <ImageButton
+                            android:id="@+id/share_ib"
+                            android:layout_width="30.0dip"
+                            android:layout_height="30.0dip"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="4.0dip"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_share_icon" />
+
+                        <ImageButton
+                            android:id="@+id/favourite_ib"
+                            android:layout_width="30.0dip"
+                            android:layout_height="30.0dip"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="4.0dip"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_fav_icon" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                            android:id="@+id/producttitle_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16.0dip"
+                            android:layout_marginTop="8.0dip"
+                            android:layout_marginRight="8.0dip"
+                            android:textColor="@color/text_color"
+                            android:textSize="18.0sp" />
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16.0dip"
+                            android:layout_marginTop="4.0dip"
+                            android:layout_marginRight="8.0dip"
+                            android:layout_marginBottom="8.0dip"
+                            android:orientation="horizontal">
+
+                            <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                                android:id="@+id/productCode_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="code"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="14.0sp" />
+
+                            <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                                android:id="@+id/productcolor_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10.0dip"
+                                android:layout_marginRight="8.0dip"
+                                android:text="---"
+                                android:textColor="@color/theme"
+                                android:textSize="14.0sp" />
+                        </LinearLayout>
+
+                        <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                            android:id="@+id/productDetail_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16.0dip"
+                            android:layout_marginTop="8.0dip"
+                            android:layout_marginRight="8.0dip"
+                            android:textColor="@color/text_color"
+                            android:textSize="14.0sp" />
+                        <!--Frequent Product-->
+                        <LinearLayout
+                            android:id="@+id/add_layout_ll"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+                        </LinearLayout>
+
+
+                        <!--Intrested Product-->
+                        <LinearLayout
+                            android:id="@+id/intrested_product_ll"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenBold
+                                android:id="@+id/intrested_Prod_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="16.0dip"
+                                android:layout_marginTop="8.0dip"
+                                android:layout_marginRight="8.0dip"
+                                android:text="You May be Intrested"
+                                android:textColor="@color/theme"
+                                android:textSize="16.0sp"
+                                android:visibility="visible" />
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/intrested_product_list_rv"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8.0dip"
+                                android:orientation="horizontal"
+                                android:scrollbars="vertical"
+                                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                                tools:listitem="@layout/intrested_category_list_item" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+            <!--bottom-->
+            <LinearLayout
+                android:id="@+id/bottom"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1.0dip"
+                    android:background="@color/gray" />
+                <!---->
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:id="@+id/freq_product_ll"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="8dp"
+                    android:visibility="visible">
+
+                    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenBold
+                        android:id="@+id/cart_Prod_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16.0dip"
+                        android:layout_marginTop="2dip"
+                        android:layout_marginRight="8.0dip"
+                        android:text="Selected Product"
+                        android:textColor="@color/theme"
+                        android:textSize="16.0sp"
+                        android:visibility="visible" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/cart_product_list_rv"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dip"
+                        android:orientation="horizontal"
+                        android:scrollbars="vertical"
+                        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                        tools:listitem="@layout/cart_product_list_item" />
+                </LinearLayout>
+                <!---->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="6dp">
+
+                    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                        android:id="@+id/productPrice_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8.0dip"
+                        android:layout_marginRight="8.0dip"
+                        android:padding="4.0dip"
+                        android:text="0.00"
+                        android:textColor="@color/dark_text_color" />
+
+                    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="|"
+                        android:textColor="@color/dark_text_color"
+                        android:textSize="14.0sp" />
+
+                    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                        android:id="@+id/featureTextview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="8.0dip"
+                        android:layout_marginRight="8.0dip"
+                        android:background="?android:selectableItemBackground"
+                        android:gravity="center"
+                        android:padding="4.0dip"
+                        android:text="Features"
+                        android:textAllCaps="false"
+                        android:textColor="@color/theme"
+                        android:textSize="14.0sp" />
+
+                    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                        android:id="@+id/sepraterTextview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|right"
+                        android:text="|"
+                        android:textColor="@color/dark_text_color"
+                        android:textSize="14.0sp" />
+
+                    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+                        android:id="@+id/technologyTextview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginLeft="4.0dip"
+                        android:layout_marginRight="4.0dip"
+                        android:background="?android:selectableItemBackground"
+                        android:gravity="center"
+                        android:padding="4.0dip"
+                        android:text="Technology"
+                        android:textAllCaps="false"
+                        android:textColor="@color/theme"
+                        android:textSize="14.0sp" />
+
+                    <com.displayfort.mvpatel.TextUtils.TypefaceButtonBrandenReg
+                        android:id="@+id/cart_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/button_selector"
+                        android:gravity="center"
+                        android:drawableEnd="@drawable/ic_shopping_cart"
+                        android:padding="4dp"
+                        android:text="Add Cart"
+                        android:textColor="@drawable/text_selector"
+                        android:textSize="10sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+        <!---->
+    </FrameLayout>
+</io.codetail.widget.RevealFrameLayout>

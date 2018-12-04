@@ -38,6 +38,7 @@ public class SubCategory {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.optJSONObject(i);
                 SubCategory subCategory = new SubCategory(jsonObject);
+                Master.subCategoriesMaster.add(subCategory);
                 this.subCategoryList.add(subCategory);
                 subcategoryDetailMap.put(subCategory.id, subCategory);
             }
@@ -58,7 +59,7 @@ public class SubCategory {
 
     public SubCategory(JSONObject jsonObject) {
         if (jsonObject != null) {
-            this.attachable = new Attachable(jsonObject.optJSONObject("attachable"));
+            this.attachable = new Attachable(jsonObject.optJSONObject("attachable"),2);
             this.catagoryName = jsonObject.optString("catagoryName", "");
             this.created = jsonObject.optLong("created", 0);
             this.categoryid = jsonObject.optInt("categoryid", 0);

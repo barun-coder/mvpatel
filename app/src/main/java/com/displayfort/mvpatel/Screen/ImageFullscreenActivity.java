@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.displayfort.mvpatel.Base.BaseActivity;
 import com.displayfort.mvpatel.R;
+import com.displayfort.mvpatel.Utils.Utility;
 import com.github.chrisbanes.photoview.PhotoView;
 
 public class ImageFullscreenActivity extends BaseActivity {
@@ -32,6 +33,8 @@ public class ImageFullscreenActivity extends BaseActivity {
         getSupportActionBar().setHomeAsUpIndicator((int) R.drawable.ic_back);
         this.imageView = (PhotoView) findViewById(R.id.imageView);
         this.transitions_container = (LinearLayout) findViewById(R.id.transitions_container);
+
+        Utility.setImage(this, getIntent().getStringExtra("URL"), imageView);
     }
 
     public boolean onOptionsItemSelected(MenuItem menuItem) {

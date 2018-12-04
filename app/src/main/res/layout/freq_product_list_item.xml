@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="85dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="4.0dip"
+    android:layout_marginTop="8.0dip"
+    android:layout_marginRight="4.0dip"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/img_pager_itemLayout"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/image_background_box"
+        android:padding="2dp">
+
+        <ImageView
+            android:id="@+id/img_pager_item_iv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2.0dip"
+            android:adjustViewBounds="true"
+            android:background="?android:selectableItemBackground"
+            android:clickable="false"
+            android:minWidth="170.0dip"
+            android:minHeight="170.0dip"
+            android:scaleType="centerInside"
+            android:src="@drawable/dummy_image" />
+
+        <ImageView
+            android:id="@+id/newArrivalImageView_iv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center|left|top"
+            android:layout_marginTop="0.0dip"
+            android:adjustViewBounds="true"
+            android:background="#20000000"
+            android:scaleType="center"
+            android:src="@drawable/ic_check"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenLight
+        android:id="@+id/productCodeTextView_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4.0dip"
+        android:lines="1"
+        android:text="SDR-WHT-DJ0010F"
+        android:textColor="@color/theme"
+        android:textSize="8sp" />
+
+    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+        android:id="@+id/productNameTextView_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="2"
+        android:text="Push Button Soap Dispensers"
+        android:textColor="@color/text_color"
+        android:textSize="12.0sp" />
+
+
+    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenLight
+        android:id="@+id/productprice_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4.0dip"
+        android:lines="1"
+        android:text="x,xxx"
+        android:textColor="@color/theme"
+        android:textSize="14.0sp" />
+</LinearLayout>

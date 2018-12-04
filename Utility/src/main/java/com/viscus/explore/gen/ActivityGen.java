@@ -9,10 +9,10 @@ import java.util.List;
 //D:\Android Projects\Peat
 public class ActivityGen {
     public static final String PROJECT_PATH = "G:\\Android Projects";
-    public static final String VIEW_NAMES = "activity_add_myocassion";
+    public static final String VIEW_NAMES = "home_activity";
     // com.crown.NavadMap.NavigationPlaces
     //com.crown.peat.Activity
-    private String PACKAGE_NAME = "com.zolute.monasaba.screen";
+    private String PACKAGE_NAME = "com.displayfort.mvpatel.Screen";
     private File srcDir = null, layoutDir = null;
 
     public List<String> varNames = new ArrayList<>();

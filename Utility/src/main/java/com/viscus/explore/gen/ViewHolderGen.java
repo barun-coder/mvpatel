@@ -5,12 +5,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-//D:\Android Projects\NavadMapOSM
-//D:\Android Projects\Peat\res
-//G:\Zolute Drive\Project\Monasaaba\MonasabatCust\app\src\main\res\layout
+
 public class ViewHolderGen {
-    private static final String LAYOUT_PATH = "G:\\Zolute Drive\\Project\\Monasaaba\\MonasabatCust\\app\\src\\main\\res\\layout";
-    private static final String XML_FILE_NAME = "activity_add_myocassion.xml";
+    private static final String LAYOUT_PATH = "G:\\DisplayFort\\androidCode\\JAGUAR APPLICATION\\MVPatel\\app\\src\\main\\res\\layout";
+    private static final String XML_FILE_NAME = "fragment_search.xml";
 
     private static String WIDGETS = "";
 
@@ -184,6 +182,8 @@ public class ViewHolderGen {
                             varClass = "RecyclerView";
                         } else if ("sr".equalsIgnoreCase(varClass)) {
                             varClass = "SwipyRefreshLayout";
+                        } else if ("vp".equalsIgnoreCase(varClass)) {
+                            varClass = "ViewPager";
                         }
 
 

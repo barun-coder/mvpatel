@@ -21,6 +21,7 @@ public class Color {
             this.updated = jsonObject.optLong("updated", 0);
             this.name = jsonObject.optString("name", "NA");
             this.status = jsonObject.optBoolean("status", true);
+            Master.colorArrayListMaster.add(this);
         }
     }
 }

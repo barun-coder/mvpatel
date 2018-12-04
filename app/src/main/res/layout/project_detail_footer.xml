@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/totalLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8.0dip"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:visibility="visible">
+
+    <!---->
+    <LinearLayout
+        android:id="@+id/total_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1.0dip"
+            android:layout_below="@+id/layout"
+            android:layout_marginLeft="16.0dip"
+            android:layout_marginRight="16.0dip"
+            android:layout_marginBottom="8dp"
+            android:background="@color/colorAccent"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:paddingRight="4dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|right"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+
+            <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenBold
+                android:id="@+id/totalTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="Total"
+                android:textColor="@color/dark_text_color"
+                android:textSize="14.0sp" />
+
+            <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenBold
+                android:id="@+id/priceTotal_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="4dp"
+                android:layout_weight="3"
+                android:gravity="right"
+                android:text="0,000,00"
+                android:textColor="@color/dark_text_color"
+                android:textSize="16.0sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.0dip"
+            android:layout_below="@+id/layout"
+            android:layout_marginLeft="16.0dip"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16.0dip"
+            android:background="@color/dark_text_color"
+            android:visibility="visible" />
+    </LinearLayout>
+</LinearLayout>

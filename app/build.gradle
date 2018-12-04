@@ -53,4 +53,9 @@ dependencies {
     implementation 'com.googlecode.android-query:android-query:0.24.3'
     implementation 'me.relex:circleindicator:2.1.0'
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+    implementation 'com.android.support:percent:23.3.0'
+    implementation 'com.github.omadahealth:swipy:1.2.3@aar'
+    implementation 'com.github.DanielMartinus:Stepper-Touch:0.6'
+    implementation 'com.daimajia.swipelayout:library:1.2.0@aar'
+    implementation files('libs/itextpdf-5.1.0.jar')
 }

@@ -35,4 +35,13 @@
     <string name="pdf">PDF</string>
     <string name="cad">CAD</string>
     <string name="technical_drawing_msg">File will be downloaded and attached attached to your email, This might take few seconds.</string>
+    <string name="email_project">Email Project</string>
+    <string name="add_more_products">Add more</string>
+    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
 </resources>

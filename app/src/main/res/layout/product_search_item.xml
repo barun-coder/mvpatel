@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="4.0dip"
+    android:layout_marginTop="8.0dip"
+    android:layout_marginRight="4.0dip"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="horizontal">
+
+    <FrameLayout
+        android:id="@+id/img_pager_itemLayout"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginRight="4dp"
+        android:background="@drawable/image_background_box"
+        android:padding="2dp">
+
+        <ImageView
+            android:id="@+id/img_pager_item_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8.0dip"
+            android:adjustViewBounds="true"
+
+            android:clickable="false"
+            android:minWidth="170.0dip"
+            android:minHeight="170.0dip"
+            android:scaleType="fitCenter"
+            android:src="@drawable/dummy_image" />
+
+        <ImageView
+            android:id="@+id/newArrivalImageView_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|left|top"
+            android:layout_marginTop="6.0dip"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/newarrival"
+            android:visibility="invisible" />
+    </FrameLayout>
+
+    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenReg
+        android:id="@+id/productNameTextView_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/img_pager_itemLayout"
+        android:text="name"
+        android:textColor="@color/text_color"
+        android:textSize="16.0sp" />
+
+    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenLight
+        android:id="@+id/productCodeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/productNameTextView_tv"
+        android:layout_toRightOf="@+id/img_pager_itemLayout"
+        android:text="name"
+        android:textColor="@color/theme"
+        android:textSize="16.0sp" />
+
+    <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenMed
+        android:id="@+id/productdetail_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/productCodeTextView"
+        android:layout_toRightOf="@+id/img_pager_itemLayout"
+        android:lines="2"
+        android:text="name"
+        android:textColor="@color/dark_text_color"
+        android:textSize="16.0sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/productdetail_tv"
+        android:layout_margin="4dp"
+        android:background="@color/gray" />
+</RelativeLayout>

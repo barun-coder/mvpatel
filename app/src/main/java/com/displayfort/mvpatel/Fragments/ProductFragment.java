@@ -54,7 +54,7 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
     private ProductListAapter adapter;
     private ArrayList<Product> productList;
     private SubCategory subCategoryDetail;
-    private TrackerDbHandler dbHandler;
+
 
 
     public static ProductFragment newInstance(Long catId) {
@@ -114,7 +114,7 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
                         ((HomeActivity) getActivity()).addFragment(ProductDetailFragment.newInstance(product.id), (product.name));
                     }
                 }));
-        setFilter(Constant.ATOZ);
+//        setFilter(Constant.ATOZ);
     }
 
     private void setFilter(int atoz) {

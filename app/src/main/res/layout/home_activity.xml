@@ -22,7 +22,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary"
+                android:contentInsetStart="0dp"
+                android:contentInsetLeft="0dp"
+                android:contentInsetEnd="0dp"
+                android:contentInsetRight="0dp"
                 android:minHeight="?attr/actionBarSize"
+                app:contentInsetEnd="0dp"
+                app:contentInsetLeft="0dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetStart="0dp"
                 app:theme="@style/ToolBarStyle">
 
                 <TextView
@@ -43,6 +51,15 @@
                     android:layout_gravity="center"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_mono_small" />
+
+                <ImageView
+                    android:id="@+id/back_icon"
+                    android:layout_width="?attr/actionBarSize"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_gravity="left"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_back"
+                    android:visibility="gone" />
             </android.support.v7.widget.Toolbar>
 
             <LinearLayout
@@ -50,7 +67,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/toolbar"
-                android:orientation="vertical" />
+                android:orientation="vertical"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/content_frame"
@@ -58,6 +76,12 @@
                 android:layout_height="match_parent"
                 android:layout_below="@+id/toolbar"
                 android:orientation="vertical" />
+
+            <FrameLayout
+                android:id="@+id/main_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/toolbar" />
 
 
         </RelativeLayout>

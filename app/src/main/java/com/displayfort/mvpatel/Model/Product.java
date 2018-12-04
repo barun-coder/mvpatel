@@ -11,21 +11,26 @@ import java.util.HashMap;
  * MVPatel
  */
 public class Product {
+    public SubCategory subCategory;
     public Attachable attachable;
     public Classification classification;
     public String code;
     public Long created;
+    public ProductPrice productPrice;
     public String detail;
     public Long id;
     public String name;
     public Boolean newArrival;
     public ArrayList<ProductPrice> productPrices = null;
     public Boolean status;
+    public String subCatName;
     public Long subcatid;
     public Long updated;
+    public Integer categoryid;
     public String ImageUrl;
     public ArrayList<Product> productList = new ArrayList<>();
     public static HashMap<Long, Product> productDetailMap = new HashMap<>();
+    public boolean isSelected=false;
 
     public Product(JSONArray jsonArray) {
         if (jsonArray != null) {
@@ -37,6 +42,7 @@ public class Product {
                 JSONObject jsonObject = jsonArray.optJSONObject(i);
                 Product product = new Product(jsonObject);
                 this.productList.add(product);
+                Master.productsMaster.add(product);
                 productDetailMap.put(product.id, product);
             }
         }
@@ -57,7 +63,7 @@ public class Product {
 
     public Product(JSONObject jsonObject) {
         if (jsonObject != null) {
-            this.attachable = new Attachable(jsonObject.optJSONObject("attachable"));
+            this.attachable = new Attachable(jsonObject.optJSONObject("attachable"), 3);
             this.code = jsonObject.optString("code", "");
             this.created = jsonObject.optLong("created", 0);
             this.detail = jsonObject.optString("detail", "");

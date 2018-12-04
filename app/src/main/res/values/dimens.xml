@@ -8,4 +8,7 @@
     <dimen name="button_min_width1">110.0dip</dimen>
     <dimen name="button_min_width2">140.0dip</dimen>
     <dimen name="layout_min_height">350.0dip</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

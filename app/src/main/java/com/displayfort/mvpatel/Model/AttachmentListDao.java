@@ -30,7 +30,9 @@ public class AttachmentListDao {
             this.attachmentList = new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.optJSONObject(i);
-                this.attachmentList.add(new AttachmentListDao(jsonObject));
+                AttachmentListDao attachmentListDao = new AttachmentListDao(jsonObject);
+                this.attachmentList.add(attachmentListDao);
+                Master.attachmentListDaosMaster.add(attachmentListDao);
             }
         }
 

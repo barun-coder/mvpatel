@@ -16,12 +16,16 @@ import com.displayfort.mvpatel.Model.Room;
 import com.displayfort.mvpatel.MvPatelApplication;
 import com.displayfort.mvpatel.R;
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chapter;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Header;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.Utilities;
 import com.itextpdf.text.html.WebColors;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -57,9 +61,10 @@ public class PDFUtils {
             initializeDoc();
             setDocHeader();
             setSubIndex();
-//            addDocFooter();
-            EndDocument();
             ImlementRoomDetail(roomArrayList);
+            addDocFooter();
+            EndDocument();
+
             if (Build.VERSION.SDK_INT >= 24) {
                 // wrap File object into a content provider. NOTE: authority here should match authority in manifest declaration
                 return FileProvider.getUriForFile(context, "com.displayfort.mvpatel", file);  // use this version for API >= 24
@@ -70,37 +75,6 @@ public class PDFUtils {
 
         return uri;
     }
-
-    private void setSubIndex() {
-        BaseColor myColor1 = WebColors.getRGBColor("#767676");
-        PdfPCell cell = new PdfPCell(new Phrase(" "));
-        cell.setColspan(6);
-        table.addCell(cell);
-        cell = new PdfPCell();
-        cell.setColspan(6);
-
-        cell.setBackgroundColor(myColor1);
-        /*Header Style */
-        cell = new PdfPCell(new Phrase("#"));
-        cell.setBackgroundColor(myColor1);
-        table.addCell(cell);
-        cell = new PdfPCell(new Phrase("Code"));
-        cell.setBackgroundColor(myColor1);
-        table.addCell(cell);
-        cell = new PdfPCell(new Phrase("Qty"));
-        cell.setBackgroundColor(myColor1);
-        table.addCell(cell);
-        cell = new PdfPCell(new Phrase("Rate"));
-        cell.setBackgroundColor(myColor1);
-        table.addCell(cell);
-        cell = new PdfPCell(new Phrase("Total"));
-        cell.setBackgroundColor(myColor1);
-        table.addCell(cell);
-        cell = new PdfPCell(new Phrase("Image"));
-        cell.setBackgroundColor(myColor1);
-        table.addCell(cell);
-    }
-
 
     private void initializeDoc() {
         doc = new Document();
@@ -119,7 +93,6 @@ public class PDFUtils {
             e.printStackTrace();
         }
     }
-
 
     private void setDocHeader() throws DocumentException {
         BaseColor myColor1 = WebColors.getRGBColor("#FFFFFF");
@@ -153,7 +126,7 @@ public class PDFUtils {
             cell = new PdfPCell(new Paragraph("Phone: 097555 40406"));
             cell.setBorder(Rectangle.NO_BORDER);
             pt.addCell(cell);
-           /**/
+            /**/
 
             PdfPTable pTable = new PdfPTable(1);
             pTable.setWidthPercentage(100);
@@ -176,6 +149,74 @@ public class PDFUtils {
         }
     }
 
+    private void setSubIndex() {
+        BaseColor myColor1 = WebColors.getRGBColor("#cdcdcd");
+        PdfPCell cell = new PdfPCell(new Phrase(" "));
+//        cell.setColspan(6);
+//        table.addCell(cell);
+        cell = new PdfPCell();
+        cell.setColspan(6);
+
+        cell.setBackgroundColor(myColor1);
+        /*Header Style */
+        cell = new PdfPCell(new Phrase("#"));
+        cell.setBackgroundColor(myColor1);
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase("Image"));
+        cell.setBackgroundColor(myColor1);
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase("Code"));
+        cell.setBackgroundColor(myColor1);
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase("Qty"));
+        cell.setBackgroundColor(myColor1);
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase("Rate"));
+        cell.setBackgroundColor(myColor1);
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase("Total"));
+        cell.setBackgroundColor(myColor1);
+        table.addCell(cell);
+
+    }
+
+    private void ImlementRoomDetail(ArrayList<Room> roomArrayList) {
+        int k = 0;
+        for (int i = 0; i < roomArrayList.size(); i++) {
+//                     roomListItemViewHolder.mRoomNameTv.setText(roomArrayList.get(i).name);
+            final ArrayList<OrderDetailDao> orderDetailDaos = dbHandler.getOrderListByRoom((int) roomArrayList.get(i).id);
+            if (orderDetailDaos.size() > 0) {
+                PdfPCell cell = new PdfPCell();
+                cell.addElement(new Paragraph(roomArrayList.get(i).name));
+                cell.setColspan(6);
+                table.addCell(cell);
+                Font smallfont = new Font(Font.FontFamily.HELVETICA, 10);
+                for (int j = 0; j < orderDetailDaos.size(); j++) {
+                    final OrderDetailDao orderDetailDao = orderDetailDaos.get(j);
+                    table.addCell(String.valueOf(++k));
+                    table.addCell(new Phrase("ASAP", smallfont));
+                    table.addCell(orderDetailDao.code);
+                    table.addCell(orderDetailDao.Qty + "");
+                    table.addCell(orderDetailDao.price + "");
+                    table.addCell((orderDetailDao.Qty * orderDetailDao.price) + "");
+
+
+                }
+                //  return Utility.showPriceInUK(dbHandler.getParticularRoomtotal(roomid));
+                cell = new PdfPCell(new Phrase(" "));
+                cell.setColspan(6);
+//                table.addCell(cell);
+                table.addCell(new Phrase(" "));
+                table.addCell(new Phrase(" "));
+                table.addCell(new Phrase(" "));
+                table.addCell(new Phrase(" "));
+                table.addCell("Total");
+                table.addCell(Utility.showPriceInUK(dbHandler.getParticularRoomtotal(roomArrayList.get(i).id)) + "");
+            }
+
+        }
+    }
+
     private void addDocFooter() {
         try {
             BaseColor myColor1 = WebColors.getRGBColor("#757575");
@@ -186,7 +227,7 @@ public class PDFUtils {
             PdfPCell cell = new PdfPCell();
             cell.setColspan(6);
             cell.setBackgroundColor(myColor1);
-            cell = new PdfPCell(new Phrase("Total Nunber"));
+            cell = new PdfPCell(new Phrase("Total Number"));
             cell.setBorder(Rectangle.NO_BORDER);
             cell.setBackgroundColor(myColor1);
             ftable.addCell(cell);
@@ -236,18 +277,6 @@ public class PDFUtils {
             doc.close();
         }
     }
-
-    private void ImlementRoomDetail(ArrayList<Room> roomArrayList) {
-        for (int i = 0; i < roomArrayList.size(); i++) {
-//                     roomListItemViewHolder.mRoomNameTv.setText(roomArrayList.get(i).name);
-            final ArrayList<OrderDetailDao> orderDetailDaos = dbHandler.getOrderListByRoom((int) roomArrayList.get(i).id);
-            if (orderDetailDaos.size() > 0) {
-
-            }
-
-        }
-    }
-
 
     public Uri createPDF(Context context) throws FileNotFoundException, DocumentException {
 

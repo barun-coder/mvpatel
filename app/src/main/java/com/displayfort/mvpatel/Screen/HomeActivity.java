@@ -507,7 +507,7 @@ public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnima
                 emailIntent.setType("image/jpeg");
 
                 try {
-                    emailIntent.putExtra(Intent.EXTRA_STREAM, new PDFUtils().CreateQuotation(context, 1));
+                    emailIntent.putExtra(Intent.EXTRA_STREAM, new PDFUtils().CreateQuotation(context, 2));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (DocumentException e) {

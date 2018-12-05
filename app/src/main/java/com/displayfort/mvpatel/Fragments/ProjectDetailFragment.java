@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v4.widget.NestedScrollView;
@@ -105,8 +106,14 @@ public class ProjectDetailFragment extends BaseFragment implements View.OnClickL
         super.onViewCreated(view, savedInstanceState);
         this.containerView = view.findViewById(R.id.container);
         homeViewHolder = new HomeViewHolder(view, this);
-        dbHandler = MvPatelApplication.getDatabaseHandler();
-        init();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dbHandler = MvPatelApplication.getDatabaseHandler();
+                init();
+            }
+        }, 400);
+
 
     }
 
@@ -184,7 +191,7 @@ public class ProjectDetailFragment extends BaseFragment implements View.OnClickL
                 projectDetailListViewHolder.mQuantityTextTv.stepper.setMin(0);
                 projectDetailListViewHolder.mProductColorTv.setText(orderDetailDao.colorText);
                 projectDetailListViewHolder.mProductTitleTv.setText(orderDetailDao.code);
-                Utility.setImage(mContext, orderDetailDao.ImageUrl, projectDetailListViewHolder.mProductIv);
+                Utility.setImage(mContext, orderDetailDao.ImageUrl, projectDetailListViewHolder.mProductIv, 'A');
                 final int finalI = i;
                 projectDetailListViewHolder.mQuantityTextTv.stepper.setValue(orderDetailDao.Qty);
                 projectDetailListViewHolder.mQuantityTextTv.stepper.addStepCallback(new OnStepCallback() {
@@ -408,10 +415,12 @@ public class ProjectDetailFragment extends BaseFragment implements View.OnClickL
         });
         /**/
         mDiscountEt.setText(project.discountValue + "");
-        if (project.discountType.equalsIgnoreCase("R")) {
-            radioGroup.check(R.id.ruppes_rb);
-        } else {
-            radioGroup.check(R.id.percentage_rb);
+        if (project.discountType != null) {
+            if (project.discountType.equalsIgnoreCase("R")) {
+                radioGroup.check(R.id.ruppes_rb);
+            } else {
+                radioGroup.check(R.id.percentage_rb);
+            }
         }
         /**/
         Button cancelBtn = dialog.findViewById(R.id.cancel_btn);
@@ -574,7 +583,7 @@ public class ProjectDetailFragment extends BaseFragment implements View.OnClickL
 //        emailIntent.putExtra(Intent.EXTRA_STREAM, getBitmapFromDrawable(getScreenBitmap()));
         emailIntent.putExtra(Intent.EXTRA_CC, CC);
         try {
-            emailIntent.putExtra(Intent.EXTRA_STREAM,  new PDFUtils().createPDF(mContext));
+            emailIntent.putExtra(Intent.EXTRA_STREAM, new PDFUtils().CreateQuotation(mContext, PRID));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (DocumentException e) {

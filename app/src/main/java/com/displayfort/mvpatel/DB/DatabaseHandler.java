@@ -19,7 +19,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TRACKER_DB = "MVPatel.db";
     // Database Version\
     private static SQLiteDatabase mSqLiteDatabase;
-    private static final int VERSION = 10;//5
+    private static final int VERSION = 11;//5
     private static final String TAG = "DatabaseHandler";
     private static final String DROP_IF_EXISTS = "DROP TABLE IF EXISTS ";
     private static final String FOREIGN_KEY_CONSTRAINT = "PRAGMA foreign_key=ON;";

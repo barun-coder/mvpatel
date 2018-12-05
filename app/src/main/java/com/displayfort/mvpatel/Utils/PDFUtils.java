@@ -1,24 +1,33 @@
 package com.displayfort.mvpatel.Utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.androidquery.AQuery;
 import com.displayfort.mvpatel.DB.TrackerDbHandler;
 import com.displayfort.mvpatel.Model.OrderDetailDao;
+import com.displayfort.mvpatel.Model.Project;
 import com.displayfort.mvpatel.Model.Room;
 import com.displayfort.mvpatel.MvPatelApplication;
 import com.displayfort.mvpatel.R;
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chapter;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Header;
 import com.itextpdf.text.Image;
@@ -30,12 +39,15 @@ import com.itextpdf.text.html.WebColors;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,11 +62,13 @@ public class PDFUtils {
     private File file = null;
     private Context context;
     private PdfPTable table;
+    private long PRID = 2;
     /**/
 
     public Uri CreateQuotation(Context context, long PRID) throws FileNotFoundException, DocumentException {
         Uri uri = null;
         this.context = context;
+        this.PRID = PRID;
         dbHandler = MvPatelApplication.getDatabaseHandler();
         ArrayList<Room> roomArrayList = dbHandler.getRoomList(PRID);
         if (roomArrayList.size() > 0) {
@@ -89,6 +103,10 @@ public class PDFUtils {
 
             //open the document
             doc.open();
+            table = new PdfPTable(6);
+//            float[] columnWidth = new float[]{6, 30, 30, 20, 20, 30};
+            float[] columnWidth = new float[]{10, 25, 40, 15, 15, 15};
+            table.setWidths(columnWidth);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -100,7 +118,7 @@ public class PDFUtils {
         try {
             PdfPTable pt = new PdfPTable(3);
             pt.setWidthPercentage(100);
-            float[] fl = new float[]{20, 45, 35};
+            float[] fl = new float[]{35, 45, 20};
             pt.setWidths(fl);
             PdfPCell cell = new PdfPCell();
             /*1*/
@@ -135,9 +153,6 @@ public class PDFUtils {
             cell.addElement(pt);
             pTable.addCell(cell);
 
-            table = new PdfPTable(6);
-            float[] columnWidth = new float[]{6, 30, 30, 20, 20, 30};
-            table.setWidths(columnWidth);
 
             cell = new PdfPCell();
             cell.setBackgroundColor(myColor1);
@@ -150,7 +165,7 @@ public class PDFUtils {
     }
 
     private void setSubIndex() {
-        BaseColor myColor1 = WebColors.getRGBColor("#cdcdcd");
+        BaseColor myColor1 = WebColors.getRGBColor("#efefef");
         PdfPCell cell = new PdfPCell(new Phrase(" "));
 //        cell.setColspan(6);
 //        table.addCell(cell);
@@ -159,22 +174,24 @@ public class PDFUtils {
 
         cell.setBackgroundColor(myColor1);
         /*Header Style */
-        cell = new PdfPCell(new Phrase("#"));
+        Font Head_FONT = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
+        Head_FONT.setColor(WebColors.getRGBColor("#0F4C8D"));
+        cell = new PdfPCell(new Phrase(new Chunk("S.NO", Head_FONT)));
         cell.setBackgroundColor(myColor1);
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("Image"));
+        cell = new PdfPCell(new Phrase(new Chunk("IMAGE", Head_FONT)));
         cell.setBackgroundColor(myColor1);
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("Code"));
+        cell = new PdfPCell(new Phrase(new Chunk("CODE", Head_FONT)));
         cell.setBackgroundColor(myColor1);
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("Qty"));
+        cell = new PdfPCell(new Phrase(new Chunk("QTY", Head_FONT)));
         cell.setBackgroundColor(myColor1);
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("Rate"));
+        cell = new PdfPCell(new Phrase(new Chunk("RATE", Head_FONT)));
         cell.setBackgroundColor(myColor1);
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("Total"));
+        cell = new PdfPCell(new Phrase(new Chunk("TOTAL", Head_FONT)));
         cell.setBackgroundColor(myColor1);
         table.addCell(cell);
 
@@ -187,20 +204,24 @@ public class PDFUtils {
             final ArrayList<OrderDetailDao> orderDetailDaos = dbHandler.getOrderListByRoom((int) roomArrayList.get(i).id);
             if (orderDetailDaos.size() > 0) {
                 PdfPCell cell = new PdfPCell();
-                cell.addElement(new Paragraph(roomArrayList.get(i).name));
+                Font ROOM_FONT = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD | Font.UNDERLINE);
+                ROOM_FONT.setColor(WebColors.getRGBColor("#B0D041"));
+                Paragraph paragraph = new Paragraph(roomArrayList.get(i).name, ROOM_FONT);
+                paragraph.setAlignment(Element.ALIGN_JUSTIFIED | Element.ALIGN_CENTER);
+                cell.addElement(paragraph);
                 cell.setColspan(6);
+
                 table.addCell(cell);
-                Font smallfont = new Font(Font.FontFamily.HELVETICA, 10);
+
                 for (int j = 0; j < orderDetailDaos.size(); j++) {
                     final OrderDetailDao orderDetailDao = orderDetailDaos.get(j);
-                    table.addCell(String.valueOf(++k));
-                    table.addCell(new Phrase("ASAP", smallfont));
-                    table.addCell(orderDetailDao.code);
-                    table.addCell(orderDetailDao.Qty + "");
-                    table.addCell(orderDetailDao.price + "");
-                    table.addCell((orderDetailDao.Qty * orderDetailDao.price) + "");
-
-
+                    table.addCell(getTableValue(String.valueOf(++k)));
+                    table.addCell(getTableImageValue(getBitmap(orderDetailDao.ImageUrl)));
+                    table.addCell(getTableValue(orderDetailDao.code));
+                    table.addCell(getTableValue(orderDetailDao.Qty + ""));
+                    table.addCell(getTableValue(orderDetailDao.price + ""));
+                    table.addCell(getTableValue((orderDetailDao.Qty * orderDetailDao.price) + ""));
+                    ;
                 }
                 //  return Utility.showPriceInUK(dbHandler.getParticularRoomtotal(roomid));
                 cell = new PdfPCell(new Phrase(" "));
@@ -210,52 +231,155 @@ public class PDFUtils {
                 table.addCell(new Phrase(" "));
                 table.addCell(new Phrase(" "));
                 table.addCell(new Phrase(" "));
-                table.addCell("Total");
-                table.addCell(Utility.showPriceInUK(dbHandler.getParticularRoomtotal(roomArrayList.get(i).id)) + "");
+                table.addCell(getTableValue("Total", "#0F4C8D"));
+                table.addCell(getTableValue(Utility.showPriceInUK(dbHandler.getParticularRoomtotal(roomArrayList.get(i).id)) + "", "#0F4C8D"));
             }
 
         }
     }
 
+    private PdfPCell getTableImageValue(Bitmap b) {
+        Log.d("BitmapSize", "" + b.getWidth() + ":" + b.getHeight());
+        Bitmap bitmap = Bitmap.createScaledBitmap(b, b.getWidth() / 4, b.getHeight() / 4, true);
+        Log.d("BitmapSize", "" + bitmap.getWidth() + ":" + bitmap.getHeight());
+        PdfPCell pdfPCell = new PdfPCell();
+        try {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream);
+            byte[] bitmapdata = stream.toByteArray();
+            Image bgImage = null;
+            bgImage = Image.getInstance(bitmapdata);
+            bgImage.setAbsolutePosition(330f, 642f);
+            pdfPCell.addElement(bgImage);
+        } catch (BadElementException e) {
+            e.printStackTrace();
+            pdfPCell.setPaddingTop(5);
+            pdfPCell.setPaddingBottom(5);
+            pdfPCell.addElement(getTableValue("NA"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            pdfPCell.setPaddingTop(5);
+            pdfPCell.setPaddingBottom(5);
+            pdfPCell.addElement(getTableValue("NA"));
+        }
+
+        return pdfPCell;
+    }
+
+    private static Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
+        if (maxHeight > 0 && maxWidth > 0) {
+            int width = image.getWidth();
+            int height = image.getHeight();
+            float ratioBitmap = (float) width / (float) height;
+            float ratioMax = (float) maxWidth / (float) maxHeight;
+
+            int finalWidth = maxWidth;
+            int finalHeight = maxHeight;
+            if (ratioMax > 1) {
+                finalWidth = (int) ((float) maxHeight * ratioBitmap);
+            } else {
+                finalHeight = (int) ((float) maxWidth / ratioBitmap);
+            }
+            image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+            return image;
+        } else {
+            return image;
+        }
+    }
+
+    private Bitmap getBitmap(String imageUrl) {
+        Bitmap image = null;
+        Log.d("onBitmapLoad", imageUrl + "");
+        try {
+            URL url = new URL(imageUrl);
+            image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            Log.d("onBitmapLoaded B", image.getWidth() + "");
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        return image;
+
+    }
+
+    private Phrase getTableValue(String s) {
+        Font Value_FONT = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
+        Value_FONT.setColor(WebColors.getRGBColor("#2e2e2e"));
+        Paragraph paragraph = new Paragraph(s, Value_FONT);
+        paragraph.setAlignment(Element.ALIGN_CENTER);
+        return paragraph;
+    }
+
+    private PdfPCell getTableValue(String s, String color) {
+        Font Value_FONT = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLDITALIC);
+        Value_FONT.setColor(WebColors.getRGBColor(color));
+        Paragraph paragraph = new Paragraph(s, Value_FONT);
+        paragraph.setAlignment(Element.ALIGN_CENTER);
+        PdfPCell pdfPCell = new PdfPCell();
+//        pdfPCell.setBorder(Rectangle.NO_BORDER);
+        pdfPCell.setPaddingTop(5);
+        pdfPCell.setPaddingBottom(5);
+        pdfPCell.addElement(paragraph);
+        return pdfPCell;
+    }
+
+
     private void addDocFooter() {
         try {
-            BaseColor myColor1 = WebColors.getRGBColor("#757575");
-            PdfPTable ftable = new PdfPTable(6);
+            BaseColor myColor1 = WebColors.getRGBColor("#CDCDCD");
+            PdfPTable ftable = new PdfPTable(2);
             ftable.setWidthPercentage(100);
-            float[] columnWidthaa = new float[]{30, 10, 30, 10, 30, 10};
+            float[] columnWidthaa = new float[]{90, 30};
             ftable.setWidths(columnWidthaa);
             PdfPCell cell = new PdfPCell();
-            cell.setColspan(6);
+            cell.setColspan(2);
             cell.setBackgroundColor(myColor1);
-            cell = new PdfPCell(new Phrase("Total Number"));
-            cell.setBorder(Rectangle.NO_BORDER);
-            cell.setBackgroundColor(myColor1);
-            ftable.addCell(cell);
-            cell = new PdfPCell(new Phrase(""));
-            cell.setBorder(Rectangle.NO_BORDER);
-            cell.setBackgroundColor(myColor1);
-            ftable.addCell(cell);
-            cell = new PdfPCell(new Phrase(""));
-            cell.setBorder(Rectangle.NO_BORDER);
-            cell.setBackgroundColor(myColor1);
-            ftable.addCell(cell);
-            cell = new PdfPCell(new Phrase(""));
-            cell.setBorder(Rectangle.NO_BORDER);
-            cell.setBackgroundColor(myColor1);
-            ftable.addCell(cell);
-            cell = new PdfPCell(new Phrase(""));
-            cell.setBorder(Rectangle.NO_BORDER);
-            cell.setBackgroundColor(myColor1);
-            ftable.addCell(cell);
-            cell = new PdfPCell(new Phrase(""));
-            cell.setBorder(Rectangle.NO_BORDER);
-            cell.setBackgroundColor(myColor1);
-            ftable.addCell(cell);
-            cell = new PdfPCell(new Paragraph("Footer"));
+
+            Project project = dbHandler.getProjectDetail(PRID);
+            if (project.discountType != null && project.discountType.equalsIgnoreCase("R")) {
+                double subTotal = dbHandler.getGrandValues(true, PRID);
+                if (project.discountValue >= 1) {
+                    double finalTotal = subTotal - project.discountValue;
+                    ftable.addCell(getFooterValue("SUB TOTAL: ", Element.ALIGN_RIGHT));
+                    ftable.addCell(getFooterValue(Utility.showPriceInUK(subTotal), Element.ALIGN_RIGHT));
+                    /*Discount */
+                    ftable.addCell(getFooterValue("DIS: ", Element.ALIGN_RIGHT));
+                    ftable.addCell(getFooterValue(Utility.showPriceInUK(project.discountValue), Element.ALIGN_RIGHT));
+                    /*Subtototal*/
+                    ftable.addCell(getFooterValue("TOTAL: ", Element.ALIGN_RIGHT));
+                    ftable.addCell(getFooterValue(Utility.showPriceInUK(finalTotal), Element.ALIGN_RIGHT));
+                } else {
+                    ftable.addCell(getFooterValue("TOTAL: ", Element.ALIGN_RIGHT));
+                    ftable.addCell(getFooterValue(Utility.showPriceInUK(subTotal), Element.ALIGN_RIGHT));
+                }
+
+            } else if (project.discountType != null && project.discountType.equalsIgnoreCase("P")) {
+                double subTotal = dbHandler.getGrandValues(true, PRID);
+                if (project.discountValue >= 1) {
+                    double finalTotal = subTotal - (subTotal * (project.discountValue / 100));
+                    ftable.addCell(getFooterValue("SUB TOTAL: ", Element.ALIGN_RIGHT));
+                    ftable.addCell(getFooterValue(Utility.showPriceInUK(subTotal), Element.ALIGN_RIGHT));
+                    /*Discount */
+                    ftable.addCell(getFooterValue("DIS (" + project.discountValue + "%): ", Element.ALIGN_RIGHT));
+                    ftable.addCell(getFooterValue(Utility.showPriceInUK((subTotal * (project.discountValue / 100))), Element.ALIGN_RIGHT));
+                    /*Subtototal*/
+                    ftable.addCell(getFooterValue("TOTAL: ", Element.ALIGN_RIGHT));
+                    ftable.addCell(getFooterValue(Utility.showPriceInUK(finalTotal), Element.ALIGN_RIGHT));
+                } else {
+                    ftable.addCell(getFooterValue("TOTAL: ", Element.ALIGN_RIGHT));
+                    ftable.addCell(getFooterValue(Utility.showPriceInUK(subTotal), Element.ALIGN_RIGHT));
+                }
+            } else {
+                double subTotal = dbHandler.getGrandValues(true, PRID);
+                ftable.addCell(getFooterValue("TOTAL: ", Element.ALIGN_RIGHT));
+                ftable.addCell(getFooterValue(Utility.showPriceInUK(subTotal), Element.ALIGN_RIGHT));
+            }
+            /**/
+            cell = new PdfPCell(new Paragraph("Term & Conditions"));
             cell.setColspan(6);
             ftable.addCell(cell);
             cell = new PdfPCell();
             cell.setColspan(6);
+            /**/
             cell.addElement(ftable);
             table.addCell(cell);
             doc.add(table);
@@ -265,6 +389,19 @@ public class PDFUtils {
         } finally {
             doc.close();
         }
+    }
+
+    private PdfPCell getFooterValue(String s, int Align) {
+        Font Value_FONT = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLDITALIC);
+        Value_FONT.setColor(WebColors.getRGBColor("#2e2e2e"));
+        Paragraph paragraph = new Paragraph(s, Value_FONT);
+        paragraph.setAlignment(Align);
+        PdfPCell pdfPCell = new PdfPCell();
+//        pdfPCell.setBorder(Rectangle.NO_BORDER);
+        pdfPCell.setPaddingTop(2);
+        pdfPCell.setPaddingBottom(2);
+        pdfPCell.addElement(paragraph);
+        return pdfPCell;
     }
 
     private void EndDocument() {

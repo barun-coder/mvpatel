@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.ServiceConnection;
 
 import com.displayfort.mvpatel.DB.TrackerDbHandler;
+import com.splunk.mint.Mint;
 
 /**
  * Created by Husain on 07-03-2016.
@@ -20,7 +21,7 @@ public class MvPatelApplication extends Application {
         mInstance = this;
         initialize();
         MvPatelApplication.context = getApplicationContext();
-//             Mint.initAndStartSession(getApplicationContext(), "91479eda");
+        Mint.initAndStartSession(this, "844ac1aa");
     }
 
     private void initialize() {

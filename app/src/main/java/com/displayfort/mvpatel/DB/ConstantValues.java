@@ -209,6 +209,8 @@ public class ConstantValues {
         values.put(DbCons.PRODUCT_PRICE, orderDetailDao.price);
         values.put(DbCons.COLOR_ID, orderDetailDao.colorId);
         values.put(DbCons.STATUS, true);
+        values.put(DbCons.DISCOUNT_VALUE, 0);
+        values.put(DbCons.DISCOUNT_TYPE, "R");
         values.put(DbCons.TITLE, orderDetailDao.colorText);
         values.put(DbCons.URL, orderDetailDao.ImageUrl);
         values.put(DbCons.CREATION, System.currentTimeMillis());

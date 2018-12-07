@@ -1,12 +1,5 @@
 package com.displayfort.mvpatel.Model;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-
 /**
  * Created by pc on 14/11/2018 13:08.
  * MVPatel
@@ -19,6 +12,7 @@ public class OrderDetailDao {
     public String detail;
     public Integer productTypeId;
     public Integer price;
+    public double discountPrice;
     public Integer colorId;
     public boolean status;
     public String colorText;
@@ -26,7 +20,8 @@ public class OrderDetailDao {
     public String ImageUrl;
     public long created;
     public int Qty;
-
+    public double discountValue;
+    public String discountType;
 
     public OrderDetailDao() {
 
@@ -40,6 +35,7 @@ public class OrderDetailDao {
         this.detail = detail;
         this.productTypeId = productTypeId;
         this.price = price;
+        this.discountPrice = price;
         this.colorId = colorId;
         this.status = status;
         this.colorText = colorText;

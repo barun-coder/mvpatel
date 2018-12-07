@@ -126,6 +126,7 @@ public class AddProductinProjectActivity extends BaseActivity {
         orderDao.detail = productDao.detail;
         orderDao.productTypeId = productPrice.id;
         orderDao.price = productPrice.price;
+        orderDao.discountPrice = productPrice.price;
         orderDao.colorId = productPrice.colorID;
         orderDao.status = true;
         orderDao.colorText = productPrice.attachmentListDao.type;

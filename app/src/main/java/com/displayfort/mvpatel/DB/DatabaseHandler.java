@@ -19,7 +19,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TRACKER_DB = "MVPatel.db";
     // Database Version\
     private static SQLiteDatabase mSqLiteDatabase;
-    private static final int VERSION = 11;//5
+    private static final int VERSION = 12;//5
     private static final String TAG = "DatabaseHandler";
     private static final String DROP_IF_EXISTS = "DROP TABLE IF EXISTS ";
     private static final String FOREIGN_KEY_CONSTRAINT = "PRAGMA foreign_key=ON;";
@@ -92,9 +92,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (newVersion != oldVersion) {
             if (newVersion > oldVersion) {
-                db.execSQL("ALTER TABLE " + DbCons.TABLE_PROJECT + " ADD COLUMN " + DbCons.DISCOUNT_VALUE + " " + INTEGER_NO_COMMA);
+                db.execSQL("ALTER TABLE " + DbCons.TABLE_ORDER_DETAIL + " ADD COLUMN " + DbCons.DISCOUNT_VALUE + " " + INTEGER_NO_COMMA);
 
-                db.execSQL("ALTER TABLE " + DbCons.TABLE_PROJECT + " ADD COLUMN " + DbCons.DISCOUNT_TYPE + " " + INTEGER_NO_COMMA);
+                db.execSQL("ALTER TABLE " + DbCons.TABLE_ORDER_DETAIL + " ADD COLUMN " + DbCons.DISCOUNT_TYPE + " " + INTEGER_NO_COMMA);
             }
 
         }

@@ -229,7 +229,7 @@ public class DbQueries {
         mBuffer.append(DbCons.STATUS);//
         mBuffer.append(BOOLEAN);
         mBuffer.append(DbCons.DISCOUNT_TYPE);//
-        mBuffer.append(INTEGER);
+        mBuffer.append(TEXT);
         mBuffer.append(DbCons.DISCOUNT_VALUE);//
         mBuffer.append(INTEGER);
         mBuffer.append(DbCons.CREATION);//0
@@ -277,7 +277,10 @@ public class DbQueries {
         mBuffer.append(TEXT);
         mBuffer.append(DbCons.PRODUCT_DETAIL);//
         mBuffer.append(TEXT);
-
+//        mBuffer.append(DbCons.DISCOUNT_TYPE);//
+//        mBuffer.append(TEXT);
+//        mBuffer.append(DbCons.DISCOUNT_VALUE);//
+//        mBuffer.append(INTEGER);
         mBuffer.append(DbCons.PRODUCT_TYPE_ID);//0
         mBuffer.append(INTEGER);
         mBuffer.append(DbCons.PRODUCT_PRICE);

@@ -8,7 +8,7 @@ import java.util.List;
 public class Project implements Serializable {
 
     public Date created;
-    public Long projectId;
+    public long projectId;
     public String name;
     public Boolean status;
     public double discountValue;
@@ -22,7 +22,7 @@ public class Project implements Serializable {
 
     }
 
-    public Project(Long projectId, String name) {
+    public Project(long projectId, String name) {
         this.projectId = projectId;
         this.name = name;
     }

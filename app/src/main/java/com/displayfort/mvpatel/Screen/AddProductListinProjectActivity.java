@@ -91,7 +91,7 @@ public class AddProductListinProjectActivity extends BaseActivity {
                             addNewProject();
                         } else {
                             currentProject = projectArrayList.get(position);
-                            new MVPatelPrefrence(context).setIntValue("PRID", currentProject.projectId.intValue());
+                            new MVPatelPrefrence(context).setIntValue("PRID", (int) currentProject.projectId);
                             setRoomData();
                         }
                     }
@@ -123,17 +123,19 @@ public class AddProductListinProjectActivity extends BaseActivity {
             orderDetailDao = cartProductOrderList.get(i);
 
             long orderID = 0;
-            int ORDER_IDavailable = dbHandler.getOrderDetailCount(orderDetailDao.productId, orderDetailDao.colorId, orderDetailDao.productTypeId, orderDetailDao.price);
+            int ORDER_IDavailable = dbHandler.getOrderDetailCount(orderDetailDao.productId, orderDetailDao.colorId, orderDetailDao.productTypeId, orderDetailDao.price, currentProject.projectId);
             if (ORDER_IDavailable == 0) {
-                orderID = dbHandler.AddOrderDetail(orderDetailDao);
+                orderID = dbHandler.AddOrderDetail(orderDetailDao, currentProject.projectId);
+                if (orderID > 0) {
+                    dbHandler.AddOrder(listAdapter.getSelectedRoom().id, orderID, currentProject.projectId, 0);
+                }
             } else {
                 orderID = ORDER_IDavailable;
             }
-            if (orderID > 0) {
-                dbHandler.AddOrder(listAdapter.getSelectedRoom().id, orderID);
-            }
+            dbHandler.updateOrderQtyItself(listAdapter.getSelectedRoom().id, orderID, currentProject.projectId);
+
         }
-        Utility.ShowToast(cartProductOrderList.size() + "product added succesfully in " + listAdapter.getSelectedRoom().name, context);
+        Utility.ShowToast(cartProductOrderList.size() + " product added succesfully in " + listAdapter.getSelectedRoom().name, context);
         finishActivityWithAnim();
     }
 
@@ -168,7 +170,7 @@ public class AddProductListinProjectActivity extends BaseActivity {
                     if (res != 0) {
                         Utility.ShowToast("Project Added Succesfully", context);
                         resetProjectList();
-                        currentProject = new Project(res, projectname);
+                        currentProject = new Project(res, projectname);                        new MVPatelPrefrence(context).setIntValue("PRID", (int) currentProject.projectId);
                         addProductToProjectViewHolder.mProjectNameTv.setText(projectname);
                         resetRoomList();
                         dialog.cancel();
@@ -195,7 +197,11 @@ public class AddProductListinProjectActivity extends BaseActivity {
 
     private void resetRoomList() {
         roomArrayList = dbHandler.getRoomList(currentProject.projectId);
-        roomArrayList.get(0).isSelected = true;
+        try {
+            roomArrayList.get(0).isSelected = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         listAdapter.setlist(roomArrayList);
     }
 
@@ -255,7 +261,7 @@ public class AddProductListinProjectActivity extends BaseActivity {
         adapter.setlist(projectArrayList);
         int ProjId = new MVPatelPrefrence(context).getIntValue("PRID");
         for (Project project : projectArrayList) {
-            if (project.projectId != null && project.projectId == ProjId) {
+            if (project.projectId != 0 && project.projectId == ProjId) {
                 currentProject = project;
                 setRoomData();
                 return;

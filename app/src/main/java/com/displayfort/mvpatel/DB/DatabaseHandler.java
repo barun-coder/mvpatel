@@ -19,7 +19,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TRACKER_DB = "MVPatel.db";
     // Database Version\
     private static SQLiteDatabase mSqLiteDatabase;
-    private static final int VERSION = 12;//5
+    private static final int VERSION = 10;//5
     private static final String TAG = "DatabaseHandler";
     private static final String DROP_IF_EXISTS = "DROP TABLE IF EXISTS ";
     private static final String FOREIGN_KEY_CONSTRAINT = "PRAGMA foreign_key=ON;";
@@ -45,6 +45,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         /**
          * Creating table
          */
+        init(db);
+
+//
+
+    }
+
+    private void init(SQLiteDatabase db) {
         db.execSQL(DbQueries.getCreateCategoryTable());
         db.execSQL(DbQueries.getCreateSubCategoryTable());
         db.execSQL(DbQueries.getCreateMasterCategoryTable());
@@ -81,12 +88,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + DbCons.TABLE_MASTER_CATEGORY + " (" + DbCons._ID + ", " + DbCons.CAT_ID + ") VALUES (4, 19);");
         db.execSQL("INSERT INTO " + DbCons.TABLE_MASTER_CATEGORY + " (" + DbCons._ID + ", " + DbCons.CAT_ID + ") VALUES (4, 20);");
         db.execSQL("INSERT INTO " + DbCons.TABLE_MASTER_CATEGORY + " (" + DbCons._ID + ", " + DbCons.CAT_ID + ") VALUES (5, 21);");
-//
-
     }
 
     private final String INTEGER_NO_COMMA = " Integer";
     private final String INTEGER = " INTEGER, ";
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        super.onDowngrade(db, oldVersion, newVersion);
+        init(db);
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

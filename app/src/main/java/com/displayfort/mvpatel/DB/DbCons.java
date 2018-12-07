@@ -59,6 +59,7 @@ public final class DbCons {
     public static final String PRODUCT_TYPE_ID = "productTypeId";
     /*Order Table*/
     public static final String TABLE_ORDER = "TableOrder";
-    public static final String ROOMID = "RoomId";
+    public static final String ROOMID = "RoomID";
+    public static final String QUANTITY = "QTY";
 
 }

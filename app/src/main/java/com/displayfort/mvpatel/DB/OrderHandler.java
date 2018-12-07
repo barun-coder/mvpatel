@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.displayfort.mvpatel.Model.OrderDetailDao;
+import com.displayfort.mvpatel.Model.Room;
 
 import java.util.ArrayList;
 
@@ -27,7 +28,7 @@ public class OrderHandler extends ProjectHandler {
         Cursor cursor = null;
         try {
             //SELECT * FROM 'TableOrderDetailDao' where catId =1;
-            cursor = db.rawQuery("SELECT TableOrderDetail.*,TableOrder." + DbCons.ROOMID + " ,Count (*) AS Qty" +
+            cursor = db.rawQuery("SELECT TableOrderDetail.*,TableOrder." + DbCons.ROOMID + " ,TableOrder.QTY " +
                     " FROM TableOrder " +
                     "INNER JOIN TableOrderDetail ON TableOrder.OrderId = TableOrderDetail.OrderId" +
                     " where  " + DbCons.ROOMID + "=" + roomID +
@@ -48,9 +49,30 @@ public class OrderHandler extends ProjectHandler {
                     detailDao.colorText = cursor.getString(cursor.getColumnIndex(DbCons.TITLE));
                     detailDao.attachId = cursor.getInt(cursor.getColumnIndex(DbCons.ATTACHABLE_ID));
                     detailDao.ImageUrl = cursor.getString(cursor.getColumnIndex(DbCons.URL));
-                    detailDao.Qty = cursor.getInt(cursor.getColumnIndexOrThrow("Qty"));
+                    detailDao.Qty = cursor.getInt(cursor.getColumnIndex(DbCons.QUANTITY));
                     detailDao.created = cursor.getLong(cursor.getColumnIndex(DbCons.CREATION));
                     detailDao.roomId = cursor.getLong(cursor.getColumnIndexOrThrow(DbCons.ROOMID));
+                    detailDao.discountValue = cursor.getDouble(cursor.getColumnIndex(DbCons.DISCOUNT_VALUE));
+                    detailDao.discountType = cursor.getString(cursor.getColumnIndex(DbCons.DISCOUNT_TYPE));
+                    double grandT = detailDao.price;
+                    double finalgTotal = grandT;
+                    double dvalue = detailDao.discountValue;
+                    detailDao.discountPrice = detailDao.price;
+                    if (detailDao.discountType != null && dvalue >= 1) {
+                        if (detailDao.discountType.equalsIgnoreCase("R")) {
+                            if (dvalue >= 1) {
+                                detailDao.discountPrice = grandT - dvalue;
+
+                            }
+                        } else {
+                            if (dvalue >= 1) {
+                                detailDao.discountPrice = grandT - (grandT * (dvalue / 100));
+                            }
+                        }
+                    } else {
+                        detailDao.discountPrice = detailDao.price;
+                    }
+
                     if (detailDao != null) {
                         orderDetailDaos.add(detailDao);
                     }
@@ -68,7 +90,7 @@ public class OrderHandler extends ProjectHandler {
     }
 
     /*Add OrderDetailDao*/
-    public long AddOrderDetail(OrderDetailDao orderDao) {
+    public long AddOrderDetail(OrderDetailDao orderDao, long PRID) {
         long count = 0;
         SQLiteDatabase db = this.getWritableDatabase();
         try {
@@ -76,7 +98,7 @@ public class OrderHandler extends ProjectHandler {
                 if (!db.isOpen()) {
                     db = this.getWritableDatabase();
                 }
-                count = db.insert(DbCons.TABLE_ORDER_DETAIL, "", ConstantValues.geOrderDetailValues(orderDao));
+                count = db.insert(DbCons.TABLE_ORDER_DETAIL, "", ConstantValues.geOrderDetailValues(orderDao, PRID));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,7 +111,7 @@ public class OrderHandler extends ProjectHandler {
 
     /*Is avail*/
 
-    public int getOrderDetailCount(long productId, Integer colorId, Integer productTypeId, Integer price) {
+    public int getOrderDetailCount(long productId, Integer colorId, Integer productTypeId, Integer price, long PRID) {
         int orderId = 0;
         ShowLog("getOrderDetailCount");
         SQLiteDatabase db = this.getReadableDatabase();
@@ -99,6 +121,7 @@ public class OrderHandler extends ProjectHandler {
             cursor = db.rawQuery("SELECT " + DbCons.ORDER_ID + " FROM " + DbCons.TABLE_ORDER_DETAIL + " Where " +
                             DbCons.PRODUCT_ID + "=" + productId + " AND " +
                             DbCons.PRODUCT_TYPE_ID + "=" + productTypeId + " AND " +
+                            DbCons.PROJECT_ID + "=" + PRID + " AND " +
                             DbCons.COLOR_ID + "=" + colorId + " AND " +
                             DbCons.PRODUCT_PRICE + "=" + price
 
@@ -122,7 +145,7 @@ public class OrderHandler extends ProjectHandler {
     }
 
     /*Add Order*/
-    public long AddOrder(long roomId, long OID) {
+    public long AddOrder(long roomId, long OID, long PRID, int QTY) {
         long count = 0;
         SQLiteDatabase db = this.getWritableDatabase();
         try {
@@ -133,6 +156,8 @@ public class OrderHandler extends ProjectHandler {
                 ContentValues values = new ContentValues();
                 values.put(DbCons.ORDER_ID, OID);
                 values.put(DbCons.ROOMID, roomId);
+                values.put(DbCons.PROJECT_ID, PRID);
+                values.put(DbCons.QUANTITY, QTY);
                 count = db.insert(DbCons.TABLE_ORDER, "", values);
             }
         } catch (Exception e) {
@@ -144,9 +169,7 @@ public class OrderHandler extends ProjectHandler {
         return count;
     }
 
-    /*Update Price*/
-
-    public int updateOrder(double Price, int OID) {
+    public int updateOrderQty(long roomId, long OID, long PRID, int QTY) {
         int count = 0;
         long id = 0;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -156,8 +179,65 @@ public class OrderHandler extends ProjectHandler {
                     db = this.getWritableDatabase();
                 }
                 ContentValues values = new ContentValues();
-                values.put(DbCons.PRODUCT_PRICE, Price);
-                count = db.update(DbCons.TABLE_ORDER_DETAIL, values, DbCons.ORDER_ID + "=" + OID, null);
+                values.put(DbCons.QUANTITY, QTY);
+                count = db.update(DbCons.TABLE_ORDER, values,
+                        DbCons.ORDER_ID + "=" + OID
+                                + " AND " + DbCons.ROOMID + "=" + roomId
+                                + " AND " + DbCons.PROJECT_ID + "=" + PRID
+
+                        , null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            databaseClose(db);
+        }
+
+        return count;
+    }
+
+    public void updateOrderQtyItself(long roomId, long OID, long PRID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            if (db != null) {
+                if (!db.isOpen()) {
+                    db = this.getWritableDatabase();
+                }
+//                UPDATE TableOrder     SET QTY = QTY + 1    WHERE OrderId = 1
+                String sql = "UPDATE " + DbCons.TABLE_ORDER +
+                        " SET " + DbCons.QUANTITY + "=" + DbCons.QUANTITY + "+1 " +
+                        "where " + DbCons.ORDER_ID + "=" + OID + " AND " + DbCons.ROOMID + "=" + roomId + " AND " + DbCons.PROJECT_ID + "=" + PRID;
+                Cursor cursor = null;
+                cursor = db.rawQuery(sql, null);
+                if (null != cursor && cursor.getCount() > 0) {
+                    while (cursor.moveToNext()) {
+                        cursor.getInt(cursor.getColumnIndex(DbCons.QUANTITY));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            databaseClose(db);
+        }
+
+    }
+
+    /*Update Price*/
+//
+    public int updateOrderDetail(int OID, double discount, String type, long PRID) {
+        int count = 0;
+        long id = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            if (db != null) {
+                if (!db.isOpen()) {
+                    db = this.getWritableDatabase();
+                }
+                ContentValues values = new ContentValues();
+                values.put(DbCons.DISCOUNT_VALUE, discount);
+                values.put(DbCons.DISCOUNT_TYPE, type);
+                count = db.update(DbCons.TABLE_ORDER_DETAIL, values, DbCons.ORDER_ID + "=" + OID + " AND " + DbCons.PROJECT_ID + "=" + PRID, null);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -169,7 +249,7 @@ public class OrderHandler extends ProjectHandler {
     }
 
     /**/
-    public int deleteOrder(long roomId, long OID) {
+    public int deleteOrder(long roomId, long OID, long PRID) {
         int count = 0;
         long id = 0;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -183,7 +263,10 @@ public class OrderHandler extends ProjectHandler {
                 values.put(DbCons.ROOMID, roomId);
                 Cursor cursor = null;
                 cursor = db.rawQuery(" select t.ID from 'TableOrder' as t " +
-                        " where t.OrderId=" + OID + " AND t.RoomId=" + roomId + " " +
+                        " where" +
+                        " t.OrderId=" + OID + " AND " +
+                        " t.ProjectId=" + PRID + " AND " +
+                        "t.RoomId=" + roomId + " " +
                         " order by ID desc Limit 1", null);
                 if (null != cursor && cursor.getCount() > 0) {
                     while (cursor.moveToNext()) {
@@ -210,15 +293,43 @@ public class OrderHandler extends ProjectHandler {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         try {
-            cursor = db.rawQuery(" SELECT ((Count (*))*TableOrderDetail.Price) As Total, TableOrderDetail.Price ,Count (*) AS Qty " +
-                            " FROM TableOrder " +
-                            " INNER JOIN TableOrderDetail ON TableOrder.OrderId = TableOrderDetail.OrderId " +
-                            " where  RoomId=" + roomId + " Group By TableOrder.OrderId"
-                    , null);
+//           sql=" SELECT ((Count (*))*TableOrderDetail.Price) As Total, TableOrderDetail.Price ,Count (*) AS Qty " +
+//                    " FROM TableOrder " +
+//                    " INNER JOIN TableOrderDetail ON TableOrder.OrderId = TableOrderDetail.OrderId " +
+//                    " where  RoomId=" + roomId + " Group By TableOrder.OrderId";
+
+            String sql = "SELECT TableOrderDetail.DiscountValue,TableOrderDetail.DiscountType, TableOrderDetail.Price,TableOrder.QTY " +
+                    "FROM 'TableOrder' " +
+                    "INNER JOIN TableOrderDetail ON TableOrder.OrderId = TableOrderDetail.OrderId  " +
+                    "where RoomID=" + +roomId;
+            cursor = db.rawQuery(sql, null);
             ShowLog(db.toString());
             if (null != cursor && cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
-                    amount = amount + cursor.getDouble(cursor.getColumnIndex("Total"));
+                    int price = cursor.getInt(cursor.getColumnIndex(DbCons.PRODUCT_PRICE));
+                    int Qty = cursor.getInt(cursor.getColumnIndex(DbCons.QUANTITY));
+                    double discountValue = cursor.getDouble(cursor.getColumnIndex(DbCons.DISCOUNT_VALUE));
+                    String discountType = cursor.getString(cursor.getColumnIndex(DbCons.DISCOUNT_TYPE));
+//
+                    double totalAmount = price;
+                    double grandT = price;
+                    double finalgTotal = grandT;
+                    double dvalue = discountValue;
+                    if (discountType != null && dvalue >= 1) {
+                        if (discountType.equalsIgnoreCase("R")) {
+                            if (dvalue >= 1) {
+                                totalAmount = grandT - dvalue;
+                            }
+                        } else {
+                            if (dvalue >= 1) {
+                                totalAmount = grandT - (grandT * (dvalue / 100));
+                            }
+                        }
+                    } else {
+                        totalAmount = price;
+                    }
+
+                    amount = amount + (Qty * totalAmount);
                 }
             }
         } catch (Exception e) {
@@ -238,19 +349,55 @@ public class OrderHandler extends ProjectHandler {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         try {
-            cursor = db.rawQuery(" SELECT ((Count (*))*TableOrderDetail.Price) As Total, TableOrderDetail.Price ,Count (*) AS Qty " +
-                            " FROM TableOrder " +
-                            " INNER JOIN TableOrderDetail ON TableOrder.OrderId = TableOrderDetail.OrderId " +
-                            " where RoomId IN(SELECT RoomID FROM 'TableRoom' where ProjectId=" + ProjectId + ")" +
-                            " Group By TableOrder.OrderId"
-                    , null);
+// SELECT ((Count (*))*TableOrderDetail.Price) As Total, TableOrderDetail.Price ,Count (*) AS Qty " +
+//                            " FROM TableOrder " +
+//                            " INNER JOIN TableOrderDetail ON TableOrder.OrderId = TableOrderDetail.OrderId " +
+//                            " where RoomId IN(SELECT RoomID FROM 'TableRoom' where ProjectId=" + ProjectId + ")" +
+//                            " Group By TableOrder.OrderId
+            String sql = "";
+            if (isGrandTotal) {
+                sql = "SELECT TableOrderDetail.DiscountValue,TableOrderDetail.DiscountType, TableOrderDetail.Price,TableOrder.QTY " +
+                        " FROM 'TableOrder' " +
+                        " INNER JOIN TableOrderDetail ON TableOrder.OrderId = TableOrderDetail.OrderId  " +
+                        " where TableOrder.ProjectId=" + ProjectId;
+            } else {
+                sql = "SELECT SUM(TableOrder.QTY) AS Qty FROM 'TableOrder' " +
+                        "INNER JOIN TableOrderDetail ON TableOrder.OrderId = TableOrderDetail.OrderId " +
+                        "where TableOrder.ProjectId=" + ProjectId;
+            }
+            cursor = db.rawQuery(sql, null);
             ShowLog(db.toString());
             if (null != cursor && cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
                     if (isGrandTotal) {
-                        amount = amount + cursor.getDouble(cursor.getColumnIndex("Total"));
+                        /**/
+                        int price = cursor.getInt(cursor.getColumnIndex(DbCons.PRODUCT_PRICE));
+                        int Qty = cursor.getInt(cursor.getColumnIndex(DbCons.QUANTITY));
+                        double discountValue = cursor.getDouble(cursor.getColumnIndex(DbCons.DISCOUNT_VALUE));
+                        String discountType = cursor.getString(cursor.getColumnIndex(DbCons.DISCOUNT_TYPE));
+//
+                        double totalAmount = price;
+                        double grandT = price;
+                        double finalgTotal = grandT;
+                        double dvalue = discountValue;
+                        if (discountType != null && dvalue >= 1) {
+                            if (discountType.equalsIgnoreCase("R")) {
+                                if (dvalue >= 1) {
+                                    totalAmount = grandT - dvalue;
+                                }
+                            } else {
+                                if (dvalue >= 1) {
+                                    totalAmount = grandT - (grandT * (dvalue / 100));
+                                }
+                            }
+                        } else {
+                            totalAmount = price;
+                        }
+
+                        amount = amount + (Qty * totalAmount);
+                        /**/
                     } else {
-                        amount = amount + cursor.getDouble(cursor.getColumnIndex("Qty"));
+                        amount = cursor.getDouble(cursor.getColumnIndex("Qty"));
                     }
                 }
             }
@@ -265,7 +412,7 @@ public class OrderHandler extends ProjectHandler {
         return amount;
     }
 
-    public int updateProject(double discount ,String type, long PRID) {
+    public int updateProject(double discount, String type, long PRID) {
         int count = 0;
         long id = 0;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -277,7 +424,7 @@ public class OrderHandler extends ProjectHandler {
                 ContentValues values = new ContentValues();
                 values.put(DbCons.DISCOUNT_VALUE, discount);
                 values.put(DbCons.DISCOUNT_TYPE, type);
-                count = db.update(DbCons.TABLE_PROJECT, values, DbCons.PROJECT_ID+ "=" + PRID, null);
+                count = db.update(DbCons.TABLE_PROJECT, values, DbCons.PROJECT_ID + "=" + PRID, null);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -65,19 +65,7 @@
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp">
 
-                    <include layout="@layout/room_list_item_layout" />
 
-                    <include layout="@layout/project_detail_list_item" />
-
-
-                    <include layout="@layout/project_detail_footer" />
-
-                    <include layout="@layout/room_list_item_layout" />
-
-                    <include layout="@layout/project_detail_list_item" />
-
-
-                    <include layout="@layout/project_detail_footer" />
                 </LinearLayout>
 
             </android.support.v4.widget.NestedScrollView>

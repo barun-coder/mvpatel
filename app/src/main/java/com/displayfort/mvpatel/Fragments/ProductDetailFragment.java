@@ -46,7 +46,6 @@ import com.displayfort.mvpatel.Model.SubCategory;
 import com.displayfort.mvpatel.MvPatelApplication;
 import com.displayfort.mvpatel.R;
 import com.displayfort.mvpatel.Screen.AddProductListinProjectActivity;
-import com.displayfort.mvpatel.Screen.AddProductinProjectActivity;
 import com.displayfort.mvpatel.Screen.HomeActivity;
 import com.displayfort.mvpatel.Screen.ImageFullscreenActivity;
 import com.displayfort.mvpatel.Utils.RecyclerItemClickListener;
@@ -356,13 +355,6 @@ public class ProductDetailFragment extends BaseFragment implements View.OnClickL
         cartProductAdapter.notifyDataSetChanged();
     }
 
-    private void AddProduct() {
-        if (productPriceList != null && productPriceList.size() > 0 && productPriceList.get(CurrentItem) != null) {
-            AddProductinProjectActivity.productDao = productDao;
-            AddProductinProjectActivity.productPrice = productPriceList.get(CurrentItem);
-            startActivityWithAnim(getActivity(), new Intent(mContext, AddProductinProjectActivity.class));
-        }
-    }
 
     private void showTechnicalDrawingDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -465,7 +457,7 @@ public class ProductDetailFragment extends BaseFragment implements View.OnClickL
 
 
     private void setProductPrice(final int i) {
-        homeViewHolder.mProductPriceTv.setText(getString(R.string.Rs) + "Price On Request");
+        homeViewHolder.mProductPriceTv.setText(getString(R.string.Rs) + "NA");//Price On Request
         Utility.setImage(mContext, productPriceList.get(i).attachmentListDao.attachmentURL, homeViewHolder.mProductImageIv);
         homeViewHolder.productcolor_tv.setText("(" + productPriceList.get(i).attachmentListDao.type + ")");
 

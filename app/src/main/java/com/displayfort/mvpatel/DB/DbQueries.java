@@ -277,26 +277,24 @@ public class DbQueries {
         mBuffer.append(TEXT);
         mBuffer.append(DbCons.PRODUCT_DETAIL);//
         mBuffer.append(TEXT);
-//        mBuffer.append(DbCons.DISCOUNT_TYPE);//
-//        mBuffer.append(TEXT);
-//        mBuffer.append(DbCons.DISCOUNT_VALUE);//
-//        mBuffer.append(INTEGER);
         mBuffer.append(DbCons.PRODUCT_TYPE_ID);//0
         mBuffer.append(INTEGER);
         mBuffer.append(DbCons.PRODUCT_PRICE);
         mBuffer.append(INTEGER);
-
         mBuffer.append(DbCons.COLOR_ID);
         mBuffer.append(INTEGER);
         mBuffer.append(DbCons.TITLE);
         mBuffer.append(TEXT);
-
         mBuffer.append(DbCons.ATTACHABLE_ID);
         mBuffer.append(INTEGER);
         mBuffer.append(DbCons.URL);
         mBuffer.append(TEXT);
-
-
+        mBuffer.append(DbCons.DISCOUNT_TYPE);//
+        mBuffer.append(TEXT);
+        mBuffer.append(DbCons.DISCOUNT_VALUE);//
+        mBuffer.append(INTEGER);
+        mBuffer.append(DbCons.PROJECT_ID);//0
+        mBuffer.append(INTEGER);
         mBuffer.append(DbCons.STATUS);//
         mBuffer.append(BOOLEAN);
         mBuffer.append(DbCons.CREATION);//0
@@ -315,6 +313,10 @@ public class DbQueries {
         mBuffer.append(DbCons._ID);//0
         mBuffer.append(INT_P_KEY_AUTOINC);
         mBuffer.append(DbCons.ORDER_ID);//0
+        mBuffer.append(INTEGER);
+        mBuffer.append(DbCons.QUANTITY);//0
+        mBuffer.append(INTEGER);
+        mBuffer.append(DbCons.PROJECT_ID);//0
         mBuffer.append(INTEGER);
         mBuffer.append(DbCons.ROOMID);//0
         mBuffer.append(INTEGER_NO_COMMA);

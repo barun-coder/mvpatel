@@ -87,6 +87,19 @@
                     android:textSize="16sp" />
             </RadioGroup>
 
+            <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenMed
+                android:id="@+id/base_price_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="5dp"
+                android:text="0.0"
+                android:textColor="@color/dark_text_color"
+                android:textSize="14sp" />
+
             <android.support.design.widget.TextInputLayout
                 style="@style/TextLabel"
                 android:layout_width="match_parent"
@@ -100,7 +113,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:hint="Dioscount Value"
+                    android:hint="Discount Value"
                     android:inputType="numberDecimal"
                     android:maxLines="1"
                     android:singleLine="true" />

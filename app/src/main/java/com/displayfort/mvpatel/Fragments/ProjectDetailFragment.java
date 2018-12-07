@@ -12,19 +12,16 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v4.widget.NestedScrollView;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -139,7 +136,6 @@ public class ProjectDetailFragment extends BaseFragment implements View.OnClickL
                 homeViewHolder.mOrderDetailLl.addView(view);
                 addOrderDetail(orderDetailDaos, roomArrayList.get(i).id);
             }
-
         }
         setGrandTaltalAndQty();
     }
@@ -200,20 +196,17 @@ public class ProjectDetailFragment extends BaseFragment implements View.OnClickL
                     @Override
                     public void onStep(int value, boolean positive) {
                         if (!isFirstRun) {
-                            int xqty = value;
                             if (positive) {
-                                xqty = xqty - 1;
-                                dbHandler.AddOrder(orderDetailDao.roomId, orderDetailDao.OrderId);
+                                dbHandler.updateOrderQty(orderDetailDao.roomId, orderDetailDao.OrderId, PRID, value);
                             } else {
-                                xqty = xqty + 1;
-                                int delcount = dbHandler.deleteOrder(orderDetailDao.roomId, orderDetailDao.OrderId);
-
+                                dbHandler.updateOrderQty(orderDetailDao.roomId, orderDetailDao.OrderId, PRID, value);
                                 if (value < 1) {
+                                    dbHandler.deleteOrder(orderDetailDao.roomId, orderDetailDao.OrderId, PRID);
                                     homeViewHolder.mOrderDetailLl.removeView(view);
                                 }
                             }
                             orderDetailDaos.get(finalI).Qty = value;
-                            projectDetailListViewHolder.mPriceTv.setText((orderDetailDao.Qty * orderDetailDao.price) + "");
+                            projectDetailListViewHolder.mPriceTv.setText((orderDetailDao.Qty * orderDetailDao.discountPrice) + "");
                             projectDetailViewHolder.mPriceTotalTv.setText(getParticularRoomTotalAmount(Roomid));
                             setGrandTaltalAndQty();
                         } else {
@@ -238,8 +231,8 @@ public class ProjectDetailFragment extends BaseFragment implements View.OnClickL
 
                 //setText(orderDetailDao.Qty + "");
                 qty = qty + orderDetailDao.Qty;
-                projectDetailListViewHolder.mRate.setText((orderDetailDao.price) + "");
-                projectDetailListViewHolder.mPriceTv.setText((orderDetailDao.Qty * orderDetailDao.price) + "");
+                projectDetailListViewHolder.mRate.setText((orderDetailDao.discountPrice) + "");
+                projectDetailListViewHolder.mPriceTv.setText((orderDetailDao.Qty * orderDetailDao.discountPrice) + "");
                 homeViewHolder.mOrderDetailLl.addView(view);
             }
 
@@ -262,7 +255,8 @@ public class ProjectDetailFragment extends BaseFragment implements View.OnClickL
                 new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.calculation_dialog);
-
+        TextView basePriceTv = dialog.findViewById(R.id.base_price_tv);
+        basePriceTv.setText("Base: "+Utility.showPriceInUK(amount));
         final TextView messageTv = dialog.findViewById(R.id.message_tv);
         final EditText mDiscountEt = dialog.findViewById(R.id.dicaount_val_et);
         messageTv.setText(Utility.showPriceInUK(finalamount));
@@ -331,7 +325,21 @@ public class ProjectDetailFragment extends BaseFragment implements View.OnClickL
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                dbHandler.updateOrder(finalamount, orderId);
+                String s = mDiscountEt.getText().toString();
+                int checkRB = radioGroup.getCheckedRadioButtonId();
+                if (checkRB == R.id.ruppes_rb) {
+                    if (s != null && s.length() > 0) {
+                        dbHandler.updateOrderDetail(orderId, Double.parseDouble(s), "R", PRID);
+                    } else {
+                        dbHandler.updateOrderDetail(orderId, 0, "R", PRID);
+                    }
+                } else if (checkRB == R.id.percentage_rb) {
+                    if (s != null && s.length() > 0) {
+                        dbHandler.updateOrderDetail(orderId, Double.parseDouble(s), "P", PRID);
+                    } else {
+                        dbHandler.updateOrderDetail(orderId, 0, "P", PRID);
+                    }
+                }
                 mRate.setText(finalamount + "");
                 mPriceTv.setText((qty * finalamount) + "");
                 mPriceTotalTv.setText(getParticularRoomTotalAmount(roomid));
@@ -358,7 +366,8 @@ public class ProjectDetailFragment extends BaseFragment implements View.OnClickL
                 new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.calculation_dialog);
-
+        TextView basePriceTv = dialog.findViewById(R.id.base_price_tv);
+        basePriceTv.setText("Base: "+Utility.showPriceInUK(GrandTotal));
         final TextView messageTv = dialog.findViewById(R.id.message_tv);
         final EditText mDiscountEt = dialog.findViewById(R.id.dicaount_val_et);
         messageTv.setText(Utility.showPriceInUK(GrandTotal));

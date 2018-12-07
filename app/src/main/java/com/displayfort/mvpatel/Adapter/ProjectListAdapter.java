@@ -1,6 +1,8 @@
 package com.displayfort.mvpatel.Adapter;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,9 +15,12 @@ import android.widget.TextView;
 
 import com.displayfort.mvpatel.DB.TrackerDbHandler;
 import com.displayfort.mvpatel.InterFaces.OnProjectClick;
+import com.displayfort.mvpatel.MVPatelPrefrence;
 import com.displayfort.mvpatel.Model.Project;
 import com.displayfort.mvpatel.MvPatelApplication;
 import com.displayfort.mvpatel.R;
+import com.displayfort.mvpatel.Screen.LoginActivity;
+import com.displayfort.mvpatel.Utils.Dialogs;
 
 import java.util.ArrayList;
 
@@ -93,9 +98,16 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
                 if (menuId == R.id.emailImageButton) {
                     //TODO Email
                 } else {
-                    TrackerDbHandler dbHandler = MvPatelApplication.getDatabaseHandler();
-                    dbHandler.DeleteProject(projectArrayList.get(position).projectId);
-                    onProjectClick.OnProjectClick(projectArrayList.get(position), true);
+                    Dialogs.showYesNolDialog(context, "Confirmation", "Are you sure you want to Delete " + projectArrayList.get(position).name, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ((Dialog) v.getTag()).dismiss();
+                            TrackerDbHandler dbHandler = MvPatelApplication.getDatabaseHandler();
+                            dbHandler.DeleteProject(projectArrayList.get(position).projectId);
+                            onProjectClick.OnProjectClick(projectArrayList.get(position), true);
+                        }
+                    });
+
                 }
                 return true;
             }

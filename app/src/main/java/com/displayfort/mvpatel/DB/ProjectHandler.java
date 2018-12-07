@@ -61,16 +61,16 @@ public class ProjectHandler extends AllJsonListHandler {
 
     public Project getProjectDetail(long PRID) {
         ShowLog("getProjectList");
-        Project project=new Project();
+        Project project = new Project();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         try {
             //SELECT * FROM 'TableProject' where catId =1;
-            cursor = db.rawQuery("SELECT * FROM " + DbCons.TABLE_PROJECT +" Where "+DbCons.PROJECT_ID+"="+PRID, null);
+            cursor = db.rawQuery("SELECT * FROM " + DbCons.TABLE_PROJECT + " Where " + DbCons.PROJECT_ID + "=" + PRID, null);
             ShowLog(db.toString());
             if (null != cursor && cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
-                     project = new Project();
+                    project = new Project();
                     project.projectId = cursor.getLong(cursor.getColumnIndex(DbCons.PROJECT_ID));
                     project.name = cursor.getString(cursor.getColumnIndex(DbCons.TITLE));
                     project.status = (cursor.getInt(cursor.getColumnIndex(DbCons.STATUS)) == 1);
@@ -137,6 +137,9 @@ public class ProjectHandler extends AllJsonListHandler {
                 if (!db.isOpen()) {
                     db = this.getWritableDatabase();
                 }
+                count = db.delete(DbCons.TABLE_ORDER, DbCons.PROJECT_ID + "=?", new String[]{String.valueOf(projectId)});
+                count = db.delete(DbCons.TABLE_ORDER_DETAIL, DbCons.PROJECT_ID + "=?", new String[]{String.valueOf(projectId)});
+                count = db.delete(DbCons.TABLE_ROOM, DbCons.PROJECT_ID + "=?", new String[]{String.valueOf(projectId)});
                 count = db.delete(DbCons.TABLE_PROJECT, DbCons.PROJECT_ID + "=?", new String[]{String.valueOf(projectId)});
             }
         } catch (Exception e) {

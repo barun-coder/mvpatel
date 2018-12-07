@@ -40,7 +40,7 @@ import com.displayfort.mvpatel.Model.ProductPrice;
 import com.displayfort.mvpatel.Model.SubCategory;
 import com.displayfort.mvpatel.MvPatelApplication;
 import com.displayfort.mvpatel.R;
-import com.displayfort.mvpatel.Screen.AddProductinProjectActivity;
+
 import com.displayfort.mvpatel.Screen.ImageFullscreenActivity;
 import com.displayfort.mvpatel.Utils.RecyclerItemClickListener;
 import com.displayfort.mvpatel.Utils.Utility;
@@ -197,9 +197,9 @@ public class ProductShortDetailFragment extends BaseFragment implements View.OnC
 
     private void AddProduct() {
         if (productPriceList != null && productPriceList.size() > 0 && productPriceList.get(CurrentItem) != null) {
-            AddProductinProjectActivity.productDao = productDao;
-            AddProductinProjectActivity.productPrice = productPriceList.get(CurrentItem);
-            startActivityWithAnim(getActivity(), new Intent(mContext, AddProductinProjectActivity.class));
+//            AddProductinProjectDialogActivity.productDao = productDao;
+//            AddProductinProjectDialogActivity.productPrice = productPriceList.get(CurrentItem);
+//            startActivityWithAnim(getActivity(), new Intent(mContext, AddProductinProjectDialogActivity.class));
         }
     }
 
@@ -304,7 +304,7 @@ public class ProductShortDetailFragment extends BaseFragment implements View.OnC
 
 
     private void setProductPrice(final int i) {
-        homeViewHolder.mProductPriceTv.setText(getString(R.string.Rs) + "Price On Request");
+        homeViewHolder.mProductPriceTv.setText(getString(R.string.Rs) + "NA");//Price On Request
         Utility.setImage(mContext, productPriceList.get(i).attachmentListDao.attachmentURL, homeViewHolder.mProductImageIv);
         homeViewHolder.productcolor_tv.setText("(" + productPriceList.get(i).attachmentListDao.type + ")");
 

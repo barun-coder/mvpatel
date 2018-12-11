@@ -203,6 +203,8 @@ public class OrderHandler extends ProjectHandler {
                 if (!db.isOpen()) {
                     db = this.getWritableDatabase();
                 }
+
+
 //                UPDATE TableOrder     SET QTY = QTY + 1    WHERE OrderId = 1
                 String sql = "UPDATE " + DbCons.TABLE_ORDER +
                         " SET " + DbCons.QUANTITY + "=" + DbCons.QUANTITY + "+1 " +
@@ -221,6 +223,31 @@ public class OrderHandler extends ProjectHandler {
             databaseClose(db);
         }
 
+    }
+
+
+    public int getOrderRowCount(long roomId, long OID, long PRID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rowCount = 0;
+        try {
+            if (db != null) {
+                if (!db.isOpen()) {
+                    db = this.getWritableDatabase();
+                }
+                Cursor cursor = null;
+                cursor = db.rawQuery("  Select count (*)AS rowCount  FROM 'TableOrder' where OrderId=" + OID + " AND RoomID=" + roomId + " AND ProjectId=" + PRID, null);
+                if (null != cursor && cursor.getCount() > 0) {
+                    while (cursor.moveToNext()) {
+                        rowCount = cursor.getInt(cursor.getColumnIndexOrThrow("rowCount"));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            databaseClose(db);
+        }
+        return rowCount;
     }
 
     /*Update Price*/

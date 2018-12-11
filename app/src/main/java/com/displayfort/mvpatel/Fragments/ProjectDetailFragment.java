@@ -256,7 +256,7 @@ public class ProjectDetailFragment extends BaseFragment implements View.OnClickL
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.calculation_dialog);
         TextView basePriceTv = dialog.findViewById(R.id.base_price_tv);
-        basePriceTv.setText("Base: "+Utility.showPriceInUK(amount));
+        basePriceTv.setText("Base: " + Utility.showPriceInUK(amount));
         final TextView messageTv = dialog.findViewById(R.id.message_tv);
         final EditText mDiscountEt = dialog.findViewById(R.id.dicaount_val_et);
         messageTv.setText(Utility.showPriceInUK(finalamount));
@@ -344,6 +344,7 @@ public class ProjectDetailFragment extends BaseFragment implements View.OnClickL
                 mPriceTv.setText((qty * finalamount) + "");
                 mPriceTotalTv.setText(getParticularRoomTotalAmount(roomid));
                 setGrandTaltalAndQty();
+                ImlementRoomDetail();
             }
         });
 
@@ -367,7 +368,7 @@ public class ProjectDetailFragment extends BaseFragment implements View.OnClickL
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.calculation_dialog);
         TextView basePriceTv = dialog.findViewById(R.id.base_price_tv);
-        basePriceTv.setText("Base: "+Utility.showPriceInUK(GrandTotal));
+        basePriceTv.setText("Base: " + Utility.showPriceInUK(GrandTotal));
         final TextView messageTv = dialog.findViewById(R.id.message_tv);
         final EditText mDiscountEt = dialog.findViewById(R.id.dicaount_val_et);
         messageTv.setText(Utility.showPriceInUK(GrandTotal));

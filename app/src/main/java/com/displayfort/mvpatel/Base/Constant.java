@@ -15,7 +15,7 @@ public class Constant {
     public static final String NEW = "News & Notification";
     public static final String CUSTOMER = "Customer";
     public static final String VIDEOS = "Videos";
-    public static final String SUPPORT = "Support";
+    public static final String NFC = "NfcConnect";
     public static final String LOGOUT = "Logout";
     public static final String LOGIN = "Login";
 

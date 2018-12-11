@@ -44,6 +44,7 @@ import com.displayfort.mvpatel.Base.BaseFragment;
 import com.displayfort.mvpatel.Base.Constant;
 import com.displayfort.mvpatel.DB.DatabaseHandler;
 import com.displayfort.mvpatel.DB.TrackerDbHandler;
+import com.displayfort.mvpatel.Fragments.ConnectNfcFragment;
 import com.displayfort.mvpatel.Fragments.HomeFragment;
 import com.displayfort.mvpatel.Fragments.MyProjectListingFragment;
 import com.displayfort.mvpatel.Fragments.ProductDetailFragment;
@@ -56,12 +57,9 @@ import com.displayfort.mvpatel.MvPatelApplication;
 import com.displayfort.mvpatel.R;
 import com.displayfort.mvpatel.Utils.Dialogs;
 import com.displayfort.mvpatel.Utils.NewViewAnimator;
-import com.displayfort.mvpatel.Utils.PDFUtils;
 import com.displayfort.mvpatel.Utils.Utility;
-import com.itextpdf.text.DocumentException;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
@@ -84,7 +82,7 @@ public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnima
     private NewViewAnimator viewAnimator;
     private LinearLayout linearLayout;
     private String currentFragment = Constant.HOME;
-    private TextView titleTv;
+//    private TextView titleTv;
     private Context context;
     private ImageView icBackIv;
     private boolean mToolBarNavigationListenerIsRegistered = false;
@@ -101,9 +99,10 @@ public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnima
         initGestures();
         initNFC();
         homeFragment = HomeFragment.newInstance();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_fragment, homeFragment)
-                .commit();
+        replaceFragment(homeFragment, Constant.HOME);
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.main_fragment, homeFragment)
+//                .commit();
         icBackIv = findViewById(R.id.back_icon);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -163,7 +162,19 @@ public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnima
     private GestureDetector gestureDetector;
     View.OnTouchListener gestureListener;
 
+    public void goToHome(View view) {
+        List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+        Fragment fragment = fragmentList.get(fragmentList.size() - 1);
+        if (!(fragment instanceof HomeFragment)) {
+            Intent intent = new Intent(context, HomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivityWithAnim(intent);
+        }
+
+    }
+
     private void initGestures() {
+
         gestureDetector = new GestureDetector(new SwipeGestureDetector());
         gestureListener = new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
@@ -333,14 +344,14 @@ public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnima
         list.add(new SlideMenuItem(Constant.NEW, R.drawable.ic_news_notifications));
         list.add(new SlideMenuItem(Constant.CUSTOMER, R.drawable.ic_dealer));
         list.add(new SlideMenuItem(Constant.VIDEOS, R.drawable.ic_video));
-        list.add(new SlideMenuItem(Constant.SUPPORT, R.drawable.ic_support));
+        list.add(new SlideMenuItem(Constant.NFC, R.drawable.ic_support));
         list.add(new SlideMenuItem(Constant.LOGIN, R.drawable.ic_login));
     }
 
 
     private void setActionBar() {
-        titleTv = findViewById(R.id.toolbar_title);
-        titleTv.setVisibility(View.GONE);
+//        titleTv = findViewById(R.id.toolbar_title);
+//        titleTv.setVisibility(View.GONE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -502,27 +513,13 @@ public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnima
                     return replaceFragment(screenShotable, position, MyProjectListingFragment.newInstance(), slideMenuItem.getName());
                 }
                 break;
-            case Constant.SUPPORT: {
-                Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                emailIntent.setType("image/jpeg");
-
-                try {
-                    emailIntent.putExtra(Intent.EXTRA_STREAM, new PDFUtils().CreateQuotation(context, 2));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (DocumentException e) {
-                    e.printStackTrace();
+            case Constant.NFC: {
+                myFragment = getFragmentManager().findFragmentByTag(slideMenuItem.getName());
+                if (myFragment == null || !myFragment.isVisible()) {
+                    EmptyStack();
+                    currentFragment = slideMenuItem.getName();
+                    return replaceFragment(screenShotable, position, ConnectNfcFragment.newInstance(), slideMenuItem.getName());
                 }
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Mv Patel Quotation ");
-                emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
-
-                try {
-                    startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-
-                } catch (android.content.ActivityNotFoundException ex) {
-                    ex.printStackTrace();
-                }
-
             }
 
             break;
@@ -626,7 +623,7 @@ public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnima
     public void addFragment(Fragment fragment, String name) {
         mCurrentFragment = fragment;
 //        enableViews(true);
-        titleTv.setText(name);
+//        titleTv.setText(name);
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim)
                 .add(R.id.main_fragment, fragment)
@@ -637,7 +634,7 @@ public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnima
     public void addFragment(Fragment fragment, String name, boolean setEnable) {
         mCurrentFragment = fragment;
         enableViews(setEnable);
-        titleTv.setText(name);
+//        titleTv.setText(name);
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim)
                 .add(R.id.main_fragment, fragment)
@@ -649,7 +646,7 @@ public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnima
 
     public void replaceFragment(Fragment fragment, String name) {
         mCurrentFragment = fragment;
-        titleTv.setText(name);
+//        titleTv.setText(name);
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim)
                 .replace(R.id.main_fragment, fragment)
@@ -707,6 +704,8 @@ public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnima
         setIntent(intent);
         if (mCurrentFragment != null && mCurrentFragment instanceof SearchFragment) {
             ((SearchFragment) mCurrentFragment).onNewIntent(intent);
+        } else if (mCurrentFragment != null && mCurrentFragment instanceof ConnectNfcFragment) {
+            ((ConnectNfcFragment) mCurrentFragment).onNewIntent(intent);
         } else {
 
             String action = intent.getAction();
@@ -724,21 +723,21 @@ public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnima
                     for (int i = 0; i < rawMsgs.length; i++) {
                         msgs[i] = (NdefMessage) rawMsgs[i];
                     }
-                    onQueryTextSubmit("aquamax");
                 } else {
                     byte[] empty = new byte[0];
                     byte[] id = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
                     Tag tag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
                     long tagId = dumpTagIDData(tag);
                     if (lastTagID != tagId) {
-                        Utility.ShowToast("NEw NFC Tag " + tagId, context);
-                        if ((tagId + "").equalsIgnoreCase("1145151598180225")) {
-                            onQueryTextSubmit("KUP-CHR-35011BPM");
-                        } else if ((tagId + "").equalsIgnoreCase("1145147303212929")) {
-                            onQueryTextSubmit("ALI-CHR-85011B");
-                        } else {
-                            onQueryTextSubmit("aquamax");
-                        }
+//                        Utility.ShowToast("NEw NFC Tag " + tagId, context);
+//                        if ((tagId + "").equalsIgnoreCase("1145151598180225")) {
+//                            onQueryTextSubmit("KUP-CHR-35011BPM");
+//                        } else if ((tagId + "").equalsIgnoreCase("1145147303212929")) {
+//                            onQueryTextSubmit("ALI-CHR-85011B");
+//                        } else {
+//                        }
+                        onQueryTextSubmit(tagId);
+
                         lastTagID = tagId;
                     }
                     new Handler().postDelayed(new Runnable() {
@@ -760,10 +759,10 @@ public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnima
 
     private int limit = 10, offset = 0;
 
-    private void onQueryTextSubmit(String s) {
-        if (s.length() > 2) {
+    private void onQueryTextSubmit(long s) {
+        if (s != 0) {
             TrackerDbHandler dbHandler = MvPatelApplication.getDatabaseHandler();
-            ArrayList<Product> productList = dbHandler.getSearchProductList(s, offset, limit);
+            ArrayList<Product> productList = dbHandler.getNFCSearchProductList(s);
             if (productList.size() > 0) {
                 Product product = productList.get(0);
                 addFragment(ProductDetailFragment.newInstance(product.id), (product.name));

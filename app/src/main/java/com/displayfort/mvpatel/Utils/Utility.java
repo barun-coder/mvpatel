@@ -6,9 +6,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.Build;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -29,8 +33,10 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
@@ -327,5 +333,44 @@ public class Utility {
 
     }
 
+    public static Bitmap getBitmap(String imageUrl) {
+        Bitmap image = null;
+        Log.d("onBitmapLoad", imageUrl + "");
+        try {
+            java.net.URL url = new URL(imageUrl);
+            image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            Log.d("onBitmapLoaded B", image.getWidth() + "");
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        return image;
 
+    }
+
+    public static Uri getBitmapFromDrawable(Bitmap bmp, Context context) {
+
+        // Store image to default external storage directory
+        Uri bmpUri = null;
+        try {
+            // Use methods on Context to access package-specific directories on external storage.
+            // This way, you don't need to request external read/write permission.
+            // See https://youtu.be/5xVh-7ywKpE?t=25m25s
+            File file = new File(context.getFilesDir(), "share_image_" + System.currentTimeMillis() + ".png");
+            FileOutputStream out = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.close();
+            if (Build.VERSION.SDK_INT >= 24) {
+                // wrap File object into a content provider. NOTE: authority here should match authority in manifest declaration
+                bmpUri = FileProvider.getUriForFile(context, "com.displayfort.mvpatel", file);  // use this version for API >= 24
+            } else {
+                bmpUri = Uri.fromFile(file);
+            }
+
+            // **Note:** For API < 24, you may use bmpUri = Uri.fromFile(file);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bmpUri;
+    }
 }

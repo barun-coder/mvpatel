@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:fillViewport="true">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:padding="4dp">
+
+
+        <RelativeLayout
+            android:id="@+id/dealerListLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="bottom"
+            android:layout_margin="0dip"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenBold
+                android:id="@+id/bfc_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="8dp"
+                android:text="TAG"
+                android:textColor="@color/theme"
+                android:textSize="18sp" />
+            <!---->
+
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/search_cv"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bfc_tv"
+                android:layout_marginLeft="4dip"
+                android:layout_marginRight="4dip"
+                card_view:cardCornerRadius="4.0dip"
+                card_view:cardElevation="2.0dip"
+                card_view:cardUseCompatPadding="true">
+
+                <android.support.v7.widget.SearchView
+                    android:id="@+id/searchView_sv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:iconifiedByDefault="true"
+                    app:queryHint="Search Here" />
+            </android.support.v7.widget.CardView>
+
+
+            <com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout
+                android:id="@+id/swipyrefreshlayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/search_btn"
+                android:layout_below="@+id/search_cv"
+                app:srl_direction="bottom">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/productList_rv"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@color/white"
+                    android:scrollIndicators="none"
+                    android:scrollbarStyle="@null"
+                    android:scrollbars="vertical"
+                    android:visibility="visible"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    tools:listitem="@layout/product_search_item" />
+            </com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+
+            <Button
+                android:id="@+id/search_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
+                android:layout_weight="0.5"
+                android:background="@drawable/ic_button_shape"
+                android:gravity="center"
+                android:minWidth="@dimen/button_min_width"
+                android:minHeight="@dimen/button_min_height"
+                android:padding="8.0dip"
+                android:text="Select Product"
+                android:textColor="@color/theme"
+                android:textSize="14.0sp"
+                android:visibility="visible" />
+
+
+        </RelativeLayout>
+
+        <!--NFC-->
+        <RelativeLayout
+            android:id="@+id/no_data_rl"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/white"
+            android:visibility="visible">
+
+            <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenBold
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/nfc_iv"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="8dp"
+                android:text="Scan To Add"
+                android:textColor="@color/theme"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/nfc_iv"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/nfc" />
+
+            <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenLight
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nfc_iv"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="8dp"
+                android:text="Hold your Phone near the object"
+                android:textColor="@color/text_color"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/getNFCTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:background="@drawable/ic_button_shape"
+                android:gravity="center"
+                android:minWidth="@dimen/button_min_width"
+                android:minHeight="@dimen/button_min_height"
+                android:onClick="getNFCTag"
+                android:padding="8.0dip"
+                android:text="Dummy"
+                android:textColor="@color/theme"
+                android:textSize="14.0sp"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

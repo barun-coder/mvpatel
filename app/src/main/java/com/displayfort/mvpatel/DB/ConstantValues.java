@@ -31,6 +31,14 @@ public class ConstantValues {
         return values;
     }
 
+    public static final ContentValues getNFCValues(long currentTag, Long id) {
+        ContentValues values = new ContentValues();
+        values.put(DbCons.NFC_ID, currentTag);
+        values.put(DbCons.PRODUCT_ID, id.intValue());
+        values.put(DbCons.NOTE, "No Note");
+        return values;
+    }
+
     public static final ContentValues getAttachableValues(SubCategory categoryDao) {
         ContentValues values = new ContentValues();
         values.put(DbCons._ID, categoryDao.id);

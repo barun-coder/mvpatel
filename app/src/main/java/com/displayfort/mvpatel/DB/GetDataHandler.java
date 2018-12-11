@@ -87,7 +87,7 @@ public class GetDataHandler extends MasterDataHandler {
         return categoryDaos;
     }
 
-    public ArrayList<CategoryDao> getCategoryListByMaster(int MID) {
+    public ArrayList<CategoryDao> getCategoryListByMaster(String MID) {
         ShowLog("getCategoryListByMaster");
         ArrayList<CategoryDao> categoryDaos = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -95,7 +95,7 @@ public class GetDataHandler extends MasterDataHandler {
         try {
             //SELECT * FROM 'TableCategory' where catId In (SELECT catId FROM 'MasterRelation' where ID=1);
             cursor = db.rawQuery("SELECT * FROM " + DbCons.TABLE_CATEGORY + " where " + DbCons.CAT_ID + " In " +
-                    "(SELECT " + DbCons.CAT_ID + " FROM " + DbCons.TABLE_MASTER_CATEGORY + " where ID=" + MID + ")", null);
+                    "(SELECT " + DbCons.CAT_ID + " FROM " + DbCons.TABLE_MASTER_CATEGORY + " where ID  IN (" + MID + "))", null);
             ShowLog(db.toString());
             if (null != cursor && cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
@@ -537,6 +537,47 @@ public class GetDataHandler extends MasterDataHandler {
                     " WHERE "
                     + DbCons.PRODUCT_CODE + " LIKE '%" + searhText + "%' OR "
                     + DbCons.PRODUCT_NAME + " LIKE '%" + searhText + "%'";
+            cursor = db.rawQuery(sql, null);
+            ShowLog(db.toString());
+            if (null != cursor && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    Product product = new Product();
+                    product.id = cursor.getLong(cursor.getColumnIndex(DbCons.PRODUCT_ID));
+                    product.name = cursor.getString(cursor.getColumnIndex(DbCons.PRODUCT_NAME));
+                    product.subCatName = cursor.getString(cursor.getColumnIndex(DbCons.SUBCAT_NAME));
+                    product.status = (cursor.getInt(cursor.getColumnIndex(DbCons.STATUS)) == 1);
+                    product.detail = cursor.getString(cursor.getColumnIndex(DbCons.PRODUCT_DETAIL));
+                    product.code = cursor.getString(cursor.getColumnIndex(DbCons.PRODUCT_CODE));
+                    product.subcatid = cursor.getLong(cursor.getColumnIndex(DbCons.SUBCAT_ID));
+                    product.newArrival = (cursor.getInt(cursor.getColumnIndex(DbCons.NEW_ARRIVAL)) == 1);
+                    product.attachable = getAttachmeent(product);
+                    if (product != null) {
+                        products.add(product);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            ShowLog("Exception in getAllCategories" + e.getStackTrace());
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
+            databaseClose(db);
+        }
+        return products;
+    }
+
+    public ArrayList<Product> getNFCSearchProductList(long nfcTag) {
+        ShowLog("getSearchProductList");
+        ArrayList<Product> products = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            //SELECT * FROM 'TableProduct' WHERE Code LIKE '%aquamax%' OR P_Name LIKE '%aquamax%'
+            String sql = "SELECT " + DbCons.TABLE_PRODUCT + ".*," + DbCons.TABLE_SUBCATEGORY + "." + DbCons.SUBCAT_NAME + " FROM " + DbCons.TABLE_PRODUCT +
+                    " INNER join TableSubCategory ON TableSubCategory.subcatId = TableProduct.subcatId" +
+                    " WHERE "
+                    + DbCons.PRODUCT_ID + "= (SELECT P_ID FROM 'TableNFC' where NFC_ID=" + nfcTag + ")";
             cursor = db.rawQuery(sql, null);
             ShowLog(db.toString());
             if (null != cursor && cursor.getCount() > 0) {

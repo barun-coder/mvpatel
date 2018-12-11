@@ -18,7 +18,7 @@ public class DbQueries {
     private static final String REFERENCES = " REFERENCES ";
     private static final String INTEGER = " INTEGER, ";
     private static final String BOOLEAN = " BOOLEAN, ";
-    private static final String INTEGER__UNIQUE_NOT_NULL = " INTEGER UNIQUE not null,";
+    private static final String INTEGER__UNIQUE_NOT_NULL = " INTEGER NOT NULL UNIQUE,";
     private static final String TEXT = " TEXT, ";
     private static final String TEXT_PRIMARY_KEY = " TEXT PRIMARY KEY,";
     private static final String TEXT_NO_COMMA = " TEXT";
@@ -320,6 +320,23 @@ public class DbQueries {
         mBuffer.append(INTEGER);
         mBuffer.append(DbCons.ROOMID);//0
         mBuffer.append(INTEGER_NO_COMMA);
+        mBuffer.append(CLOSE_BRACES);
+        Utility.showLog(mBuffer.toString());
+        return mBuffer.toString();
+    }
+
+    /*Order Table*/
+    static String getCreateProductNfcTable() {
+        StringBuffer mBuffer = new StringBuffer();
+        mBuffer.append(CREATE_TABLE);
+        mBuffer.append(DbCons.TABLE_NFC);
+        mBuffer.append(OPEN_BRACES);
+        mBuffer.append(DbCons.NFC_ID);//0
+        mBuffer.append(INT_P_KEY);
+        mBuffer.append(DbCons.PRODUCT_ID);//0
+        mBuffer.append(INTEGER__UNIQUE_NOT_NULL);
+        mBuffer.append(DbCons.NOTE);//0
+        mBuffer.append(TEXT_NO_COMMA);
         mBuffer.append(CLOSE_BRACES);
         Utility.showLog(mBuffer.toString());
         return mBuffer.toString();

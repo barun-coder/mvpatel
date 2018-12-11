@@ -92,4 +92,16 @@ public class MVPatelPrefrence {
         return sharedPreferences.getInt(Key, 0);
     }
 
+
+    /**/
+
+    public void setNFCTag(long NFCTag) {
+        SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+        prefsEditor.putLong("NFCTag", NFCTag);
+        prefsEditor.commit();
+    }
+
+    public long getNFCTag() {
+        return sharedPreferences.getLong("NFCTag", 0);
+    }
 }

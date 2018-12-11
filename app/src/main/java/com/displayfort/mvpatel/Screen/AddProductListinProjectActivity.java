@@ -131,6 +131,10 @@ public class AddProductListinProjectActivity extends BaseActivity {
                 }
             } else {
                 orderID = ORDER_IDavailable;
+                if (dbHandler.getOrderRowCount(listAdapter.getSelectedRoom().id, orderID, currentProject.projectId) <= 0) {
+                    dbHandler.AddOrder(listAdapter.getSelectedRoom().id, orderID, currentProject.projectId, 0);
+                }
+
             }
             dbHandler.updateOrderQtyItself(listAdapter.getSelectedRoom().id, orderID, currentProject.projectId);
 
@@ -170,7 +174,8 @@ public class AddProductListinProjectActivity extends BaseActivity {
                     if (res != 0) {
                         Utility.ShowToast("Project Added Succesfully", context);
                         resetProjectList();
-                        currentProject = new Project(res, projectname);                        new MVPatelPrefrence(context).setIntValue("PRID", (int) currentProject.projectId);
+                        currentProject = new Project(res, projectname);
+                        new MVPatelPrefrence(context).setIntValue("PRID", (int) currentProject.projectId);
                         addProductToProjectViewHolder.mProjectNameTv.setText(projectname);
                         resetRoomList();
                         dialog.cancel();

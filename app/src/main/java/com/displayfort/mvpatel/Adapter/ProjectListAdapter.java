@@ -21,7 +21,10 @@ import com.displayfort.mvpatel.MvPatelApplication;
 import com.displayfort.mvpatel.R;
 import com.displayfort.mvpatel.Screen.LoginActivity;
 import com.displayfort.mvpatel.Utils.Dialogs;
+import com.displayfort.mvpatel.Utils.PDFUtils;
+import com.itextpdf.text.DocumentException;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 
@@ -97,6 +100,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
                 if (menuId == R.id.emailImageButton) {
                     //TODO Email
+                    sendMail(projectArrayList.get(position).projectId);
                 } else {
                     Dialogs.showYesNolDialog(context, "Confirmation", "Are you sure you want to Delete " + projectArrayList.get(position).name, new View.OnClickListener() {
                         @Override
@@ -117,6 +121,28 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         } catch (Exception e) {
             Log.w("Menu", "error forcing menu icons to show", e);
             popupMenu.show();
+        }
+    }
+
+    private void sendMail(long Prid) {
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.setType("image/jpeg");
+
+        try {
+            emailIntent.putExtra(Intent.EXTRA_STREAM, new PDFUtils().CreateQuotation(context, Prid));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Mv Patel Quotation ");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
+
+        try {
+            context.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+
+        } catch (android.content.ActivityNotFoundException ex) {
+            ex.printStackTrace();
         }
     }
 

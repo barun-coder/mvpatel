@@ -301,4 +301,49 @@ public class MasterDataHandler extends DatabaseHandler {
 
     }
 
+    /**
+     * @return
+     * @param currentTag
+     * @param id
+     */
+    public long AddNFC(long currentTag, Long id) {
+        ShowLog("AddNFC " + (c));
+        long count = 0;
+        db = this.getWritableDatabase();
+        try {
+            if (db != null) {
+                if (!db.isOpen()) {
+                    db = this.getWritableDatabase();
+                }
+            }
+            count = db.insert(DbCons.TABLE_NFC, "", ConstantValues.getNFCValues(currentTag, id));
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            databaseClose(db);
+        }
+
+        return count;
+    }
+
+    public long DeleteNFC(long NfcTag) {
+        long count = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            if (db != null) {
+                if (!db.isOpen()) {
+                    db = this.getWritableDatabase();
+                }
+                count = db.delete(DbCons.TABLE_NFC, DbCons.NFC_ID + "=?", new String[]{String.valueOf(NfcTag)});
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            databaseClose(db);
+        }
+
+        return count;
+    }
+
 }

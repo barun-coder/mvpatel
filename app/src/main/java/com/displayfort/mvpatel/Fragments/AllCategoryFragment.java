@@ -24,7 +24,7 @@ import com.displayfort.mvpatel.DB.TrackerDbHandler;
 import com.displayfort.mvpatel.Model.CategoryDao;
 import com.displayfort.mvpatel.MvPatelApplication;
 import com.displayfort.mvpatel.R;
-import com.displayfort.mvpatel.Screen.HomeActivity;
+import com.displayfort.mvpatel.Screen.AddNfcToProductActivity;
 import com.displayfort.mvpatel.Utils.RecyclerItemClickListener;
 
 import java.util.ArrayList;
@@ -32,12 +32,12 @@ import java.util.ArrayList;
 /**
  * Created by Konstantin on 22.12.2014.
  */
-public class CategoryFragment extends BaseFragment implements View.OnClickListener {
+public class AllCategoryFragment extends BaseFragment implements View.OnClickListener {
 
 
     private View containerView;
     protected ImageView mImageView;
-    protected int MCatID;
+    protected String MCatID;
     private Bitmap bitmap;
     private HomeViewHolder homeViewHolder;
     private Context mContext;
@@ -45,10 +45,10 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
     private ArrayList<CategoryDao> categoryDaoArrayList;
 
 
-    public static CategoryFragment newInstance(int catId) {
-        CategoryFragment contentFragment = new CategoryFragment();
+    public static AllCategoryFragment newInstance(String catId) {
+        AllCategoryFragment contentFragment = new AllCategoryFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("CATID", catId);
+        bundle.putString("CATID", catId);
         contentFragment.setArguments(bundle);
         return contentFragment;
     }
@@ -65,7 +65,7 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MCatID = getArguments().getInt("CATID");
+        MCatID = getArguments().getString("CATID");
     }
 
     @Override
@@ -82,7 +82,7 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
         homeViewHolder.mRecyclerViewRv.setHasFixedSize(true);
         homeViewHolder.mRecyclerViewRv.addOnScrollListener(new CenterScrollListener());
         TrackerDbHandler dbHandler = MvPatelApplication.getDatabaseHandler();
-        categoryDaoArrayList = dbHandler.getCategoryListByMaster(MCatID+"");
+        categoryDaoArrayList = dbHandler.getCategoryListByMaster(MCatID);
         adapter = new CategoryAdapter(mContext, categoryDaoArrayList);
         homeViewHolder.mRecyclerViewRv.setAdapter(adapter);
         homeViewHolder.mRecyclerViewRv.addOnItemTouchListener(
@@ -90,7 +90,7 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
                     @Override
                     public void onItemClick(View view, int position) {
                         CategoryDao dao = categoryDaoArrayList.get(position);
-                        ((HomeActivity) getActivity()).addFragment(SubCategoryFragment.newInstance(dao.id), (dao.name));
+                        ((AddNfcToProductActivity) getActivity()).addFragment(NFCSubCategoryFragment.newInstance(dao.id), (dao.name));
                     }
                 }));
     }
@@ -107,7 +107,7 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
                                 containerView.getHeight(), Bitmap.Config.ARGB_8888);
                         Canvas canvas = new Canvas(bitmap);
                         containerView.draw(canvas);
-                        CategoryFragment.this.bitmap = bitmap;
+                        AllCategoryFragment.this.bitmap = bitmap;
                     }
                 }
             };

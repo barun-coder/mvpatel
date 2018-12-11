@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -34,13 +35,16 @@ import com.displayfort.mvpatel.Adapter.IntrestedProductAdapter;
 import com.displayfort.mvpatel.Adapter.ProductTypeListAdapter;
 import com.displayfort.mvpatel.Base.BaseFragment;
 import com.displayfort.mvpatel.Base.Constant;
+import com.displayfort.mvpatel.MVPatelPrefrence;
 import com.displayfort.mvpatel.Model.CategoryDao;
+import com.displayfort.mvpatel.Model.OrderDetailDao;
 import com.displayfort.mvpatel.Model.Product;
 import com.displayfort.mvpatel.Model.ProductPrice;
 import com.displayfort.mvpatel.Model.SubCategory;
 import com.displayfort.mvpatel.MvPatelApplication;
 import com.displayfort.mvpatel.R;
 
+import com.displayfort.mvpatel.Screen.AddProductListinProjectActivity;
 import com.displayfort.mvpatel.Screen.ImageFullscreenActivity;
 import com.displayfort.mvpatel.Utils.RecyclerItemClickListener;
 import com.displayfort.mvpatel.Utils.Utility;
@@ -48,6 +52,8 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by Konstantin on 22.12.2014.
@@ -58,6 +64,7 @@ public class ProductShortDetailFragment extends BaseFragment implements View.OnC
     private View containerView;
     protected ImageView mImageView;
     protected long PID;
+    protected boolean isNFC = false;
     private Bitmap bitmap;
     private HomeViewHolder homeViewHolder;
     private Context mContext;
@@ -76,6 +83,16 @@ public class ProductShortDetailFragment extends BaseFragment implements View.OnC
         ProductShortDetailFragment contentFragment = new ProductShortDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putLong("CATID", catId);
+        bundle.putBoolean("NFC", false);
+        contentFragment.setArguments(bundle);
+        return contentFragment;
+    }
+
+    public static ProductShortDetailFragment newInstance(Long catId, boolean isNFC) {
+        ProductShortDetailFragment contentFragment = new ProductShortDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putLong("CATID", catId);
+        bundle.putBoolean("NFC", isNFC);
         contentFragment.setArguments(bundle);
         return contentFragment;
     }
@@ -85,6 +102,7 @@ public class ProductShortDetailFragment extends BaseFragment implements View.OnC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PID = getArguments().getLong("CATID");
+        isNFC = getArguments().getBoolean("NFC");
     }
 
     @Override
@@ -138,7 +156,6 @@ public class ProductShortDetailFragment extends BaseFragment implements View.OnC
         }, 200);
 
 
-
     }
 
 
@@ -148,28 +165,23 @@ public class ProductShortDetailFragment extends BaseFragment implements View.OnC
             @Override
             public void onClick(View v) {
                 final ProductPrice productPrice = productPriceList.get(CurrentItem);
-                Picasso.with(mContext).load(productPrice.attachmentListDao.attachmentURL).into(new Target() {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        Intent intent = new Intent();
-                        intent.setAction("android.intent.action.SEND");
-                        if (bitmap != null) {
-                            intent.putExtra("android.intent.extra.STREAM", bitmap);
-                        }
-                        intent.setType("image/jpeg");
-                        intent.putExtra("android.intent.extra.TEXT", productDao.name + " " + productPrice.attachmentListDao.type);
-                        startActivity(Intent.createChooser(intent, "Send to"));
+                Bitmap bitmap = Utility.getBitmap(productPrice.attachmentListDao.attachmentURL);
 
-                    }
+//                String bitmapPath = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), bitmap, "title", null);
+                Uri bitmapUri = Utility.getBitmapFromDrawable(bitmap, getActivity());
 
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
-                    }
 
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-                    }
-                });
+                Intent intent = new Intent();
+                intent.setAction("android.intent.action.SEND");
+//                if (bitmap != null) {
+//                    intent.putExtra("android.intent.extra.STREAM", bitmap);
+//                }
+
+                intent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
+                intent.setType("image/jpeg");
+                intent.putExtra("android.intent.extra.TEXT", productDao.name + " " + productPrice.attachmentListDao.type);
+                getActivity().startActivity(Intent.createChooser(intent, "Send to"));
+
 
             }
         });
@@ -184,7 +196,25 @@ public class ProductShortDetailFragment extends BaseFragment implements View.OnC
         homeViewHolder.mAddProjectIb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddProduct();
+                if (isNFC) {
+                    Product product = productDao;
+                    long nfcTag = new MVPatelPrefrence(mContext).getNFCTag();
+                    if (nfcTag != 0) {
+                        long count = dbHandler.AddNFC(nfcTag, product.id);
+                        if (count >= 1) {
+                            Utility.ShowToast("Added Successfully", mContext);
+                            getActivity().setResult(getActivity().RESULT_OK);
+//---close the activity---
+                            getActivity().finish();
+                        } else {
+                            Utility.ShowToast("Already Added", mContext);
+                        }
+                    } else {
+                        Utility.ShowToast("Please Try Again", mContext);
+                    }
+                } else {
+                    AddProduct();
+                }
             }
         });
         homeViewHolder.mProductNameTv.setText(subCategory.name);
@@ -197,9 +227,29 @@ public class ProductShortDetailFragment extends BaseFragment implements View.OnC
 
     private void AddProduct() {
         if (productPriceList != null && productPriceList.size() > 0 && productPriceList.get(CurrentItem) != null) {
-//            AddProductinProjectDialogActivity.productDao = productDao;
-//            AddProductinProjectDialogActivity.productPrice = productPriceList.get(CurrentItem);
-//            startActivityWithAnim(getActivity(), new Intent(mContext, AddProductinProjectDialogActivity.class));
+            ProductPrice productPrice = productPriceList.get(CurrentItem);
+            ArrayList<OrderDetailDao> cartProductOrderList = new ArrayList<>();
+            OrderDetailDao orderDetailDao = new OrderDetailDao();
+            orderDetailDao.productId = productDao.id;
+            orderDetailDao.name = productDao.name;
+            orderDetailDao.code = productDao.code;
+            orderDetailDao.detail = productDao.detail;
+            orderDetailDao.productTypeId = productPrice.id;
+            orderDetailDao.price = productPrice.price;
+            orderDetailDao.colorId = productPrice.colorID;
+            orderDetailDao.status = true;
+            orderDetailDao.colorText = productPrice.attachmentListDao.type;
+            orderDetailDao.attachId = productPrice.attachmentListDao.attachableid;
+            orderDetailDao.ImageUrl = productPrice.attachmentListDao.attachmentURL;
+            orderDetailDao.created = System.currentTimeMillis();
+            cartProductOrderList.add(orderDetailDao);
+
+            if (cartProductOrderList != null && cartProductOrderList.size() != 0) {
+                AddProductListinProjectActivity.cartProductOrderList = cartProductOrderList;
+                startActivityWithAnim(getActivity(), new Intent(mContext, AddProductListinProjectActivity.class));
+            } else {
+                Utility.ShowToast("Add atleast 1 product into cart", mContext);
+            }
         }
     }
 
@@ -334,11 +384,13 @@ public class ProductShortDetailFragment extends BaseFragment implements View.OnC
             Thread thread = new Thread() {
                 @Override
                 public void run() {
-                    Bitmap bitmap = Bitmap.createBitmap(containerView.getWidth(),
-                            containerView.getHeight(), Bitmap.Config.ARGB_8888);
-                    Canvas canvas = new Canvas(bitmap);
-                    containerView.draw(canvas);
-                    ProductShortDetailFragment.this.bitmap = bitmap;
+                    if (containerView != null) {
+                        Bitmap bitmap = Bitmap.createBitmap(containerView.getWidth(),
+                                containerView.getHeight(), Bitmap.Config.ARGB_8888);
+                        Canvas canvas = new Canvas(bitmap);
+                        containerView.draw(canvas);
+                        ProductShortDetailFragment.this.bitmap = bitmap;
+                    }
                 }
             };
 
@@ -386,7 +438,7 @@ public class ProductShortDetailFragment extends BaseFragment implements View.OnC
             mProductCodeTv = (TextView) view.findViewById(R.id.productCode_tv);
             mProductDetailTv = (TextView) view.findViewById(R.id.productDetail_tv);
 
-                    mProductPriceTv = (TextView) view.findViewById(R.id.productPrice_tv);
+            mProductPriceTv = (TextView) view.findViewById(R.id.productPrice_tv);
             productcolor_tv = (TextView) view.findViewById(R.id.productcolor_tv);
 
 

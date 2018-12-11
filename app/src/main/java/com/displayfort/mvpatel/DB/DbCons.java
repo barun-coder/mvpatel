@@ -62,4 +62,9 @@ public final class DbCons {
     public static final String ROOMID = "RoomID";
     public static final String QUANTITY = "QTY";
 
+    /*ProductNfc Table*/
+    public static final String TABLE_NFC= "TableNFC";
+    public static final String NFC_ID = "NFC_ID";
+    public static final String NOTE = "note";
+
 }

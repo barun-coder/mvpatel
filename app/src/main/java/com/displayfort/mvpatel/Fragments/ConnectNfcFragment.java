@@ -1,5 +1,6 @@
 package com.displayfort.mvpatel.Fragments;
 
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -20,28 +21,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.displayfort.mvpatel.Adapter.SearchProductListAapter;
 import com.displayfort.mvpatel.Base.BaseFragment;
+import com.displayfort.mvpatel.BuildConfig;
 import com.displayfort.mvpatel.DB.TrackerDbHandler;
+import com.displayfort.mvpatel.MVPatelPrefrence;
 import com.displayfort.mvpatel.Model.Product;
 import com.displayfort.mvpatel.MvPatelApplication;
 import com.displayfort.mvpatel.R;
+import com.displayfort.mvpatel.Screen.AddNfcToProductActivity;
 import com.displayfort.mvpatel.Screen.HomeActivity;
+import com.displayfort.mvpatel.Screen.LoginActivity;
+import com.displayfort.mvpatel.Utils.Dialogs;
 import com.displayfort.mvpatel.Utils.RecyclerItemClickListener;
 import com.displayfort.mvpatel.Utils.Utility;
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by pc on 21/11/2018 11:48.
  * MVPatel
  */
-public class SearchFragment extends BaseFragment implements View.OnClickListener {
+public class ConnectNfcFragment extends BaseFragment implements View.OnClickListener {
     private Context mContext;
     private HomeViewHolder homeViewHolder;
     private Bitmap bitmap;
@@ -49,24 +57,25 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
     private String str;
     private SearchProductListAapter adapter;
     private ArrayList<Product> productList = new ArrayList<>();
-
+    private boolean isAlreadyAvailable = false;
     /**/
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
 
     private int limit = 10, offset = 0;
     private SearchView.OnQueryTextListener onQueryTextListener;
+    private long currentTag = 0;
 
 
-    public static SearchFragment newInstance() {
-        SearchFragment contentFragment = new SearchFragment();
+    public static ConnectNfcFragment newInstance() {
+        ConnectNfcFragment contentFragment = new ConnectNfcFragment();
         return contentFragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_search, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_connect_nfc, container, false);
         mContext = getActivity();
         return rootView;
     }
@@ -87,6 +96,9 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
 
         if (nfcAdapter == null) {
             Toast.makeText(mContext, "No NFC", Toast.LENGTH_SHORT).show();
+            if (BuildConfig.DEBUG) {
+                homeViewHolder.getNFCTag.setVisibility(View.VISIBLE);
+            }
             return;
         }
 
@@ -120,8 +132,18 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
                 new RecyclerItemClickListener(mContext, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Product product = productList.get(position);
-                        ((HomeActivity) getActivity()).addFragment(ProductDetailFragment.newInstance(product.id), (product.name));
+                        if (isAlreadyAvailable) {
+                            Utility.ShowToast("Already Assign ", mContext);
+                        } else {
+                            Product product = productList.get(position);
+                            long count = dbHandler.AddNFC(currentTag, product.id);
+                            if (count >= 1) {
+                                Utility.ShowToast("Added Successfully", mContext);
+                            } else {
+                                Utility.ShowToast("Please Try Again", mContext);
+                            }
+                        }
+                        //                        ((HomeActivity) getActivity()).addFragment(ProductDetailFragment.newInstance(product.id), (product.name));
                     }
                 }));
     }
@@ -144,12 +166,9 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
                     offset = 0;
                     productList = dbHandler.getSearchProductList(s, offset, limit);
                     if (productList.size() > 0) {
-                        homeViewHolder.mRecyclerViewRv.setVisibility(View.VISIBLE);
-                        homeViewHolder.no_data_rl.setVisibility(View.GONE);
                         adapter.setlist(productList);
                     } else {
-                        homeViewHolder.mRecyclerViewRv.setVisibility(View.GONE);
-                        homeViewHolder.no_data_rl.setVisibility(View.VISIBLE);
+
                     }
                 }
                 return false;
@@ -163,12 +182,9 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
                     offset = 0;
                     productList = dbHandler.getSearchProductList(s, offset, limit);
                     if (productList.size() > 0) {
-                        homeViewHolder.mRecyclerViewRv.setVisibility(View.VISIBLE);
-                        homeViewHolder.no_data_rl.setVisibility(View.GONE);
                         adapter.setlist(productList);
                     } else {
-                        homeViewHolder.mRecyclerViewRv.setVisibility(View.GONE);
-                        homeViewHolder.no_data_rl.setVisibility(View.VISIBLE);
+
                     }
                 }
                 return true;
@@ -179,7 +195,6 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
             @Override
             public boolean onClose() {
                 productList = new ArrayList<>();
-                homeViewHolder.mRecyclerViewRv.setVisibility(View.GONE);
                 adapter.setlist(productList);
                 offset = 0;
                 return false;
@@ -194,13 +209,9 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
                     offset = 0;
                     productList = dbHandler.getSearchProductList(s, offset, limit);
                     if (productList.size() > 0) {
-                        homeViewHolder.mRecyclerViewRv.setVisibility(View.VISIBLE);
-                        homeViewHolder.no_data_rl.setVisibility(View.GONE);
-                        adapter.setlist(productList);
+                                              adapter.setlist(productList);
                     } else {
-                        homeViewHolder.mRecyclerViewRv.setVisibility(View.GONE);
-                        homeViewHolder.no_data_rl.setVisibility(View.VISIBLE);
-                    }
+                                          }
                 }
                 return false;
             }
@@ -213,13 +224,9 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
                     offset = 0;
                     productList = dbHandler.getSearchProductList(s, offset, limit);
                     if (productList.size() > 0) {
-                        homeViewHolder.mRecyclerViewRv.setVisibility(View.VISIBLE);
-                        homeViewHolder.no_data_rl.setVisibility(View.GONE);
-                        adapter.setlist(productList);
+                                           adapter.setlist(productList);
                     } else {
-                        homeViewHolder.mRecyclerViewRv.setVisibility(View.GONE);
-                        homeViewHolder.no_data_rl.setVisibility(View.VISIBLE);
-                    }
+                                          }
                 }
                 return false;
 
@@ -246,7 +253,7 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
                                 containerView.getHeight(), Bitmap.Config.ARGB_8888);
                         Canvas canvas = new Canvas(bitmap);
                         containerView.draw(canvas);
-                        SearchFragment.this.bitmap = bitmap;
+                        ConnectNfcFragment.this.bitmap = bitmap;
                     }
                 }
             };
@@ -266,6 +273,8 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
     public class HomeViewHolder {
         private final RelativeLayout no_data_rl;
         private final SwipyRefreshLayout swipyrefreshlayout;
+        private final RelativeLayout mSetNfcTagRL;
+        private final Button getNFCTag;
         public SearchView mSearchViewSv;
         public RecyclerView mRecyclerViewRv;
         public Button mSearchBtn;
@@ -274,20 +283,57 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
             mSearchViewSv = (SearchView) view.findViewById(R.id.searchView_sv);
             mRecyclerViewRv = (RecyclerView) view.findViewById(R.id.productList_rv);
             no_data_rl = (RelativeLayout) view.findViewById(R.id.no_data_rl);
+            mSetNfcTagRL = (RelativeLayout) view.findViewById(R.id.dealerListLayout);
             swipyrefreshlayout = view.findViewById(R.id.swipyrefreshlayout);
             mSearchBtn = (Button) view.findViewById(R.id.search_btn);
-            mRecyclerViewRv.setVisibility(View.GONE);
+            getNFCTag = (Button) view.findViewById(R.id.getNFCTag);
+            getNFCTag.setVisibility(View.GONE);
             no_data_rl.setVisibility(View.VISIBLE);
+            mSetNfcTagRL.setVisibility(View.GONE);
             mSearchBtn.setOnClickListener(listener);
+            getNFCTag.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getNFCTag(v);
+                }
+            });
 
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.search_btn:
+                if (isAlreadyAvailable) {
+                    Dialogs.showYesNolDialog(mContext, "Confirmation", "Are you sure you want to remove", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ((Dialog) v.getTag()).dismiss();
+                            dbHandler.DeleteNFC(currentTag);
+                            productList = new ArrayList<>();
+                            adapter.setlist(productList);
+                        }
+                    });
+                } else {
+                    Intent intent = new Intent(mContext, AddNfcToProductActivity.class);
+                    new MVPatelPrefrence(mContext).setNFCTag(currentTag);
+                    startActivityWithResultAnim(getActivity(), intent, 302);
+//                ((HomeActivity) getActivity()).addFragment(AllCategoryFragment.newInstance("1,2,3,4,5"), "AllCategory");
+                }
+                break;
+        }
+    }
 
-    public boolean onBackPressed() {
-        ((HomeActivity) getActivity()).enableViews(true);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        return true;
+        if (requestCode == 302 && resultCode == getActivity().RESULT_OK) {
+            homeViewHolder.no_data_rl.setVisibility(View.VISIBLE);
+            homeViewHolder.mSetNfcTagRL.setVisibility(View.GONE);
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     /*NFC*/
@@ -322,8 +368,14 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
         resolveIntent(intent);
     }
 
+    public void getNFCTag(View view) {
+        Random r = new Random();
+        ProcessNFC(r.nextInt(100));
+    }
+
     private void resolveIntent(Intent intent) {
         String action = intent.getAction();
+        homeViewHolder.no_data_rl.setVisibility(View.VISIBLE);
 //android.nfc.action.NDEF_DISCOVERED
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)
                 || NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)
@@ -338,30 +390,46 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
                 for (int i = 0; i < rawMsgs.length; i++) {
                     msgs[i] = (NdefMessage) rawMsgs[i];
                 }
+//                onQueryTextSubmit("aquamax");
             } else {
                 byte[] empty = new byte[0];
                 byte[] id = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
                 Tag tag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
                 long tagId = dumpTagIDData(tag);
-                onQueryTextSubmit(tagId);
-
+//                Product product = new Product(tagId + "");
+//                displayNFCTag(product);
+//                Utility.ShowToast("NEw NFC Tag " + tagId, mContext);
+                ProcessNFC(tagId);
 
             }
 
+        }
+    }
+
+    private void ProcessNFC(long tagId) {
+        currentTag = tagId;
+        isAlreadyAvailable = false;
+        homeViewHolder.no_data_rl.setVisibility(View.GONE);
+        homeViewHolder.mSetNfcTagRL.setVisibility(View.VISIBLE);
+        ((TextView) (getView().findViewById(R.id.bfc_tv))).setText("TAG: " + tagId);
+        onQueryTextSubmit(tagId);
+        if (isAlreadyAvailable) {
+            homeViewHolder.mSearchBtn.setText("Remove");
+        } else {
+            homeViewHolder.mSearchBtn.setText("Tag Product");
         }
     }
 
     private void onQueryTextSubmit(long s) {
         if (s != 0) {
             TrackerDbHandler dbHandler = MvPatelApplication.getDatabaseHandler();
-            ArrayList<Product> productList = dbHandler.getNFCSearchProductList(s);
+            productList = dbHandler.getNFCSearchProductList(s);
             if (productList.size() > 0) {
-                Product product = productList.get(0);
-                ((HomeActivity) getActivity()).addFragment(ProductDetailFragment.newInstance(product.id), (product.name));
+                isAlreadyAvailable = true;
+                adapter.setlist(productList);
             }
         }
     }
-
 
     private long dumpTagIDData(Tag tag) {
         StringBuilder sb = new StringBuilder();

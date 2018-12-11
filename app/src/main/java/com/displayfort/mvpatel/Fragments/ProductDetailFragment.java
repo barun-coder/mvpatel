@@ -12,8 +12,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -56,15 +58,15 @@ import com.squareup.picasso.Target;
 import java.util.ArrayList;
 
 /**
- * Created by Konstantin on 22.12.2014.
+ * Created by Husain
  */
 public class ProductDetailFragment extends BaseFragment implements View.OnClickListener {
 
-
+    private Bitmap bitmap;
     private View containerView;
     protected ImageView mImageView;
     protected long PID;
-    private Bitmap bitmap;
+
     private HomeViewHolder homeViewHolder;
     private Context mContext;
     private ProductTypeListAdapter productTypeListAdapter;
@@ -275,28 +277,22 @@ public class ProductDetailFragment extends BaseFragment implements View.OnClickL
             @Override
             public void onClick(View v) {
                 final ProductPrice productPrice = productPriceList.get(CurrentItem);
-                Picasso.with(mContext).load(productPrice.attachmentListDao.attachmentURL).into(new Target() {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        Intent intent = new Intent();
-                        intent.setAction("android.intent.action.SEND");
-                        if (bitmap != null) {
-                            intent.putExtra("android.intent.extra.STREAM", bitmap);
-                        }
-                        intent.setType("image/jpeg");
-                        intent.putExtra("android.intent.extra.TEXT", productDao.name + " " + productPrice.attachmentListDao.type);
-                        startActivity(Intent.createChooser(intent, "Send to"));
+                Bitmap bitmap = Utility.getBitmap(productPrice.attachmentListDao.attachmentURL);
 
-                    }
+//                String bitmapPath = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), bitmap, "title", null);
+                Uri bitmapUri = Utility.getBitmapFromDrawable(bitmap, getActivity());
 
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
-                    }
 
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-                    }
-                });
+                Intent intent = new Intent();
+                intent.setAction("android.intent.action.SEND");
+//                if (bitmap != null) {
+//                    intent.putExtra("android.intent.extra.STREAM", bitmap);
+//                }
+
+                intent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
+                intent.setType("image/jpeg");
+                intent.putExtra("android.intent.extra.TEXT", productDao.name + " " + productPrice.attachmentListDao.type);
+                getActivity().startActivity(Intent.createChooser(intent, "Send to"));
 
             }
         });
@@ -487,11 +483,13 @@ public class ProductDetailFragment extends BaseFragment implements View.OnClickL
             Thread thread = new Thread() {
                 @Override
                 public void run() {
-                    Bitmap bitmap = Bitmap.createBitmap(containerView.getWidth(),
-                            containerView.getHeight(), Bitmap.Config.ARGB_8888);
-                    Canvas canvas = new Canvas(bitmap);
-                    containerView.draw(canvas);
-                    ProductDetailFragment.this.bitmap = bitmap;
+                    if (containerView != null) {
+                        Bitmap bitmap = Bitmap.createBitmap(containerView.getWidth(),
+                                containerView.getHeight(), Bitmap.Config.ARGB_8888);
+                        Canvas canvas = new Canvas(bitmap);
+                        containerView.draw(canvas);
+                        ProductDetailFragment.this.bitmap = bitmap;
+                    }
                 }
             };
 

@@ -45,10 +45,11 @@
                     android:visibility="gone" />
 
                 <ImageView
-                    android:id="@+id/newArrivalImageView"
+                    android:id="@+id/app_icon"
                     android:layout_width="?attr/actionBarSize"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_gravity="center"
+                    android:onClick="goToHome"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_mono_small" />
 

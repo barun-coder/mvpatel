@@ -416,7 +416,7 @@ public class ConnectNfcFragment extends BaseFragment implements View.OnClickList
         if (isAlreadyAvailable) {
             homeViewHolder.mSearchBtn.setText("Remove");
         } else {
-            homeViewHolder.mSearchBtn.setText("Tag Product");
+            homeViewHolder.mSearchBtn.setText("Assign Product");
         }
     }
 

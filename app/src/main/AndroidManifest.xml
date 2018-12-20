@@ -51,6 +51,10 @@
                 <data android:mimeType="application/com.devdr.touch" />
             </intent-filter>
         </activity>
+        <activity android:name=".Fragments.NFC.MainActivity">
+
+        </activity>
+
         <activity
             android:name=".Screen.ImageFullscreenActivity"
             android:screenOrientation="portrait" />

@@ -48,6 +48,7 @@ import com.displayfort.mvpatel.Screen.AddProductListinProjectActivity;
 import com.displayfort.mvpatel.Screen.ImageFullscreenActivity;
 import com.displayfort.mvpatel.Utils.RecyclerItemClickListener;
 import com.displayfort.mvpatel.Utils.Utility;
+import com.github.zagum.switchicon.SwitchIconView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -410,7 +411,7 @@ public class ProductShortDetailFragment extends BaseFragment implements View.OnC
     public class HomeViewHolder {
 
 
-        private final LinearLayout mAdditionalLayoutLl;
+
         public TextView mProductNameTv;
         public ImageView mProductImageIv;
         public RecyclerView mProductListRv;
@@ -426,7 +427,6 @@ public class ProductShortDetailFragment extends BaseFragment implements View.OnC
 
         public HomeViewHolder(View view, View.OnClickListener listener) {
 
-            mAdditionalLayoutLl = (LinearLayout) view.findViewById(R.id.add_layout_ll);
             mProductNameTv = (TextView) view.findViewById(R.id.product_name_tv);
             mProductImageIv = (ImageView) view.findViewById(R.id.product_image_iv);
             mProductListRv = (RecyclerView) view.findViewById(R.id.product_list_rv);

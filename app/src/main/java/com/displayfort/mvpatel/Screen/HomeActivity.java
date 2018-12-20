@@ -74,7 +74,7 @@ import yalantis.com.sidemenu.model.SlideMenuItem;
 import yalantis.com.sidemenu.util.ViewAnimator;
 
 
-public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnimatorListener {
+public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnimatorListener  {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private List<SlideMenuItem> list = new ArrayList<>();

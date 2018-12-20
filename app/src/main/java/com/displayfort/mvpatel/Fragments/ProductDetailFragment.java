@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +54,7 @@ import com.displayfort.mvpatel.Screen.HomeActivity;
 import com.displayfort.mvpatel.Screen.ImageFullscreenActivity;
 import com.displayfort.mvpatel.Utils.RecyclerItemClickListener;
 import com.displayfort.mvpatel.Utils.Utility;
+import com.sackcentury.shinebuttonlib.ShineButton;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -80,6 +83,7 @@ public class ProductDetailFragment extends BaseFragment implements View.OnClickL
     private ArrayList<ProductPrice> productPriceList;
     private ArrayList<OrderDetailDao> cartProductOrderList = new ArrayList<>();
     private CartOrderProductAdapter cartProductAdapter;
+    private String TAG = "SHIONEBTN";
 
 
     public static ProductDetailFragment newInstance(Long catId) {
@@ -110,7 +114,7 @@ public class ProductDetailFragment extends BaseFragment implements View.OnClickL
         super.onViewCreated(view, savedInstanceState);
         this.containerView = view.findViewById(R.id.container);
         homeViewHolder = new HomeViewHolder(view, this);
-
+        getShineButton(view);
         dbHandler = MvPatelApplication.getDatabaseHandler();
         this.productDao = dbHandler.getProductDetail((int) PID);
         subCategory = dbHandler.getSubCategoryDetail(productDao.subcatid.intValue());
@@ -119,6 +123,7 @@ public class ProductDetailFragment extends BaseFragment implements View.OnClickL
         setSelectedProduct();
 
     }
+
 
     private void setSelectedProduct() {
         RecyclerView mCartRecycleViewRv = (RecyclerView) getView().findViewById(R.id.cart_product_list_rv);
@@ -567,4 +572,57 @@ public class ProductDetailFragment extends BaseFragment implements View.OnClickL
 
         }
     }
+
+    /**/
+
+    ShineButton shineButton;
+    ShineButton porterShapeImageView1;
+    ShineButton porterShapeImageView2;
+    ShineButton porterShapeImageView3;
+
+    private void getShineButton(View view) {
+        shineButton = (ShineButton) view.findViewById(R.id.po_image0);
+
+
+        if (shineButton != null)
+            shineButton.init(getActivity());
+        porterShapeImageView1 = (ShineButton) view.findViewById(R.id.po_image1);
+        if (porterShapeImageView1 != null)
+            porterShapeImageView1.init(getActivity());
+        porterShapeImageView2 = (ShineButton) view.findViewById(R.id.po_image2);
+        if (porterShapeImageView2 != null)
+            porterShapeImageView2.init(getActivity());
+        porterShapeImageView3 = (ShineButton) view.findViewById(R.id.po_image3);
+        if (porterShapeImageView3 != null)
+            porterShapeImageView3.init(getActivity());
+
+
+        shineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e(TAG, "click");
+            }
+        });
+        shineButton.setOnCheckStateChangeListener(new ShineButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(View view, boolean checked) {
+                Log.e(TAG, "click " + checked);
+            }
+        });
+
+        porterShapeImageView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e(TAG, "click");
+            }
+        });
+        porterShapeImageView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e(TAG, "click");
+            }
+        });
+
+    }
+
 }

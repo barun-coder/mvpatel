@@ -235,7 +235,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingLeft="8dp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <com.displayfort.mvpatel.TextUtils.TypefaceTextViewBrandenBold
                         android:id="@+id/cart_Prod_tv"

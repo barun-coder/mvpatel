@@ -4,12 +4,12 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.annotation.Nullable;
 
 import com.displayfort.mvpatel.DB.TrackerDbHandler;
 import com.displayfort.mvpatel.Model.CategoryDao;
 import com.displayfort.mvpatel.MvPatelApplication;
 
-import androidx.annotation.Nullable;
 
 /**
  * Created by pc on 15/11/2018 17:39.
@@ -17,7 +17,6 @@ import androidx.annotation.Nullable;
  */
 public class SaveJsonDateInDbService extends Service {
     @Nullable
-    @android.support.annotation.Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;

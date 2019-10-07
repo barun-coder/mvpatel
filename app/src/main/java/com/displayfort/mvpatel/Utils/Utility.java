@@ -1,11 +1,11 @@
 package com.displayfort.mvpatel.Utils;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.LocationManager;
@@ -13,11 +13,8 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -43,8 +40,6 @@ import java.util.Calendar;
 import java.util.Currency;
 import java.util.Locale;
 
-import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
-
 /**
  * Created by Husain on 07-03-2016.
  */
@@ -64,9 +59,13 @@ public class Utility {
      */
     public static void hideSoftKeyboard(EditText editText) {
         if (null != editText) {
-            InputMethodManager imm = (InputMethodManager) editText.getContext()
-                    .getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+            InputMethodManager imm = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.CUPCAKE) {
+                imm = (InputMethodManager) editText.getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+            }
+
         }
     }
 
@@ -81,18 +80,22 @@ public class Utility {
 
     public static void ShowSoftKeyboard(EditText editText) {
         if (null != editText) {
-            InputMethodManager imm = (InputMethodManager) editText.getContext()
-                    .getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+            InputMethodManager imm = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.CUPCAKE) {
+                imm = (InputMethodManager) editText.getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+            }
+
         }
     }
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager = (InputMethodManager) activity
-                .getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus()
-                .getWindowToken(), 0);
-    }
+//    public static void hideSoftKeyboard(Activity activity) {
+//        InputMethodManager inputMethodManager = (InputMethodManager) activity
+//                .getSystemService(Activity.INPUT_METHOD_SERVICE);
+//        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus()
+//                .getWindowToken(), 0);
+//    }
 
     public static void showLog(String string) {
         Log.i("Utility", "VALUE:" + string);
@@ -219,20 +222,20 @@ public class Utility {
         return jsonResponse;
     }
 
-    public static float convertDpToPixel(float dp, Context context) {
-        Resources resources = context.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        float px = dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-        return px;
-    }
-
-
-    public static float convertPixelsToDp(float px, Context context) {
-        Resources resources = context.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        float dp = px / ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-        return dp;
-    }
+//    public static float convertDpToPixel(float dp, Context context) {
+//        Resources resources = context.getResources();
+//        DisplayMetrics metrics = resources.getDisplayMetrics();
+//        float px = dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+//        return px;
+//    }
+//
+//
+//    public static float convertPixelsToDp(float px, Context context) {
+//        Resources resources = context.getResources();
+//        DisplayMetrics metrics = resources.getDisplayMetrics();
+//        float dp = px / ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+//        return dp;
+//    }
 
     public static DisplayMetrics getDisplayMetrix(Activity context) {
         DisplayMetrics displayMetrics = new DisplayMetrics();

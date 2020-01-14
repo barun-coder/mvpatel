@@ -470,13 +470,13 @@ public class HomeActivity extends BaseActivity implements ViewAnimator.ViewAnima
     private ScreenShotable replaceFragment(ScreenShotable screenShotable, int topPosition, BaseFragment homeFragment, String tagName) {
         enableViews(true);
         View view = findViewById(R.id.main_fragment);
-        int finalRadius = Math.max(view.getWidth(), view.getHeight());
-        SupportAnimator animator = ViewAnimationUtils.createCircularReveal(view, 0, topPosition, 0, finalRadius);
-        animator.setInterpolator(new AccelerateInterpolator());
-        animator.setDuration(ViewAnimator.CIRCULAR_REVEAL_ANIMATION_DURATION);
-        mCurrentFragment = homeFragment;
-        findViewById(R.id.content_overlay).setBackgroundDrawable(new BitmapDrawable(getResources(), screenShotable.getBitmap()));
-        animator.start();
+//        int finalRadius = Math.max(view.getWidth(), view.getHeight());
+//        SupportAnimator animator = ViewAnimationUtils.createCircularReveal(view, 0, topPosition, 0, finalRadius);
+//        animator.setInterpolator(new AccelerateInterpolator());
+//        animator.setDuration(ViewAnimator.CIRCULAR_REVEAL_ANIMATION_DURATION);
+//        mCurrentFragment = homeFragment;
+//        findViewById(R.id.content_overlay).setBackgroundDrawable(new BitmapDrawable(getResources(), screenShotable.getBitmap()));
+//        animator.start();
 
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim)
